@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/app/router/app_router.dart';
 import './feature/theme/theme_cubit.dart';
 
 
@@ -18,18 +19,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    final AppRouter appRouter = AppRouter();
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, currentTheme){
-        return MaterialApp(
+        return MaterialApp.router(
           themeMode: currentTheme,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          home: Scaffold(
-            body: Center(
-              
-            )
-          ),
-
+          routerConfig: appRouter.router,
         );
       }
     );
