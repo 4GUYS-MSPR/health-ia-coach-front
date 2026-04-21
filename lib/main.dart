@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './feature/theme/theme_cubit.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => ThemeCubit(),
+      child: const MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,10 +18,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ;
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, currentTheme){
+        return MaterialApp(
+          themeMode: currentTheme,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          home: Scaffold(
+            body: Center(
+              
+            )
+          ),
+
+        );
+      }
     );
   }
 }
