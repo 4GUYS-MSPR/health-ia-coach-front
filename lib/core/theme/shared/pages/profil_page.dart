@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../widgets/theme_switch_button.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -10,8 +11,15 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: Center(
+        child: Column(
+          children:[
+            SwitchThemeButton()
+          ]      
+        ),
+      )
     );
   }
 }
