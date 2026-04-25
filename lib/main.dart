@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
           themeMode: currentTheme,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
+          title: "Health IA Coach",
           routerConfig: appRouter.router,
         );
       }
