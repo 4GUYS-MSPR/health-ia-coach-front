@@ -6,14 +6,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      child: const Center(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface
+        ),
+      child: Center(
         child: Text(
           'Hello World',
           textDirection: TextDirection.ltr,
-          style: TextStyle(fontSize: 32, color: Colors.black87),
+          style: TextStyle(
+            fontSize: 32, 
+            color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
   }
 }
+ 
