@@ -1,0 +1,88 @@
+name: Flutter Code Quality
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+  checks: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Static Analysis & Formatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - &checkout_repository
+        name: Checkout repository
+        uses: actions/checkout@v6
+
+      - &setup_flutter_sdk
+        name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - &install_dependencies
+        name: Install dependencies
+        run: flutter pub get
+
+      - &prepare_ci_env_file
+        name: Prepare CI env file
+        shell: bash
+        run: |
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          else
+            : > .env
+          fi
+
+      - name: Verify code formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Execute static analysis
+        run: flutter analyze --no-fatal-infos
+
+  test:
+    name: Unit Tests & Coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - *checkout_repository
+      - *setup_flutter_sdk
+      - *install_dependencies
+      - *prepare_ci_env_file
+
+      - name: Execute unit tests
+        run: flutter test --coverage --machine > raw-test-results.log
+
+      - name: Sanitize test output
+        if: always()
+        run: grep '^{' raw-test-results.log > test-results.json || true
+
+      - name: Publish Test Report
+        uses: dorny/test-reporter@v3
+        if: success() || failure()
+        with:
+          name: Flutter Unit Test Results
+          path: test-results.json
+          reporter: flutter-json # was: dart-json
+          fail-on-error: true
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lcov-report
+          path: coverage/lcov.info
+          if-no-files-found: warn
+          retention-days: 7

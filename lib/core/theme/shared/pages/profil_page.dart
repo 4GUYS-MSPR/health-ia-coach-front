@@ -15,11 +15,11 @@ class _ProfilPageState extends State<ProfilPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Column(
-          children:[
-            SwitchThemeButton()
-          ]      
+          children: [
+            SwitchThemeButton(),
+          ],
         ),
-      )
+      ),
     );
   }
 }

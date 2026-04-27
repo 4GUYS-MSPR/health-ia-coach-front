@@ -7,18 +7,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface
-        ),
+        color: Theme.of(context).colorScheme.surface,
+      ),
       child: Center(
         child: Text(
           'Hello World',
           textDirection: TextDirection.ltr,
           style: TextStyle(
-            fontSize: 32, 
-            color: Theme.of(context).colorScheme.primary),
+            fontSize: 32,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
     );
   }
 }
- 
