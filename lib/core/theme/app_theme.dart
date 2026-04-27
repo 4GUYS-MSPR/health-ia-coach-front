@@ -57,7 +57,11 @@ class AppTheme {
     ),
 
     elevatedButtonTheme: _elevatedBtn(),
-    textTheme: _buildTextTheme(textPrimaryDark, textSecondaryDark, textTertiary),
+    textTheme: _buildTextTheme(
+      textPrimaryDark,
+      textSecondaryDark,
+      textTertiary,
+    ),
   );
 
   static ElevatedButtonThemeData _elevatedBtn() {
