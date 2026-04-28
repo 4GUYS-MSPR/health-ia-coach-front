@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ThemeCubit(),
+      create: (context) => sl<ThemeCubit>(),
       child: Builder(
         builder: (context) {
           final appRouter = sl<AppRouter>();
