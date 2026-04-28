@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../features/theme/theme_cubit.dart';
+import '../core/shared/cubits/theme_cubit/theme_cubit.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
 
