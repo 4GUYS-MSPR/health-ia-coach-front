@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/theme_switch_button.dart';
+import '../../../shared/widgets/theme/theme_switch_button.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../core/shared/cubits/theme_cubit/theme_cubit.dart';
+import '../../cubits/theme_cubit/theme_cubit.dart';
 
 class SwitchThemeButton extends StatefulWidget {
   const SwitchThemeButton({super.key});
