@@ -4,13 +4,14 @@ import '../../core/theme/shared/pages/app_view.dart';
 import '../../core/theme/shared/pages/error_page.dart';
 import '../../core/theme/shared/pages/home_page.dart';
 import '../../core/theme/shared/pages/profil_page.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
   GoRouter get router => _goRouter;
 
   final _goRouter = GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.login,
     errorBuilder: (context, state) => const ErrorPage(),
     routes: [
       StatefulShellRoute.indexedStack(
@@ -18,6 +19,14 @@ class AppRouter {
           return AppView(navigationShell: navigationShell);
         },
         branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.login,
+                builder: (context, state) => const LoginPage(),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(

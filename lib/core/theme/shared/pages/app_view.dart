@@ -23,6 +23,10 @@ class AppView extends StatelessWidget {
         },
         destinations: [
           NavigationDestination(
+            icon: Icon(Icons.login),
+            label: "Login",
+          ),
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: "Home",
           ),
