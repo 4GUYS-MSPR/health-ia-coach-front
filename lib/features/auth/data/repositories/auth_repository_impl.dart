@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/errors/failure.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/auth/data/repositories/auth_repository_impl.dart';
@@ -11,6 +12,10 @@ import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 
 
 void registerAuth(GetIt sl){
+  sl.registerLazySingleton(() => const FlutterSecureStorage());
+  sl.registerFactory<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(secureStorage: sl()),
+  );
   sl.registerFactory(() => AuthRemoteDataSource(dio: Dio(), baseUrl: dotenv.get('BASE_URL'), localDataSource: sl<AuthLocalDataSource>() ));
   sl.registerFactory<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerFactory(() => RegisterUseCase(sl()),);

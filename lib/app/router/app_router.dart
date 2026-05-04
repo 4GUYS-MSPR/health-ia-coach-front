@@ -14,19 +14,15 @@ class AppRouter {
     initialLocation: AppRoutes.login,
     errorBuilder: (context, state) => const ErrorPage(),
     routes: [
+      GoRoute(
+      path: AppRoutes.login,
+      builder: (context, state) => const LoginPage(),
+    ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return AppView(navigationShell: navigationShell);
         },
         branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoutes.login,
-                builder: (context, state) => const LoginPage(),
-              ),
-            ],
-          ),
           StatefulShellBranch(
             routes: [
               GoRoute(

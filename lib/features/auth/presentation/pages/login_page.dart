@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import '../widgets/authentication_text_form_field.dart';
 
@@ -20,56 +21,69 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-  usernameController.dispose();
-  passwordController.dispose();
-  structureCodeController.dispose();
-  passwordConfirmationController.dispose();
-  super.dispose();
-}
+    usernameController.dispose();
+    passwordController.dispose();
+    structureCodeController.dispose();
+    passwordConfirmationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Form(
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoginSuccess){
+            context.go('/home');
+          } else if (state is AuthFailure){
+            ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+          }
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Form(
                 key: _formkey,
                 child: Column(
-                  spacing :16,
+                  spacing: 16,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/logo.png',
-                      width : 200.0,
+                    Image.asset(
+                      'assets/logo.png',
+                      width: 200.0,
                     ),
                     AuthenticationTextFormField(
                       icon: Icons.person_outline_sharp,
                       label: "Nom de compte",
                       textEditingController: usernameController,
-                      isPassword : false
+                      isPassword: false,
                     ),
-                    if(register == true)
+                    if (register == true)
                       AuthenticationTextFormField(
-                          icon: Icons.numbers, 
-                          label: 'Code structure', 
-                          textEditingController: structureCodeController, 
-                          isPassword: false),
+                        icon: Icons.numbers,
+                        label: 'Code structure',
+                        textEditingController: structureCodeController,
+                        isPassword: false,
+                      ),
                     AuthenticationTextFormField(
                       icon: Icons.vpn_key,
                       label: "Mot de passe",
                       textEditingController: passwordController,
-                      isPassword : true
+                      isPassword: true,
                     ),
-                    if(register == true)
+                    if (register == true)
                       AuthenticationTextFormField(
-                        icon: Icons.password, 
-                        label: 'Confirmer le mot de passe', 
-                        textEditingController: passwordConfirmationController, 
-                        isPassword: true),
+                        icon: Icons.password,
+                        label: 'Confirmer le mot de passe',
+                        textEditingController: passwordConfirmationController,
+                        isPassword: true,
+                      ),
                     FilledButton(
                       onPressed: () {
-                        if (register == true){
+                        if (register == true) {
                           final username = usernameController.text.trim();
                           final password = passwordController.text.trim();
                           final structureCode = structureCodeController.text.trim();
@@ -77,38 +91,41 @@ class _LoginPageState extends State<LoginPage> {
                             AuthRegisterRequestEvent(
                               username: username,
                               password: password,
-                              structureCode : structureCode 
+                              structureCode: structureCode,
                             ),
                           );
                         } else {
-                            final username = usernameController.text.trim();
-                            final password = passwordController.text.trim();
-                            context.read<AuthBloc>().add(
-                              AuthLoginRequestEvent(
-                                username: username,
-                                password: password, 
-                              ),
-                            );
-                          }
-                      }, 
-                      child: Text(register == true ? 'Créer un compte' : 'Connexion')),
+                          final username = usernameController.text.trim();
+                          final password = passwordController.text.trim();
+                          context.read<AuthBloc>().add(
+                            AuthLoginRequestEvent(
+                              username: username,
+                              password: password,
+                            ),
+                          );
+                        }
+                      },
+                      child: Text(register == true ? 'Créer un compte' : 'Connexion'),
+                    ),
                     InkWell(
                       onTap: () {
                         setState(() => register = !register);
-                          _formkey.currentState?.reset();
-                          usernameController.clear();
-                          passwordController.clear();
-                          passwordConfirmationController.clear();
-                        },
+                        _formkey.currentState?.reset();
+                        usernameController.clear();
+                        passwordController.clear();
+                        passwordConfirmationController.clear();
+                      },
                       child: Text(
-                      register == true ? 'Se connecter' : 'Créer un compte',
+                        register == true ? 'Se connecter' : 'Créer un compte',
                       ),
-                    )
+                    ),
                   ],
-                ))
+                ),
               ),
-          ),
             ),
+          ),
+        ),
+      ),
     );
   }
 }
