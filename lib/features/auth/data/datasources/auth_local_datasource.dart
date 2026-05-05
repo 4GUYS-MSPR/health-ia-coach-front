@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract interface class AuthLocalDataSource {
   Future<void> storeAccessToken (String accessToken);
-  Future<String?> getToken(String _storeAccessToken);
+  Future<String?> getToken();
 }
 
 
@@ -23,7 +23,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<String?> getToken(String _storeAccessToken) async {
+  Future<String?> getToken() async {
     try{
       String? token = await secureStorage.read(key:_storeAccessToken); 
       return token;
@@ -33,3 +33,4 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
     }
 }
+

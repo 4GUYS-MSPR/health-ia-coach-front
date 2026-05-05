@@ -54,4 +54,29 @@ class AuthRemoteDataSource{
   }
 
 
+  @override
+  Future<bool> checkAuthStatus() async {
+    try{
+      final token = await localDataSource.getToken();
+
+      if (token == null || token.isEmpty){
+        return false;
+      }
+
+      final response = await dio.get('$baseUrl/user/me',
+      options: Options(
+        headers: {
+          'Authorization' : 'Bearer $token'
+        })
+      );
+
+      return response.statusCode == 200;
+
+    } on DioException catch (e){
+      print(e);
+      return false;
+    }
+  }
+
+
 }

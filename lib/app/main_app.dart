@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeCubit()),
         BlocProvider(
-          create: (context)=> sl<AuthBloc>(),
+          create: (context)=> sl<AuthBloc>()..add(AuthCheckStatusEvent()),
         )
       ],
       child: Builder(

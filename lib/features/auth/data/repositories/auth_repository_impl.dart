@@ -33,4 +33,16 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+
+  @override
+  Future<Either<Failure,bool>> checkAuthStatus() async{
+
+    try{
+      return Right(await datasource.checkAuthStatus());
+    }catch (e){
+      return Left(ServerFailure(message: e.toString()));
+    }
+
+  }
+
 }

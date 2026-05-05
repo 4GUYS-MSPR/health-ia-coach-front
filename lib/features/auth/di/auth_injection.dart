@@ -7,6 +7,7 @@ import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasou
 import 'package:health_ia_care/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/login_usecase.dart';
+import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -20,5 +21,6 @@ void registerAuth(GetIt sl){
   sl.registerFactory<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerFactory(() => RegisterUseCase(sl()),);
   sl.registerFactory(() => LoginUseCase(sl()),);
-  sl.registerLazySingleton(() => AuthBloc(register: sl(), login: sl()),);
+  sl.registerFactory(() => AuthCheckUseCase(sl()));
+  sl.registerLazySingleton(() => AuthBloc(register: sl(), login: sl(), authCheck: sl()));
 }

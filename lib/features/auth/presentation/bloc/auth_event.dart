@@ -14,3 +14,5 @@ class AuthRegisterRequestEvent extends AuthEvent{
   final String structureCode;
   AuthRegisterRequestEvent({required this.username, required this.password, required this.structureCode});
 }
+
+class AuthCheckStatusEvent extends AuthEvent{}
