@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/theme/theme_cubit.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
@@ -10,8 +11,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(
+          create: (context) => sl<AuthBloc>()..add(AuthCheckStatusEvent()),
+        ),
+      ],
       child: Builder(
         builder: (context) {
           final appRouter = sl<AppRouter>();
