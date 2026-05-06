@@ -15,9 +15,9 @@ class AppRouter {
     errorBuilder: (context, state) => const ErrorPage(),
     routes: [
       GoRoute(
-      path: AppRoutes.login,
-      builder: (context, state) => const LoginPage(),
-    ),
+        path: AppRoutes.login,
+        builder: (context, state) => const LoginPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return AppView(navigationShell: navigationShell);

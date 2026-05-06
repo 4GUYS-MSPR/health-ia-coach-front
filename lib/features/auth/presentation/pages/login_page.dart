@@ -33,12 +33,12 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthLoginSuccess){
+          if (state is AuthLoginSuccess) {
             context.go('/home');
-          } else if (state is AuthFailure){
+          } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+              SnackBar(content: Text(state.message)),
+            );
           }
         },
         child: SafeArea(

@@ -6,14 +6,10 @@ abstract interface class AuthRepository {
   Future<Either<Failure, bool>> register({
     required String username,
     required String password,
-    required String structureCode
+    required String structureCode,
   });
 
-  Future<Either<Failure, bool>> login({
-    required String username,
-    required String password
-  });
+  Future<Either<Failure, bool>> login({required String username, required String password});
 
   Future<Either<Failure, bool>> checkAuthStatus();
-  
 }

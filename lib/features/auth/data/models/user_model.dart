@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:health_ia_care/features/auth/domain/entities/User.dart';
 
-class UserModel extends User{
+class UserModel extends User {
   const UserModel({
     required super.id,
     required super.email,

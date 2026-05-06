@@ -31,7 +31,7 @@ class _AuthenticationTextFormFieldState extends State<AuthenticationTextFormFiel
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.textEditingController,
-      obscureText: _isObscured, 
+      obscureText: _isObscured,
       decoration: InputDecoration(
         labelText: widget.label,
         prefixIcon: Icon(widget.icon),

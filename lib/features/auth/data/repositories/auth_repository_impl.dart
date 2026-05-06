@@ -12,37 +12,41 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, bool>> register({
     required String username,
     required String password,
-    required String structureCode
+    required String structureCode,
   }) async {
-    try{
-      return Right(await datasource.register(password: password, username: username, structureCode : structureCode));
+    try {
+      return Right(
+        await datasource.register(
+          password: password,
+          username: username,
+          structureCode: structureCode,
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, bool>> login({
-    required String username,
-    required String password
-  }) async {
-    try{
-      return Right(await datasource.login( username: username, password: password,));
+  Future<Either<Failure, bool>> login({required String username, required String password}) async {
+    try {
+      return Right(
+        await datasource.login(
+          username: username,
+          password: password,
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
   }
 
-
   @override
-  Future<Either<Failure,bool>> checkAuthStatus() async{
-
-    try{
+  Future<Either<Failure, bool>> checkAuthStatus() async {
+    try {
       return Right(await datasource.checkAuthStatus());
-    }catch (e){
+    } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
-
   }
-
 }
