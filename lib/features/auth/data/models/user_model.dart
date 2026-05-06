@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:health_ia_care/features/auth/domain/entities/User.dart';
+import 'package:health_ia_care/features/auth/domain/entities/user.dart';
 
 class UserModel extends User {
   const UserModel({
