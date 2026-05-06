@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 
 class AuthRemoteDataSource {
@@ -22,12 +21,12 @@ class AuthRemoteDataSource {
 
       return response.statusCode == 201;
     } on DioException catch (e) {
+      // ignore: avoid_print
       print(e);
     }
     return false;
   }
 
-  @override
   Future<bool> login({
     required String username,
     required String password,
@@ -48,7 +47,6 @@ class AuthRemoteDataSource {
     return false;
   }
 
-  @override
   Future<bool> checkAuthStatus() async {
     try {
       final token = await localDataSource.getToken();
@@ -64,6 +62,7 @@ class AuthRemoteDataSource {
 
       return response.statusCode == 200;
     } on DioException catch (e) {
+      // ignore: avoid_print
       print(e);
       return false;
     }

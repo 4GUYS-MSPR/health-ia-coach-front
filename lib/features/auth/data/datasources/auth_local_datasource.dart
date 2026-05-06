@@ -16,6 +16,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       await secureStorage.write(key: _storeAccessToken, value: accessToken);
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -26,7 +27,9 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       String? token = await secureStorage.read(key: _storeAccessToken);
       return token;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
+    return null;
   }
 }
