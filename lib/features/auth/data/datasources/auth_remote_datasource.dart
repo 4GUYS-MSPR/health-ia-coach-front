@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 
 class AuthRemoteDataSource {
   final Dio dio;
@@ -47,12 +48,12 @@ class AuthRemoteDataSource {
     return false;
   }
 
-  Future<bool> checkAuthStatus() async {
+  Future<UserModel?> getCurrentUser() async {
     try {
       final token = await localDataSource.getToken();
 
       if (token == null || token.isEmpty) {
-        return false;
+        return null;
       }
 
       final response = await dio.get(
@@ -60,11 +61,27 @@ class AuthRemoteDataSource {
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
-      return response.statusCode == 200;
+       if (response.statusCode == 200) {
+        return UserModel.fromMap(response.data);
+      }
     } on DioException catch (e) {
       // ignore: avoid_print
       print(e);
-      return false;
+    }
+      return null;
+  }
+
+  Future<void> logout()async {
+    try{
+      await localDataSource.logout();
+    }catch (e){
+      // ignore: avoid_print
+      print(e);
     }
   }
+
+
+
+
+
 }

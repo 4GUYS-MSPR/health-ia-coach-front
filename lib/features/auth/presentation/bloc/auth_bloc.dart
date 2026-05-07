@@ -4,6 +4,7 @@ import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/login_usecase.dart';
+import 'package:health_ia_care/features/auth/domain/usecases/logout_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -11,16 +12,19 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUseCase register;
   final LoginUseCase login;
-  final AuthCheckUseCase authCheck;
+  final GetUser getUser;
+  final LogoutUseCase logout;
 
-  AuthBloc({required this.register, required this.login, required this.authCheck})
+  AuthBloc({required this.register, required this.login, required this.getUser, required this.logout})
     : super(AuthInitial()) {
     on<AuthEvent>((event, emit) {
       emit(AuthInitial());
     });
     on<AuthRegisterRequestEvent>((event, emit) => _onRegisterEvent(event, emit));
     on<AuthLoginRequestEvent>((event, emit) => _onLoginEvent(event, emit));
-    on<AuthCheckStatusEvent>((event, emit) => _onCheckStatusEvent(event, emit));
+    on<AuthGetUserEvent>((event, emit) => _onGetUserEvent(event, emit));
+    on<AuthLogoutEvent>((event, emit) => _onLogoutEvent(event, emit));
+    add(AuthGetUserEvent());
   }
 
   Future<void> _onRegisterEvent(AuthRegisterRequestEvent event, Emitter<AuthState> emit) async {
@@ -55,15 +59,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  Future<void> _onCheckStatusEvent(AuthCheckStatusEvent event, Emitter<AuthState> emit) async {
-    final isConnected = await authCheck(NoParams());
-    isConnected.fold(
-      (l) {
-        emit(AuthFailure(message: l.message));
-      },
-      (r) {
-        emit(AuthLoginSuccess(isLogged: r));
-      },
+  Future<void> _onGetUserEvent(AuthGetUserEvent event, Emitter emit) async {
+    emit(AuthLoading());
+    final result = await getUser(NoParams());
+
+    result.fold(
+      (l) => emit(AuthFailure(message: l.message)),
+      (r) => emit(AuthSuccess(user: r)),
     );
+  }
+
+  Future<void> _onLogoutEvent(AuthLogoutEvent event, Emitter emit)async {
+    emit(AuthLoading());
+    final result = await logout(NoParams());
+
+    result.fold(
+      (l) => emit(AuthFailure(message: l.message)),
+      (r) => emit(AuthLogoutSucess())
+      );
   }
 }
