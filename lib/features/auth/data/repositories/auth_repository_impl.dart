@@ -1,6 +1,7 @@
 import 'package:health_ia_care/errors/failure.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -42,11 +43,21 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> checkAuthStatus() async {
+  Future<Either<Failure, UserModel?>> getCurrentUser() async {
     try {
-      return Right(await datasource.checkAuthStatus());
+      return Right(await datasource.getCurrentUser());
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try{
+      return Right(await datasource.logout());
+    }catch (e){
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
 }

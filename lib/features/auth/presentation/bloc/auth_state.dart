@@ -11,9 +11,10 @@ class AuthFailure extends AuthState {
   AuthFailure({required this.message});
 }
 
-class AuthSuccess extends AuthState {
+final class AuthSuccess extends AuthState {
   final UserModel? user;
-  AuthSuccess(this.user);
+
+  AuthSuccess({required this.user});
 }
 
 final class AuthRegisterSuccess extends AuthState {
@@ -27,3 +28,5 @@ final class AuthLoginSuccess extends AuthState {
 
   AuthLoginSuccess({required this.isLogged});
 }
+
+final class AuthLogoutSucess extends AuthState{}

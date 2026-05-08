@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 abstract interface class AuthLocalDataSource {
   Future<void> storeAccessToken(String accessToken);
   Future<String?> getToken();
+  Future<void> logout();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -32,4 +33,17 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     }
     return null;
   }
+
+  @override
+  Future<void> logout()async {
+    try{
+      await secureStorage.delete(key: _storeAccessToken);
+    }catch (e){
+      // ignore: avoid_print
+      print(e);
+    }
+
+  }
+
+
 }

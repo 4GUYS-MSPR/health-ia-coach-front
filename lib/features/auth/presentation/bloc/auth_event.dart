@@ -19,4 +19,6 @@ class AuthRegisterRequestEvent extends AuthEvent {
   });
 }
 
-class AuthCheckStatusEvent extends AuthEvent {}
+class AuthGetUserEvent extends AuthEvent {}
+
+class AuthLogoutEvent extends AuthEvent{}
