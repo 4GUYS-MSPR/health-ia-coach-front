@@ -39,6 +39,7 @@ class AuthRemoteDataSource {
       );
       if (response.statusCode == 200) {
         await localDataSource.storeAccessToken(response.data['access']);
+        await localDataSource.storeRefreshToken(response.data['refresh']);
         return true;
       }
     } on DioException catch (e) {
@@ -61,27 +62,44 @@ class AuthRemoteDataSource {
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
-       if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
         return UserModel.fromMap(response.data);
       }
     } on DioException catch (e) {
       // ignore: avoid_print
       print(e);
     }
-      return null;
+    return null;
   }
 
-  Future<void> logout()async {
-    try{
-      await localDataSource.logout();
-    }catch (e){
+  Future<bool> logout() async {
+    try {
+      final token = await localDataSource.getToken();
+      final refresh = await localDataSource.getRefreshToken();
+
+      if (
+        token == null
+        || token.isEmpty
+        || refresh == null
+        || refresh.isEmpty
+      ) {
+        return false;
+      }
+
+      final response = await dio.post(
+        '$baseUrl/token/logout/',
+        data: {'refresh': refresh},
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+
+      if (response.statusCode == 205) {
+        await localDataSource.logout();
+        return true;
+      }
+    } on DioException catch (e) {
       // ignore: avoid_print
       print(e);
     }
+    return false;
   }
-
-
-
-
-
 }

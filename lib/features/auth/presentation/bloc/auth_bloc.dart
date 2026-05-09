@@ -15,8 +15,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetUser getUser;
   final LogoutUseCase logout;
 
-  AuthBloc({required this.register, required this.login, required this.getUser, required this.logout})
-    : super(AuthInitial()) {
+  AuthBloc({
+    required this.register,
+    required this.login,
+    required this.getUser,
+    required this.logout,
+  }) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) {
       emit(AuthInitial());
     });
@@ -69,13 +73,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  Future<void> _onLogoutEvent(AuthLogoutEvent event, Emitter emit)async {
+  Future<void> _onLogoutEvent(AuthLogoutEvent event, Emitter emit) async {
     emit(AuthLoading());
     final result = await logout(NoParams());
 
     result.fold(
       (l) => emit(AuthFailure(message: l.message)),
-      (r) => emit(AuthLogoutSucess())
-      );
+      (r) => emit(r ? AuthLogoutSucess() : AuthLogoutFailed()),
+    );
   }
 }

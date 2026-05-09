@@ -30,3 +30,4 @@ final class AuthLoginSuccess extends AuthState {
 }
 
 final class AuthLogoutSucess extends AuthState{}
+final class AuthLogoutFailed extends AuthState{}
