@@ -2,12 +2,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract interface class AuthLocalDataSource {
   Future<void> storeAccessToken(String accessToken);
+  Future<void> storeRefreshToken(String refreshToken);
   Future<String?> getToken();
+  Future<String?> getRefreshToken();
   Future<void> logout();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   static const _storeAccessToken = 'STORE_ACCESS_TOKEN';
+  static const _storeRefreshToken = 'STORE_REFRESH_TOKEN';
 
   final FlutterSecureStorage secureStorage;
   AuthLocalDataSourceImpl({required this.secureStorage});
@@ -23,9 +26,28 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<String?> getToken() async {
+  Future<void> storeRefreshToken(String refreshToken) async {
     try {
-      String? token = await secureStorage.read(key: _storeAccessToken);
+      await secureStorage.write(key: _storeRefreshToken, value: refreshToken);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  @override
+  Future<String?> getToken() async {
+    return await get(key: _storeAccessToken);
+  }
+
+  @override
+  Future<String?> getRefreshToken() async {
+    return await get(key: _storeRefreshToken);
+  }
+
+  Future<String?> get({required String key}) async {
+    try {
+      String? token = await secureStorage.read(key: key);
       return token;
     } catch (e) {
       // ignore: avoid_print
@@ -35,15 +57,13 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   }
 
   @override
-  Future<void> logout()async {
-    try{
+  Future<void> logout() async {
+    try {
       await secureStorage.delete(key: _storeAccessToken);
-    }catch (e){
+      await secureStorage.delete(key: _storeRefreshToken);
+    } catch (e) {
       // ignore: avoid_print
       print(e);
     }
-
   }
-
-
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:logging/logging.dart';
 
 import 'app/main_app.dart';
@@ -6,10 +7,14 @@ import 'app/service_locator/service_locator.dart';
 import 'core/logging/app_logger.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   await _initializeApp();
 
   runApp(const MainApp());
+
+  FlutterNativeSplash.remove();
 }
 
 Future<void> _initializeApp() async {
