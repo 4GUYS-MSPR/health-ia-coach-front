@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.dart';
 
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info.dart';
@@ -22,7 +21,9 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   void initState() {
     super.initState() ;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
     context.read<AuthBloc>().add(AuthGetUserEvent());
+    });
   }
   late String username;
   late String firstName;

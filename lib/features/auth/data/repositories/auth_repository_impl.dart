@@ -43,13 +43,17 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel?>> getCurrentUser() async {
-    try {
-      return Right(await datasource.getCurrentUser());
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+Future<Either<Failure, UserModel>> getCurrentUser() async {
+  try {
+    final user = await datasource.getCurrentUser();
+    if (user == null) {
+      return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
     }
+    return Right(user);
+  } catch (e) {
+    return Left(ServerFailure(message: e.toString()));
   }
+}
 
   @override
   Future<Either<Failure, bool>> logout() async {

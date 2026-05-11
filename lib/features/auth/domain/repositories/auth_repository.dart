@@ -12,5 +12,5 @@ abstract interface class AuthRepository {
 
   Future<Either<Failure, bool>> login({required String username, required String password});
 
-  Future<Either<Failure, UserModel?>> getCurrentUser();
+  Future<Either<Failure, UserModel>> getCurrentUser();
 }
