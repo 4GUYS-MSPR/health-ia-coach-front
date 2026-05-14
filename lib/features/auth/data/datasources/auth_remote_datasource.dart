@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/auth/data/models/user_model.dart';
+import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
 
 class AuthRemoteDataSource {
   final Dio dio;
   final String baseUrl;
   final AuthLocalDataSource localDataSource;
+  final ProfileLocalDatasource profileLocalDatasource;
 
-  AuthRemoteDataSource({required this.dio, required this.baseUrl, required this.localDataSource});
+  AuthRemoteDataSource({required this.dio, required this.baseUrl, required this.localDataSource, required this.profileLocalDatasource});
 
   Future<bool> register({
     required String username,
@@ -63,6 +65,7 @@ class AuthRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
+        await profileLocalDatasource.storeUserId(response.data['id']);
         return UserModel.fromMap(response.data);
       }
     } on DioException catch (e) {

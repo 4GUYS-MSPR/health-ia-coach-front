@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle({
-    required this.title,
-    super.key});
+  final VoidCallback onTapEdit;
+  const SectionTitle({required this.title, required this.onTapEdit, super.key});
 
-    final String title;
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min, 
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 32,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        Positioned(
-          right: -60,
-          child: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.edit_note,
-              size: 42,
-            ),
+        const SizedBox(width: 8),
+        IconButton(
+          onPressed: onTapEdit,
+          icon: const Icon(
+            Icons.edit_note,
+            size: 42,
           ),
         ),
       ],

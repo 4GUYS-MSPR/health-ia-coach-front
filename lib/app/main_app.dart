@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 
 import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/theme/theme_cubit.dart';
@@ -17,6 +18,9 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<ProfileBloc>()
+          )
       ],
       child: Builder(
         builder: (context) {

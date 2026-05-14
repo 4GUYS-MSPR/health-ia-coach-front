@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
 
 class PersonalUserInfo extends StatelessWidget {
-  const PersonalUserInfo({super.key});
+  final UserModel user; 
+  const PersonalUserInfo({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {

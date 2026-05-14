@@ -11,6 +11,7 @@ import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.
 import 'package:health_ia_care/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
 
 void registerAuth(GetIt sl) {
   sl.registerLazySingleton(() => const FlutterSecureStorage());
@@ -22,6 +23,7 @@ void registerAuth(GetIt sl) {
       dio: Dio(),
       baseUrl: dotenv.get('BASE_URL'),
       localDataSource: sl<AuthLocalDataSource>(),
+      profileLocalDatasource: sl<ProfileLocalDatasource>()
     ),
   );
   sl.registerFactory<AuthRepository>(() => AuthRepositoryImpl(sl()));
