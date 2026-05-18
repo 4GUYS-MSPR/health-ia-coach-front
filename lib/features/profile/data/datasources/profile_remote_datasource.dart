@@ -14,14 +14,11 @@ class ProfileRemoteDatasource {
     required String firstname,
     required String lastname,
     required int? id,
-    required String? token
     }) async {
       try {
         final response = await dio.patch(
           '/api/user/$id/',
-          data: {'username' : username, 'first_name': firstname, 'last_name': lastname},
-          options: Options(headers: {'Authorization': 'Bearer $token'}),
-          );
+          data: {'username' : username, 'first_name': firstname, 'last_name': lastname});
 
         if (response.statusCode == 200) {
           return UserModel.fromMap(response.data);
@@ -36,13 +33,9 @@ class ProfileRemoteDatasource {
 
   Future<MemberModel?> getMemberStats({
     required int? id,
-    required String token
   }) async {
     try{
-      final response = await dio.get(
-        '$baseUrl/member/$id',
-          options: Options(headers: {'Authorization': 'Bearer $token'})
-      );
+      final response = await dio.get('/api/member/$id');
 
       if (response.statusCode == 200){
         return MemberModel.fromMap(response.data);

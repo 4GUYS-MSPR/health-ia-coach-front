@@ -23,9 +23,8 @@ class ProfileRepositoryImpl implements ProfileRepository{
   }) async {
     try{
       String? id = await profileLocalDatasource.getUserId();
-      String? token = await authLocalDataSource.getToken();
 
-      if (id == null || token == null) {
+      if (id == null) {
         return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
       }
 
@@ -37,7 +36,6 @@ class ProfileRepositoryImpl implements ProfileRepository{
         firstname: firstname,
         lastname: lastname,
         id: convertedId,
-        token: token
         );
 
       if (user == null) {
@@ -52,17 +50,14 @@ class ProfileRepositoryImpl implements ProfileRepository{
   Future<Either<Failure, MemberModel>> getMemberStats() async {
     try{
       String? id = await profileLocalDatasource.getMemberId();
-      String? token = await authLocalDataSource.getToken();
 
-      if (id == null || token == null) {
+      if (id == null) {
         return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
       }
       int? convertedId = int.tryParse(id);
 
       final user = await datasource.getMemberStats(
-        id: convertedId,
-        token: token
-        );
+        id: convertedId,        );
 
       if (user == null) {
         return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));

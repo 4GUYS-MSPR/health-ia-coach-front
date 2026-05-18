@@ -11,7 +11,6 @@ abstract interface class AuthLocalDataSource {
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   static const _storeAccessToken = 'STORE_ACCESS_TOKEN';
   static const _storeRefreshToken = 'STORE_REFRESH_TOKEN';
-  static const _storeUserId = 'STORE_REFRESH_TOKEN';
 
   final FlutterSecureStorage secureStorage;
   AuthLocalDataSourceImpl({required this.secureStorage});
