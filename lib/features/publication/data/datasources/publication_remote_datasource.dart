@@ -13,12 +13,10 @@ abstract interface class PublicationRemoteDataSource {
 
 class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
   final Dio dio;
-  final String baseUrl;
   final AuthLocalDataSource localDataSource;
 
   PublicationRemoteDataSourceImpl({
     required this.dio,
-    required this.baseUrl,
     required this.localDataSource,
   });
 
@@ -28,11 +26,6 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
     required String description,
     required PlatformFile media,
   }) async {
-    final token = await localDataSource.getToken();
-    final headers = token != null && token.isNotEmpty
-        ? {'Authorization': 'Bearer $token'}
-        : null;
-
     MultipartFile file;
     if (media.bytes != null) {
       file = MultipartFile.fromBytes(media.bytes!, filename: media.name);
@@ -50,9 +43,8 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
     formData.files.add(MapEntry(fieldName, file));
 
     final response = await dio.post(
-      '$baseUrl/publication/',
+      '/api/publication/',
       data: formData,
-      options: Options(headers: headers),
     );
 
     if (response.statusCode == 201 || response.statusCode == 200) {
