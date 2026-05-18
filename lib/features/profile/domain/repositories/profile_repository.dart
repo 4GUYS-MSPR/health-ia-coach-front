@@ -10,5 +10,17 @@ abstract interface class ProfileRepository{
     required String lastname
   });
 
+  Future<Either<Failure, MemberModel>> updateMemberProfile({
+    required int age,
+    required double bmi,
+    required double fatPercentage,
+    required double height,
+    required double weight,
+    required int workoutFrequency,
+    required int gender,
+    required int level,
+    required int subscription,
+  });
+
   Future<Either<Failure, MemberModel>> getMemberStats();
 }

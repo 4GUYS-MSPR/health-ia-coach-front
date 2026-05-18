@@ -21,3 +21,8 @@ final class ProfileGetTrainingSuccess extends ProfileState {
 
   ProfileGetTrainingSuccess({required this.member});
 }
+
+final class ProfileMemberUpdateSuccess extends ProfileState{
+  final MemberModel member;
+  ProfileMemberUpdateSuccess({required this.member});
+}

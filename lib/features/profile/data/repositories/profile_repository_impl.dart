@@ -67,5 +67,49 @@ class ProfileRepositoryImpl implements ProfileRepository{
         return Left(ServerFailure(message: e.toString()));
     }
   }
+  @override
+  Future<Either<Failure, MemberModel>> updateMemberProfile({
+    required int age,
+    required double bmi,
+    required double fatPercentage,
+    required double height,
+    required double weight,
+    required int workoutFrequency,
+    required int gender,
+    required int level,
+    required int subscription,
+  }) async {
+    try{
+      String? id = await profileLocalDatasource.getMemberId();
+
+      if (id == null) {
+        return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
+      }
+
+      int? convertedId = int.tryParse(id);
+
+
+      final member = await datasource.updateMemberProfile(
+        age: age,
+        bmi: bmi,
+        fatPercentage: fatPercentage,
+        height: height,
+        weight: weight,
+        workoutFrequency: workoutFrequency,
+        gender: gender,
+        level: level,
+        subscription: subscription,
+        id: convertedId,
+        );
+
+      if (member == null) {
+        return Left(ServerFailure(message: "Membre non trouvé ou session expirée"));
+      }
+      return Right(member);
+    } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
+    }
+
+  }
 
 }
