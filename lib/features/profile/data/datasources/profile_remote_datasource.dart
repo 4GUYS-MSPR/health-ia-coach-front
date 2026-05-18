@@ -4,10 +4,9 @@ import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 
 class ProfileRemoteDatasource {
   final AuthLocalDataSource localDataSource;
-  final String baseUrl;
   final Dio dio;
 
-  ProfileRemoteDatasource({required this.localDataSource, required this.baseUrl, required this.dio});
+  ProfileRemoteDatasource({required this.localDataSource, required this.dio});
 
   Future<UserModel?> updateUserProfile({
     required String username,
@@ -18,7 +17,7 @@ class ProfileRemoteDatasource {
     }) async {
       try {
         final response = await dio.patch(
-          '$baseUrl/user/$id/',
+          '/api/user/$id/',
           data: {'username' : username, 'first_name': firstname, 'last_name': lastname},
           options: Options(headers: {'Authorization': 'Bearer $token'}),
           );

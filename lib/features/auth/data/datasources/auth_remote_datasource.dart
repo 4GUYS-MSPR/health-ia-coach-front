@@ -5,11 +5,14 @@ import 'package:health_ia_care/features/profile/data/datasources/profile_local_d
 
 class AuthRemoteDataSource {
   final Dio dio;
-  final String baseUrl;
   final AuthLocalDataSource localDataSource;
   final ProfileLocalDatasource profileLocalDatasource;
 
-  AuthRemoteDataSource({required this.dio, required this.baseUrl, required this.localDataSource, required this.profileLocalDatasource});
+  AuthRemoteDataSource({
+    required this.dio,
+    required this.localDataSource,
+    required this.profileLocalDatasource,
+  });
 
   Future<bool> register({
     required String username,
@@ -18,7 +21,7 @@ class AuthRemoteDataSource {
   }) async {
     try {
       final response = await dio.post(
-        '$baseUrl/user/',
+        '/api/user/',
         data: {"username": username, "password": password, "client": structureCode},
       );
 
@@ -36,7 +39,7 @@ class AuthRemoteDataSource {
   }) async {
     try {
       final response = await dio.post(
-        '$baseUrl/token/',
+        '/api/token/',
         data: {'username': username, 'password': password},
       );
       if (response.statusCode == 200) {
@@ -59,10 +62,7 @@ class AuthRemoteDataSource {
         return null;
       }
 
-      final response = await dio.get(
-        '$baseUrl/user/me',
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
-      );
+      final response = await dio.get('/api/user/me');
 
       if (response.statusCode == 200) {
         await profileLocalDatasource.storeUserId(response.data['id']);
@@ -80,19 +80,13 @@ class AuthRemoteDataSource {
       final token = await localDataSource.getToken();
       final refresh = await localDataSource.getRefreshToken();
 
-      if (
-        token == null
-        || token.isEmpty
-        || refresh == null
-        || refresh.isEmpty
-      ) {
+      if (token == null || token.isEmpty || refresh == null || refresh.isEmpty) {
         return false;
       }
 
       final response = await dio.post(
-        '$baseUrl/token/logout/',
+        '/api/token/logout/',
         data: {'refresh': refresh},
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
       if (response.statusCode == 205) {
