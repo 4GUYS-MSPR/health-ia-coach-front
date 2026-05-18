@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:health_ia_care/core/secrets/app_secrets.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/publication/data/datasources/publication_remote_datasource.dart';
 import 'package:health_ia_care/features/publication/data/repositories/publication_repository_impl.dart';
@@ -12,8 +10,7 @@ Future<void> registerPublication(GetIt sl) async {
   // DataSource
   sl.registerFactory<PublicationRemoteDataSource>(
     () => PublicationRemoteDataSourceImpl(
-      dio: Dio(),
-      baseUrl: AppSecrets.baseUrl,
+      dio: sl(),
       localDataSource: sl<AuthLocalDataSource>(),
     ),
   );
