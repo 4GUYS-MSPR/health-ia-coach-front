@@ -3,13 +3,18 @@ import 'package:health_ia_care/features/profile/data/datasources/profile_remote_
 import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
 import 'package:health_ia_care/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:health_ia_care/features/profile/domain/repositories/profile_repository.dart';
+import 'package:health_ia_care/features/profile/domain/usecases/display_user_traning_info_usecase.dart';
 import 'package:health_ia_care/features/profile/domain/usecases/update_info_profile_usecase.dart';
 import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 
 void registerProfile(GetIt sl) {
-  sl.registerFactory(() => ProfileBloc(updateProfile: sl()));
+  sl.registerFactory(() => ProfileBloc(
+    updateProfile: sl(),
+    displayTraningStats: sl()
+    ));
 
   sl.registerFactory(() => UpdateInfoProfileUsecase(sl()));
+  sl.registerFactory(() => DisplayUserTrainingUsecase(sl()));
 
   sl.registerFactory<ProfileRepository>(
     () => ProfileRepositoryImpl(

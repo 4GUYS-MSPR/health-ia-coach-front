@@ -7,14 +7,16 @@ class UserModel extends User {
     required super.username,
     required super.firstname,
     required super.lastname,
+    required super.memberId,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'username': username,
       'first_name': firstname,
       'last_name': lastname,
-      'username': username,
+      'member_id': memberId,
     };
   }
 
@@ -28,6 +30,7 @@ class UserModel extends User {
     ? map['last_name'] as String 
     : 'Non renseigné',
       username: map['username'] as String,
+      memberId: map['member_id'] as int,
     );
   }
 

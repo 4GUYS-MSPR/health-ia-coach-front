@@ -65,6 +65,7 @@ class AuthRemoteDataSource {
       final response = await dio.get('/api/user/me');
 
       if (response.statusCode == 200) {
+        await profileLocalDatasource.storeMemberId(response.data['member_id']);
         await profileLocalDatasource.storeUserId(response.data['id']);
         return UserModel.fromMap(response.data);
       }

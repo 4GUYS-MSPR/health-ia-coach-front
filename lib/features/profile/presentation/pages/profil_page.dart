@@ -16,28 +16,26 @@ class ProfilPage extends StatefulWidget {
 
   @override
   State<ProfilPage> createState() => _ProfilPageState();
-  
 }
 
 class _ProfilPageState extends State<ProfilPage> {
   @override
   void initState() {
-    super.initState() ;
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<AuthBloc>().add(AuthGetUserEvent());
+      context.read<AuthBloc>().add(AuthGetUserEvent());
+      context.read<ProfileBloc>().add(DisplayMemberRequestEvent());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return SafeArea(
       child: MultiBlocListener(
         listeners: [
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is AuthLogoutSucess){
+              if (state is AuthLogoutSucess) {
                 context.replace('/login');
               }
             },
@@ -46,6 +44,7 @@ class _ProfilPageState extends State<ProfilPage> {
             listener: (context, state) {
               if (state is ProfileUpdateSuccess) {
                 context.read<AuthBloc>().add(AuthGetUserEvent());
+                context.read<ProfileBloc>().add(DisplayMemberRequestEvent());
               }
             },
           ),
@@ -54,7 +53,11 @@ class _ProfilPageState extends State<ProfilPage> {
           builder: (context, state) {
             if (state is AuthLoading || state is AuthInitial) {
               return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
+                body: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.green,
+                  ),
+                ),
               );
             }
 
@@ -69,9 +72,12 @@ class _ProfilPageState extends State<ProfilPage> {
                       child: Column(
                         children: [
                           Image.asset('assets/profile.png', width: 150.0),
-                          SizedBox(height: 30,),
-                          SectionTitle(title: 'Mon compte',
-                            onTapEdit: (){
+                          SizedBox(
+                            height: 30,
+                          ),
+                          SectionTitle(
+                            title: 'Mon compte',
+                            onTapEdit: () {
                               showModalBottomSheet<void>(
                                 context: context,
                                 useSafeArea: true,
@@ -81,59 +87,95 @@ class _ProfilPageState extends State<ProfilPage> {
                                     height: MediaQuery.of(context).size.height * 0.9,
                                     child: PersonalUserModalForm(
                                       user: state.user,
-                                      )
-                                    );
-                                },
-                              );
-                            }
-                          ),
-                          SizedBox(height: 20,),
-                          PersonalUserInfo(
-                            user: user,
-                          ),
-                          SizedBox(height: 20,),
-                          Divider(
-                            color: Theme.of(context).colorScheme.primary,
-                            indent: 50, 
-                            endIndent: 50,
-                  
-                          ),
-                          SizedBox(height: 20,),
-                          SectionTitle(title: 'Mes infos',
-                          onTapEdit: (){
-                            showModalBottomSheet<void>(
-                                context: context,
-                                useSafeArea: true,
-                                isScrollControlled: true,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height * 0.9,
-                                    child: PersonalUserInfoModalForm());
+                                    ),
+                                  );
                                 },
                               );
                             },
                           ),
-                          SizedBox(height: 20,),
-                          DisplayMemberInfo(),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          PersonalUserInfo(
+                            user: user,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Divider(
                             color: Theme.of(context).colorScheme.primary,
-                            indent: 50, 
+                            indent: 50,
                             endIndent: 50,
-                  
                           ),
-                          SizedBox(height: 20,),
-                          Text('Paramètres',
-                          style: TextStyle(
-                            fontSize: 32
+                          SizedBox(
+                            height: 20,
                           ),
+                          BlocBuilder<ProfileBloc, ProfileState>(
+                            builder: (context, profileState) {
+                              switch (profileState) {
+                                case ProfileGetTrainingSuccess _:
+                                  return Column(
+                                    children: [
+                                      SectionTitle(
+                                        title: 'Mes infos',
+                                        onTapEdit: () {
+                                          showModalBottomSheet<void>(
+                                            context: context,
+                                            useSafeArea: true,
+                                            isScrollControlled: true,
+                                            builder: (BuildContext context) {
+                                              return SizedBox(
+                                                height: MediaQuery.of(context).size.height * 0.9,
+                                                child: PersonalUserInfoModalForm(
+                                                  member: profileState.member,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      DisplayMemberInfo(
+                                        member: profileState.member,
+                                      ),
+                                    ],
+                                  );
+
+                                default:
+                                  return Center(child: CircularProgressIndicator.adaptive());
+                              }
+                            },
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Divider(
+                            color: Theme.of(context).colorScheme.primary,
+                            indent: 50,
+                            endIndent: 50,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Paramètres',
+                            style: TextStyle(fontSize: 32),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           SwitchThemeButton(),
-                          SizedBox(height: 10,),
-                          ElevatedButton(onPressed: () {
-                            context.read<AuthBloc>().add(AuthLogoutEvent());
-                          }, child: Text('Se déconnecter')),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<AuthBloc>().add(AuthLogoutEvent());
+                            },
+                            child: Text('Se déconnecter'),
+                          ),
                         ],
                       ),
                     ),

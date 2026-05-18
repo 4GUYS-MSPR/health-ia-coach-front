@@ -8,3 +8,5 @@ class ProfileUpdateRequestEvent extends ProfileEvent{
   final String lastname;
   ProfileUpdateRequestEvent({required this.username, required this.firstname, required this.lastname});
 }
+
+class DisplayMemberRequestEvent extends ProfileEvent{}

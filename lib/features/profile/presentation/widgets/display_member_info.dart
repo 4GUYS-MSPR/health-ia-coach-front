@@ -1,11 +1,17 @@
 import 'package:flutter/widgets.dart';
+import 'package:health_ia_care/features/profile/data/models/member_model.dart';
+import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
 
 import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
 
 
-
+const List<String> genderList = <String>['MALE', 'FEMALE', 'NOT SPECIFIED'];
+const List<String> levelList = <String>['BEGINNER', 'INTERMEDIATE', 'EXPERT'];
 class DisplayMemberInfo extends StatelessWidget {
-  const DisplayMemberInfo({super.key});
+  final MemberModel member;
+  const DisplayMemberInfo({
+    required this.member,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +33,19 @@ class DisplayMemberInfo extends StatelessWidget {
                 InfoText(text: 'Sexe'),
                 InfoText(text: 'Niveau'),
                 InfoText(text: 'Abonnement'),
-                InfoText(text: 'Objectifs'),
               ],
             ),
             Column(
               children: [
-                InfoText(text: '18'),
-                InfoText(text: '20'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                InfoText(text: '30'),
-                
+                InfoText(text: member.age.toString()),
+                InfoText(text: member.bmi.toString()),
+                InfoText(text: '${member.fatPercentage.toString()}%'),
+                InfoText(text: '${convertHeight(member.height).toString()}cm'),
+                InfoText(text: '${member.weight.toString()}kg'),
+                InfoText(text: '${member.workoutFrequency.toString()}/s'),
+                InfoText(text: getGenderDisplayLabel(member.gender?.value)),
+                InfoText(text: member.level?.value ?? "-"),
+                InfoText(text: member.subscription?.value ?? "-"),
               ],
             )
           ],
