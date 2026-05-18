@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -20,8 +18,7 @@ void registerAuth(GetIt sl) {
   );
   sl.registerFactory(
     () => AuthRemoteDataSource(
-      dio: Dio(),
-      baseUrl: dotenv.get('BASE_URL'),
+      dio: sl(),
       localDataSource: sl<AuthLocalDataSource>(),
       profileLocalDatasource: sl<ProfileLocalDatasource>()
     ),
