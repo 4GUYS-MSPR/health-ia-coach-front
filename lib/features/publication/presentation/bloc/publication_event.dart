@@ -21,3 +21,5 @@ class AddPublicationEvent extends PublicationEvent {
   @override
   List<Object> get props => [type, description, media];
 }
+
+class GetPublicationsEvent extends PublicationEvent {}

@@ -9,6 +9,8 @@ abstract interface class PublicationRemoteDataSource {
     required String description,
     required PlatformFile media,
   });
+
+  Future<List<PublicationModel>> getPublications();
 }
 
 class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
@@ -32,7 +34,7 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
     } else if (media.path != null) {
       file = await MultipartFile.fromFile(media.path!, filename: media.name);
     } else {
-      throw Exception('Fichier invalide'); 
+      throw Exception('Fichier invalide');
     }
 
     final formData = FormData();
@@ -53,4 +55,38 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
       throw Exception('Erreur lors de la création: ${response.statusCode}');
     }
   }
+
+  @override
+Future<List<PublicationModel>> getPublications() async {
+  try {
+    
+    final token = await localDataSource.getToken();
+    
+    final headers = token != null && token.isNotEmpty
+        ? {'Authorization': 'Bearer $token'}
+        : null;
+    
+    final response = await dio.get(
+      '/api/publication/',
+      options: Options(headers: headers),
+    );
+
+    
+    if (response.statusCode == 200) {
+      final data = response.data as Map<String, dynamic>;
+      
+      final List results = data['results'] ?? [];
+      
+      
+      return results
+          .map((e) => PublicationModel.fromMap(e as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception('Erreur lors de la récupération: ${response.statusCode}');
+    }
+    
+  }  catch (e) {
+    rethrow;
+  }
+}
 }

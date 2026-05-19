@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:health_ia_care/core/secrets/app_secrets.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/auth/data/repositories/auth_repository_impl.dart';

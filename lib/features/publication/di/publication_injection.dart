@@ -4,6 +4,7 @@ import 'package:health_ia_care/features/publication/data/datasources/publication
 import 'package:health_ia_care/features/publication/data/repositories/publication_repository_impl.dart';
 import 'package:health_ia_care/features/publication/domain/repositories/publication_repository.dart';
 import 'package:health_ia_care/features/publication/domain/usecases/add_publication_usecase.dart';
+import 'package:health_ia_care/features/publication/domain/usecases/get_all_publications_usecase.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 
 Future<void> registerPublication(GetIt sl) async {
@@ -25,11 +26,16 @@ Future<void> registerPublication(GetIt sl) async {
   sl.registerFactory(
     () => AddPublicationUsecase(sl<PublicationRepository>()),
   );
+  sl.registerFactory(
+    () => GetPublicationsUsecase(sl<PublicationRepository>()),
+  );
 
   // Bloc
   sl.registerFactory(
     () => PublicationBloc(
       addPublication: sl<AddPublicationUsecase>(),
+      getPublications: sl<GetPublicationsUsecase>(),
     ),
   );
+
 }
