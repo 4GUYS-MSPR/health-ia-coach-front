@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:health_ia_care/features/auth/domain/entities/user.dart';
+import 'package:health_ia_care/features/auth/helpers/auth_utils.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -8,6 +9,7 @@ class UserModel extends User {
     required super.firstname,
     required super.lastname,
     required super.memberId,
+    required super.avatar,
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +33,7 @@ class UserModel extends User {
     : 'Non renseigné',
       username: map['username'] as String,
       memberId: map['member_id'] as int,
+      avatar: map['avatar'] as String?,
     );
   }
 
