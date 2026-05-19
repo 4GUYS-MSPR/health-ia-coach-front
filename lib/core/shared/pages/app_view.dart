@@ -14,12 +14,21 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actionsPadding: EdgeInsets.only(right: 10),
-        actions: [IconButton(onPressed: () {
-          context.push<void>(AppRoutes.publication);
-        }, icon: Icon(Icons.add_photo_alternate_outlined))],
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Image.asset('assets/logo.png'),
+        ),
+        title: Text("HealthIA Care"),
       ),
       body: navigationShell,
+      floatingActionButtonLocation: .endFloat,
+      floatingActionButton: navigationShell.currentIndex == 0
+          ? FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              onPressed: () => context.push<void>(AppRoutes.publication),
+              child: Icon(Icons.add_a_photo, color: Colors.white,),
+            )
+          : null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (index) {

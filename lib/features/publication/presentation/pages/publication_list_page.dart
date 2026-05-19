@@ -28,12 +28,16 @@ class _PublicationListPageState extends State<PublicationListPage> {
         if (state is PublicationLoading) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         if (state is GetPublicationFailure) {
           return Center(child: Text('Erreur: ${state.message}'));
         }
-        
+
         if (state is GetPublicationsSuccess) {
+          if (state.publications.isEmpty) {
+            return Center(child: Text("Aucune publication"));
+          }
+
           return ListView.separated(
             itemCount: state.publications.length,
             itemBuilder: (context, index) {
@@ -43,7 +47,7 @@ class _PublicationListPageState extends State<PublicationListPage> {
             separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
           );
         }
-        
+
         return const SizedBox.shrink();
       },
     );

@@ -9,9 +9,12 @@ class PublicationModel extends Publication {
     super.image,
     super.video,
     required super.description,
-    required super.user
+    required super.user,
+    required super.likes,
+    required super.comments,
+    required super.hasLiked,
+    required super.hasCommented,
   });
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -20,6 +23,10 @@ class PublicationModel extends Publication {
       'image': image,
       'video': video,
       'description': description,
+      'likes': likes,
+      'comments': comments,
+      'hasLiked': hasLiked,
+      'hasCommented': hasCommented,
     };
   }
 
@@ -31,6 +38,10 @@ class PublicationModel extends Publication {
       video: map['video'] as String?,
       description: map['description'] as String,
       user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
+      likes: map['likes'] as int,
+      comments: map['comments'] as int,
+      hasLiked:  map['has_liked'] as bool,
+      hasCommented:  map['has_commented'] as bool,
     );
   }
 }

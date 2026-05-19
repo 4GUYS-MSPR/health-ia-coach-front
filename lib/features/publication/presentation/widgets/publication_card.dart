@@ -40,15 +40,29 @@ class PublicationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 16,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.favorite_border, size: 20),
+                        Icon(
+                          publication.hasLiked ? Icons.favorite : Icons.favorite_border,
+                          size: 20,
+                        ),
                         const SizedBox(width: 4),
-                        Text("12", style: Theme.of(context).textTheme.bodyMedium),
-                        const SizedBox(width: 16),
-                        Icon(Icons.chat_bubble_outline, size: 20),
+                        Text(
+                          publication.likes.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(publication.hasCommented ? Icons.chat : Icons.chat_outlined, size: 20),
+                        const SizedBox(width: 4),
+                        Text(
+                          publication.comments.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ],
                     ),
                     Icon(Icons.share_outlined, size: 20),
