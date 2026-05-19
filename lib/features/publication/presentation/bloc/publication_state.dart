@@ -26,3 +26,19 @@ class AddPublicationSuccess extends PublicationState {
   @override
   List<Object> get props => [publicationPosted]; 
 }
+
+class GetPublicationsSuccess extends PublicationState {
+  final List<Publication> publications;
+  const GetPublicationsSuccess({required this.publications});
+  
+  @override
+  List<Object> get props => [publications];
+}
+
+class GetPublicationFailure extends PublicationState {
+  final String message;
+  const GetPublicationFailure({required this.message});
+  
+  @override
+  List<Object> get props => [message];
+}    

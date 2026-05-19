@@ -76,9 +76,9 @@ class Media extends StatelessWidget {
         AspectRatio(
           aspectRatio: 16 / 9,
           child: isVideo
-              ? AutoplayVideo(url: AppSecrets.mediaUrl + publication.video!)
+              ? AutoplayVideo(url: AppSecrets.baseUrl + publication.video!)
               : Image.network(
-                  AppSecrets.mediaUrl + publication.image!,
+                  AppSecrets.baseUrl + publication.image!,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
                     color: Colors.grey[200],

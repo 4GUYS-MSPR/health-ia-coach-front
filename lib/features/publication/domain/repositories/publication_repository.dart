@@ -10,4 +10,6 @@ abstract interface class PublicationRepository {
     required String description,
     required PlatformFile media,
   });
+
+  Future<Either<Failure, List<Publication>>> getPublications();
 }

@@ -1,3 +1,4 @@
+import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
 
@@ -8,6 +9,7 @@ class PublicationModel extends Publication {
     super.image,
     super.video,
     required super.description,
+    required super.user
   });
 
 
@@ -28,6 +30,7 @@ class PublicationModel extends Publication {
       image: map['image'] as String?,
       video: map['video'] as String?,
       description: map['description'] as String,
+      user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
     );
   }
 }

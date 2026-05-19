@@ -32,4 +32,14 @@ class PublicationRepositoryImpl implements PublicationRepository {
       return left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Publication>>> getPublications() async {
+    try {
+      final publications = await remoteDataSource.getPublications();
+      return right(publications);
+    } on Exception catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
 }
