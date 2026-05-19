@@ -1,15 +1,16 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
-import 'package:health_ia_care/features/publication/domain/repositories/publication_repository.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../../../errors/failure.dart';
+import '../entities/publication.dart';
+import '../entities/publication_type.dart';
+import '../repositories/publication_repository.dart';
 
 class AddPublicationParams {
-  final PublicationType type;    
+  final PublicationType type;
   final String description;
-  final PlatformFile media;     
+  final PlatformFile media;
 
   AddPublicationParams({
     required this.type,

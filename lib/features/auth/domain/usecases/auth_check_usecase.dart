@@ -1,8 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
-import 'package:health_ia_care/errors/failure.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../../../errors/failure.dart';
+import '../../data/models/user_model.dart';
+import '../repositories/auth_repository.dart';
 
 class GetUser implements UseCase<UserModel, NoParams> {
   final AuthRepository repository;

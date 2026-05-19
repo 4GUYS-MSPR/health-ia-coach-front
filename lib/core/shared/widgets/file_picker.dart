@@ -28,18 +28,18 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
           );
         }
       } else if (['dvr', 'mp4', 'avi', 'mkv'].contains(media!.extension)) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.videocam, size: 48),
-              const SizedBox(height: 8),
-              Text(media!.name, style: TextStyle(fontSize: 12)),
-            ],
-          );
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.videocam, size: 48),
+            const SizedBox(height: 8),
+            Text(media!.name, style: TextStyle(fontSize: 12)),
+          ],
+        );
+      }
     }
-  }
     return const Icon(Icons.add_a_photo, size: 48);
-}
+  }
 
   Future<void> chooseFile() async {
     FilePickerResult? result = await FilePicker.pickFiles(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:health_ia_care/core/secrets/app_secrets.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/auth/helpers/auth_utils.dart';
+
+import '../../../../core/secrets/app_secrets.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../../auth/helpers/auth_utils.dart';
 
 class Avatar extends StatefulWidget {
   final UserModel user;

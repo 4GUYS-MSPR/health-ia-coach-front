@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
+
+import '../../../../core/extensions/l10n_extension.dart';
+import '../bloc/auth_bloc.dart';
 import '../widgets/authentication_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {

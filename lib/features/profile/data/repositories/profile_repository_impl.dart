@@ -1,14 +1,14 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
 
-import 'package:health_ia_care/features/profile/domain/repositories/profile_repository.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/profile/data/datasources/profile_remote_datasource.dart';
+import '../../../../errors/failure.dart';
+import '../../../auth/data/datasources/auth_local_datasource.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../domain/repositories/profile_repository.dart';
+import '../datasources/profile_local_datasource.dart';
+import '../datasources/profile_remote_datasource.dart';
+import '../models/member_model.dart';
 
-class ProfileRepositoryImpl implements ProfileRepository{
+class ProfileRepositoryImpl implements ProfileRepository {
   final ProfileRemoteDatasource datasource;
   final ProfileLocalDatasource profileLocalDatasource;
   final AuthLocalDataSource authLocalDataSource;
@@ -19,9 +19,9 @@ class ProfileRepositoryImpl implements ProfileRepository{
   Future<Either<Failure, UserModel>> updateUserProfile({
     required String username,
     required String firstname,
-    required String lastname
+    required String lastname,
   }) async {
-    try{
+    try {
       String? id = await profileLocalDatasource.getUserId();
 
       if (id == null) {
@@ -30,25 +30,25 @@ class ProfileRepositoryImpl implements ProfileRepository{
 
       int? convertedId = int.tryParse(id);
 
-
       final user = await datasource.updateUserProfile(
-        username: username, 
+        username: username,
         firstname: firstname,
         lastname: lastname,
         id: convertedId,
-        );
+      );
 
       if (user == null) {
         return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
       }
       return Right(user);
     } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
+      return Left(ServerFailure(message: e.toString()));
     }
   }
+
   @override
   Future<Either<Failure, MemberModel>> getMemberStats() async {
-    try{
+    try {
       String? id = await profileLocalDatasource.getMemberId();
 
       if (id == null) {
@@ -57,16 +57,18 @@ class ProfileRepositoryImpl implements ProfileRepository{
       int? convertedId = int.tryParse(id);
 
       final user = await datasource.getMemberStats(
-        id: convertedId,        );
+        id: convertedId,
+      );
 
       if (user == null) {
         return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
       }
       return Right(user);
     } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
+      return Left(ServerFailure(message: e.toString()));
     }
   }
+
   @override
   Future<Either<Failure, MemberModel>> updateMemberProfile({
     required int age,
@@ -79,7 +81,7 @@ class ProfileRepositoryImpl implements ProfileRepository{
     required int level,
     required int subscription,
   }) async {
-    try{
+    try {
       String? id = await profileLocalDatasource.getMemberId();
 
       if (id == null) {
@@ -99,16 +101,14 @@ class ProfileRepositoryImpl implements ProfileRepository{
         level: level,
         subscription: subscription,
         id: convertedId,
-        );
+      );
 
       if (member == null) {
         return Left(ServerFailure(message: "Membre non trouvé ou session expirée"));
       }
       return Right(member);
     } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
+      return Left(ServerFailure(message: e.toString()));
     }
-
   }
-
 }

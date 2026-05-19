@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../app/router/app_routes.dart';
 import '../../extensions/l10n_extension.dart';
 import '../../../app/router/app_routes.dart';
 

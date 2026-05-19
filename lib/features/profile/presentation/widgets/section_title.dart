@@ -4,14 +4,13 @@ class SectionTitle extends StatelessWidget {
   final VoidCallback onTapEdit;
   const SectionTitle({required this.title, required this.onTapEdit, super.key});
 
-
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min, 
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           title,

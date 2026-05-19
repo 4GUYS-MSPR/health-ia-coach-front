@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:health_ia_care/features/auth/domain/entities/user.dart';
+
+import '../../domain/entities/user.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -24,12 +25,12 @@ class UserModel extends User {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       id: map['id'] as int,
-      firstname: (map['first_name'] != null && map['first_name'].toString().isNotEmpty) 
-    ? map['first_name'] as String 
-    : 'Non renseigné',
-      lastname: (map['last_name'] != null && map['last_name'].toString().isNotEmpty) 
-    ? map['last_name'] as String 
-    : 'Non renseigné',
+      firstname: (map['first_name'] != null && map['first_name'].toString().isNotEmpty)
+          ? map['first_name'] as String
+          : 'Non renseigné',
+      lastname: (map['last_name'] != null && map['last_name'].toString().isNotEmpty)
+          ? map['last_name'] as String
+          : 'Non renseigné',
       username: map['username'] as String,
       memberId: map['member_id'] as int,
       avatar: map['avatar'] as String?,

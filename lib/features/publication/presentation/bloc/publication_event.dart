@@ -8,9 +8,9 @@ abstract class PublicationEvent extends Equatable {
 }
 
 class AddPublicationEvent extends PublicationEvent {
-  final PublicationType type;    
+  final PublicationType type;
   final String description;
-  final PlatformFile media;      
+  final PlatformFile media;
 
   const AddPublicationEvent({
     required this.type,

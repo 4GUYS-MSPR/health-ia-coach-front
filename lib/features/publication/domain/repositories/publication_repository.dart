@@ -1,9 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
+
+import '../../../../errors/failure.dart';
+import '../../data/models/publication_model.dart';
+import '../entities/publication.dart';
+import '../entities/publication_type.dart';
 
 abstract interface class PublicationRepository {
   Future<Either<Failure, Publication>> createPublication({

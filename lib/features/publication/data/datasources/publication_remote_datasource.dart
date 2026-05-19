@@ -2,8 +2,9 @@ import 'dart:io' as io;
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
+
+import '../../../auth/data/datasources/auth_local_datasource.dart';
+import '../models/publication_model.dart';
 
 abstract interface class PublicationRemoteDataSource {
   Future<PublicationModel> createPublication({

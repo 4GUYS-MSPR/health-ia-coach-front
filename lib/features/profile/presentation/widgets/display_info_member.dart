@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
+
+import 'info_text.dart';
 
 class DisplayInfoMember extends StatefulWidget {
   final String label;

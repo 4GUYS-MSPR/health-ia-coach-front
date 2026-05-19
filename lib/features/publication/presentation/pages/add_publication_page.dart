@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/app/service_locator/service_locator.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
-import 'package:health_ia_care/features/publication/presentation/widgets/add_new_publication.dart';
+
+import '../../../../app/service_locator/service_locator.dart';
+import '../../../../core/extensions/l10n_extension.dart';
+import '../bloc/publication_bloc.dart';
+import '../widgets/add_new_publication.dart';
 
 class AddPublicationPage extends StatelessWidget {
   const AddPublicationPage({super.key});

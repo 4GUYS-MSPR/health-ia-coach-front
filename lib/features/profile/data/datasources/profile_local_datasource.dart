@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 abstract class ProfileLocalDatasource {
   Future<void> storeUserId(int userId);
   Future<String?> getUserId();
@@ -8,7 +7,7 @@ abstract class ProfileLocalDatasource {
   Future<String?> getMemberId();
 }
 
-class ProfileLocalDatasourceImpl implements ProfileLocalDatasource{
+class ProfileLocalDatasourceImpl implements ProfileLocalDatasource {
   static const _storeMemberId = 'STORE_MEMBER_ID';
   static const _storeUserId = 'STORE_USER_ID';
 
@@ -19,10 +18,10 @@ class ProfileLocalDatasourceImpl implements ProfileLocalDatasource{
   @override
   Future<void> storeUserId(int userId) async {
     try {
-      await secureStorage.write(key: _storeUserId, value : userId.toString());
+      await secureStorage.write(key: _storeUserId, value: userId.toString());
     } catch (e) {
       // ignore: avoid_print
-      print (e);
+      print(e);
     }
   }
 
@@ -34,10 +33,10 @@ class ProfileLocalDatasourceImpl implements ProfileLocalDatasource{
   @override
   Future<void> storeMemberId(int memberId) async {
     try {
-      await secureStorage.write(key: _storeMemberId, value : memberId.toString());
+      await secureStorage.write(key: _storeMemberId, value: memberId.toString());
     } catch (e) {
       // ignore: avoid_print
-      print (e);
+      print(e);
     }
   }
 

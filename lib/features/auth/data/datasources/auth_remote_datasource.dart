@@ -2,10 +2,11 @@ import 'dart:io' as io;
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
+
+import '../../../../errors/failure.dart';
+import '../../../profile/data/datasources/profile_local_datasource.dart';
+import '../models/user_model.dart';
+import 'auth_local_datasource.dart';
 
 class AuthRemoteDataSource {
   final Dio dio;

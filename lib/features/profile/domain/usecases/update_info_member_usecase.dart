@@ -1,11 +1,11 @@
 import 'package:fpdart/fpdart.dart';
 
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
-import 'package:health_ia_care/features/profile/domain/repositories/profile_repository.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../../../errors/failure.dart';
+import '../../data/models/member_model.dart';
+import '../repositories/profile_repository.dart';
 
-class UpdateMemberParams{
+class UpdateMemberParams {
   final int age;
   final double bmi;
   final double fatPercentage;
@@ -17,16 +17,16 @@ class UpdateMemberParams{
   final int subscription;
 
   UpdateMemberParams({
-  required this.age,
-  required this.bmi,
-  required this.fatPercentage,
-  required this.height,
-  required this.weight,
-  required this.workoutFrequency,
-  required this.gender,
-  required this.level,
-  required this.subscription,
-});
+    required this.age,
+    required this.bmi,
+    required this.fatPercentage,
+    required this.height,
+    required this.weight,
+    required this.workoutFrequency,
+    required this.gender,
+    required this.level,
+    required this.subscription,
+  });
 }
 
 class UpdateInfoMemberUsecase implements UseCase<MemberModel, UpdateMemberParams> {
@@ -45,7 +45,7 @@ class UpdateInfoMemberUsecase implements UseCase<MemberModel, UpdateMemberParams
       workoutFrequency: params.workoutFrequency,
       gender: params.gender,
       level: params.level,
-      subscription: params.subscription
+      subscription: params.subscription,
     );
   }
 }

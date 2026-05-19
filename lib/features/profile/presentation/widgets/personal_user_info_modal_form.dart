@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
-import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/close_modal_button.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/custom_dropdown.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/custom_text_form_field.dart';
+
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../data/models/member_model.dart';
+import '../bloc/profile_bloc.dart';
+import '../helpers/profil_utils.dart';
+import 'close_modal_button.dart';
+import 'custom_dropdown.dart';
+import 'custom_text_form_field.dart';
 
 const List<String> genderList = ['MALE', 'FEMALE', 'NOT SPECIFIED'];
 const List<String> levelList = ['BEGINNER', 'INTERMEDIATE', 'EXPERT'];

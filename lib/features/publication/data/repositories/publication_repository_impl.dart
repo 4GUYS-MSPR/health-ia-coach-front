@@ -1,11 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/publication/data/datasources/publication_remote_datasource.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
-import 'package:health_ia_care/features/publication/domain/repositories/publication_repository.dart';
+
+import '../../../../errors/failure.dart';
+import '../../domain/entities/publication.dart';
+import '../../domain/entities/publication_type.dart';
+import '../../domain/repositories/publication_repository.dart';
+import '../datasources/publication_remote_datasource.dart';
+import '../models/publication_model.dart';
 
 class PublicationRepositoryImpl implements PublicationRepository {
   final PublicationRemoteDataSource remoteDataSource;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
+
+import '../bloc/profile_bloc.dart';
 
 class CloseModalButton extends StatelessWidget {
   const CloseModalButton({super.key});

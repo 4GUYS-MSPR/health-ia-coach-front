@@ -2,21 +2,20 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/core/shared/widgets/locale_dropdown.dart';
 
-import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/avatar.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info.dart';
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../../../core/shared/widgets/locale_dropdown.dart';
 import '../../../../core/shared/widgets/theme/theme_switch_button.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/display_member_info.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/section_title.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_modal_form.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info_modal_form.dart';
-
+import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
 import '../../data/models/member_model.dart';
+import '../bloc/profile_bloc.dart';
+import '../widgets/avatar.dart';
+import '../widgets/display_member_info.dart';
+import '../widgets/personal_user_info.dart';
+import '../widgets/personal_user_info_modal_form.dart';
+import '../widgets/personal_user_modal_form.dart';
+import '../widgets/section_title.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});

@@ -1,10 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/core/shared/widgets/file_picker.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
-import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
+
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../../../core/shared/widgets/file_picker.dart';
+import '../../domain/entities/publication_type.dart';
+import '../bloc/publication_bloc.dart';
 
 class AddPublicationForm extends StatefulWidget {
   const AddPublicationForm({super.key});

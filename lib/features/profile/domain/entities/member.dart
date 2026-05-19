@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:health_ia_care/features/profile/domain/entities/enum_member.dart';
+
+import 'enum_member.dart';
 
 class Member extends Equatable {
   final int id;
@@ -23,7 +24,7 @@ class Member extends Equatable {
     required this.workoutFrequency,
     this.gender,
     this.level,
-    this.subscription
+    this.subscription,
   });
 
   @override
@@ -37,7 +38,7 @@ class Member extends Equatable {
     workoutFrequency,
     gender,
     level,
-    subscription
+    subscription,
   ];
 
   @override

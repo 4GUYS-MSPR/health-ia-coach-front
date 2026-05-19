@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
-import 'package:health_ia_care/features/publication/domain/usecases/add_publication_usecase.dart';
-import 'package:health_ia_care/features/publication/domain/usecases/get_all_publications_usecase.dart';
-import 'package:health_ia_care/features/publication/domain/usecases/set_liked_usecase.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../data/models/publication_model.dart';
+import '../../domain/entities/publication.dart';
+import '../../domain/entities/publication_type.dart';
+import '../../domain/usecases/add_publication_usecase.dart';
+import '../../domain/usecases/get_all_publications_usecase.dart';
+import '../../domain/usecases/set_liked_usecase.dart';
 
 part 'publication_event.dart';
 part 'publication_state.dart';

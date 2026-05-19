@@ -2,14 +2,19 @@ part of 'profile_bloc.dart';
 
 abstract class ProfileEvent {}
 
-class ProfileUpdateRequestEvent extends ProfileEvent{
+class ProfileUpdateRequestEvent extends ProfileEvent {
   final String username;
   final String firstname;
   final String lastname;
-  ProfileUpdateRequestEvent({required this.username, required this.firstname, required this.lastname});
+  ProfileUpdateRequestEvent({
+    required this.username,
+    required this.firstname,
+    required this.lastname,
+  });
 }
 
-class DisplayMemberRequestEvent extends ProfileEvent{}
+class DisplayMemberRequestEvent extends ProfileEvent {}
+
 class ProfileMemberUpdateRequestEvent extends ProfileEvent {
   final int age;
   final double bmi;

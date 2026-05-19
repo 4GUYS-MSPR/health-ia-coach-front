@@ -1,7 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
-import 'package:health_ia_care/errors/failure.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../../../errors/failure.dart';
+import '../repositories/auth_repository.dart';
 
 class RegisterParams {
   final String username;

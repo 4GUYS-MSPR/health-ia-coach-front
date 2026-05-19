@@ -1,13 +1,14 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
 
-abstract interface class ProfileRepository{
+import '../../../../errors/failure.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../data/models/member_model.dart';
+
+abstract interface class ProfileRepository {
   Future<Either<Failure, UserModel>> updateUserProfile({
     required String username,
     required String firstname,
-    required String lastname
+    required String lastname,
   });
 
   Future<Either<Failure, MemberModel>> updateMemberProfile({

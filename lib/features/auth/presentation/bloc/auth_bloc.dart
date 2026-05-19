@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/register_usecase.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/login_usecase.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:health_ia_care/features/auth/domain/usecases/update_avatar.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../data/models/user_model.dart';
+import '../../domain/usecases/auth_check_usecase.dart';
+import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/logout_usecase.dart';
+import '../../domain/usecases/register_usecase.dart';
+import '../../domain/usecases/update_avatar.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
+
+import '../../../auth/data/models/user_model.dart';
+import 'publication_type.dart';
 
 class Publication extends Equatable {
   final int id;

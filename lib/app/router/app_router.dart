@@ -1,12 +1,11 @@
 import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/features/publication/presentation/pages/add_publication_page.dart';
-import 'package:health_ia_care/features/publication/presentation/pages/publication_list_page.dart';
 
 import '../../core/shared/pages/app_view.dart';
 import '../../core/shared/pages/error_page.dart';
-import '../../features/profile/presentation/pages/profil_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
-import '../../features/recommendations/presentation/pages/recommendations_page.dart';
+import '../../features/profile/presentation/pages/profil_page.dart';
+import '../../features/publication/presentation/pages/add_publication_page.dart';
+import '../../features/publication/presentation/pages/publication_list_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {

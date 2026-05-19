@@ -1,8 +1,9 @@
 enum PublicationType {
   image(1, 'Photo'),
-  video(2, 'Vidéo');
+  video(2, 'Vidéo'),
+  ;
 
-  final int value;  
+  final int value;
   final String label;
 
   const PublicationType(this.value, this.label);

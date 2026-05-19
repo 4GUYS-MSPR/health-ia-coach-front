@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/core/secrets/app_secrets.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
-import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
-import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
-import 'package:health_ia_care/features/publication/presentation/widgets/autoplay_video.dart';
-import 'package:health_ia_care/features/comment/presentation/widgets/comments_bottom_sheet.dart';
+
+import '../../../../core/secrets/app_secrets.dart';
+import '../../../comment/presentation/widgets/comments_bottom_sheet.dart';
+import '../../domain/entities/publication.dart';
+import '../../domain/entities/publication_type.dart';
+import '../bloc/publication_bloc.dart';
+import 'autoplay_video.dart';
 
 class PublicationCard extends StatelessWidget {
   final Publication publication;

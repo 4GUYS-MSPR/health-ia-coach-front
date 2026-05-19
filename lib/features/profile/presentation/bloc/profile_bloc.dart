@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:health_ia_care/core/logging/logger_mixin.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
-import 'package:health_ia_care/features/profile/domain/usecases/display_user_traning_info_usecase.dart';
-import 'package:health_ia_care/features/profile/domain/usecases/update_info_member_usecase.dart';
-import 'package:health_ia_care/features/profile/domain/usecases/update_info_profile_usecase.dart';
+
+import '../../../../core/logging/logger_mixin.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../data/models/member_model.dart';
+import '../../domain/usecases/display_user_traning_info_usecase.dart';
+import '../../domain/usecases/update_info_member_usecase.dart';
+import '../../domain/usecases/update_info_profile_usecase.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -14,7 +15,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> with LoggerMixin {
   final UpdateInfoProfileUsecase updateProfile;
   final DisplayUserTrainingUsecase displayTraningStats;
   final UpdateInfoMemberUsecase updateMemberProfile;
-
 
   ProfileBloc({
     required this.updateProfile,
@@ -32,14 +32,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> with LoggerMixin {
   @override
   String get loggerName => 'Profile.Data.ProfileBloc';
 
-  Future<void> _onUpdateUserProfileEvent(ProfileUpdateRequestEvent event, Emitter<ProfileState> emit ) async {
+  Future<void> _onUpdateUserProfileEvent(
+    ProfileUpdateRequestEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
     emit(ProfilLoading());
     final result = await updateProfile(
-      UpdateParams(
-        username: event.username,
-        firstname : event.firstname,
-        lastname: event.lastname
-      ),
+      UpdateParams(username: event.username, firstname: event.firstname, lastname: event.lastname),
     );
     result.fold(
       (l) {
@@ -51,19 +50,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> with LoggerMixin {
     );
   }
 
-  Future<void> _onUpdateMemberProfileEvent(ProfileMemberUpdateRequestEvent event, Emitter<ProfileState> emit) async {
+  Future<void> _onUpdateMemberProfileEvent(
+    ProfileMemberUpdateRequestEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
     emit(ProfilLoading());
     final result = await updateMemberProfile(
       UpdateMemberParams(
-        age: event.age, 
-        bmi: event.bmi, 
-        fatPercentage: event.fatPercentage, 
-        height: event.height, 
-        weight: event.weight, 
-        workoutFrequency: event.workoutFrequency, 
-        gender: event.gender, 
-        level: event.level, 
-        subscription: event.subscription)
+        age: event.age,
+        bmi: event.bmi,
+        fatPercentage: event.fatPercentage,
+        height: event.height,
+        weight: event.weight,
+        workoutFrequency: event.workoutFrequency,
+        gender: event.gender,
+        level: event.level,
+        subscription: event.subscription,
+      ),
     );
     result.fold(
       (l) {
@@ -75,10 +78,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> with LoggerMixin {
     );
   }
 
-
-
-
-  Future<void> _onGetMemberTrainingProfileEvent(DisplayMemberRequestEvent event, Emitter<ProfileState> emit ) async {
+  Future<void> _onGetMemberTrainingProfileEvent(
+    DisplayMemberRequestEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
     emit(ProfilLoading());
     final result = await displayTraningStats(NoParams());
 
@@ -89,7 +92,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> with LoggerMixin {
       },
       (r) {
         emit(ProfileGetTrainingSuccess(member: r));
-      }
+      },
     );
   }
 }

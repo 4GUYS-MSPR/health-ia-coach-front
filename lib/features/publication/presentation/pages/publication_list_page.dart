@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
-import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
-import 'package:health_ia_care/features/publication/presentation/widgets/publication_card.dart';
+
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../data/models/publication_model.dart';
+import '../bloc/publication_bloc.dart';
+import '../widgets/publication_card.dart';
 
 class PublicationListPage extends StatefulWidget {
   const PublicationListPage({super.key});
