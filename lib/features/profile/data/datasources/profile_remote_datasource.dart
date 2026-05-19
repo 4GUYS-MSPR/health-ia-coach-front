@@ -31,11 +31,61 @@ class ProfileRemoteDatasource {
      return null;
   }
 
+  Future<MemberModel?> updateMemberProfile({
+    required int age,
+    required double bmi,
+    required double fatPercentage,
+    required double height,
+    required double weight,
+    required int workoutFrequency,
+    required int gender,
+    required int level,
+    required int subscription,
+    required int? id,
+    }) async {
+      try {
+        print({
+            'age': age,
+            'bmi': bmi,
+            'fat_percentage': fatPercentage,
+            'height': height,
+            'weight': weight,
+            'workout_frequency': workoutFrequency,
+            'gender': gender,
+            'level': level,
+            'subscription': subscription
+            });
+        final response = await dio.patch(
+          '/api/member/$id/',
+          data: {
+            'age': age,
+            'bmi': bmi,
+            'fat_percentage': fatPercentage,
+            'height': height,
+            'weight': weight,
+            'workout_frequency': workoutFrequency,
+            'gender': gender,
+            'level': level,
+            'subscription': subscription
+            });
+          
+
+        if (response.statusCode == 200) {
+          return MemberModel.fromMap(response.data);
+      }
+
+      } on DioException catch (e){
+        // ignore: avoid_print
+        print(e);
+      }
+     return null;
+  }
+
   Future<MemberModel?> getMemberStats({
     required int? id,
   }) async {
     try{
-      final response = await dio.get('/api/member/$id');
+      final response = await dio.get('/api/member/$id/');
 
       if (response.statusCode == 200){
         return MemberModel.fromMap(response.data);

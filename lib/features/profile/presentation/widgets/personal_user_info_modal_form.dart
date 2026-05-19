@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/features/profile/data/models/member_model.dart';
+import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/close_modal_button.dart';
+import 'package:health_ia_care/features/profile/presentation/widgets/custom_dropdown.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/custom_text_form_field.dart';
 
+
+const List<String> genderList = ['MALE', 'FEMALE', 'NOT SPECIFIED'];
+const List<String> levelList = ['BEGINNER', 'INTERMEDIATE', 'EXPERT'];
 class PersonalUserInfoModalForm extends StatefulWidget {
   final MemberModel member;
   const PersonalUserInfoModalForm({super.key, required this.member});
@@ -19,9 +25,10 @@ class _PersonalUserInfoModalFormState extends State<PersonalUserInfoModalForm> {
   late final TextEditingController heightController;
   late final TextEditingController weightController;
   late final TextEditingController workoutFrequencyController;
-  late final TextEditingController genderController;
-  late final TextEditingController levelController;
   late final TextEditingController subscriptionController;
+  late String? selectedGender;
+  late String? selectedLevel;
+
 
   @override
   void initState() {
@@ -31,9 +38,9 @@ class _PersonalUserInfoModalFormState extends State<PersonalUserInfoModalForm> {
     heightController = TextEditingController(text: widget.member.height.toString());
     weightController = TextEditingController(text: widget.member.weight.toString());
     workoutFrequencyController = TextEditingController(text: widget.member.workoutFrequency.toString());
-    genderController = TextEditingController(text: getGenderDisplayLabel(widget.member.gender?.value));
-    levelController = TextEditingController(text: widget.member.level.toString());
-    subscriptionController = TextEditingController(text: widget.member.subscription.toString());
+    selectedLevel = widget.member.level?.value;
+    selectedGender = widget.member.gender?.value;
+    subscriptionController = TextEditingController(text: widget.member.subscription?.value);
     super.initState();
   }
 
@@ -45,8 +52,6 @@ class _PersonalUserInfoModalFormState extends State<PersonalUserInfoModalForm> {
     heightController.dispose();
     weightController.dispose();
     workoutFrequencyController.dispose();
-    genderController.dispose();
-    levelController.dispose();
     subscriptionController.dispose();
     super.dispose();
   }
@@ -93,11 +98,41 @@ class _PersonalUserInfoModalFormState extends State<PersonalUserInfoModalForm> {
                     ),
                     CustomTextFormField(label: 'Taille', controller: heightController),
                     CustomTextFormField(label: 'Frequence', controller: workoutFrequencyController),
-                    CustomTextFormField(label: 'Sexe', controller: genderController),
-                    CustomTextFormField(label: 'Niveau', controller: levelController),
+                    CustomDropDown(
+                      label: 'Sexe', 
+                      selectedValue: selectedGender, 
+                      listChoice: genderList
+                      ),
+                      CustomDropDown(
+                      label: 'Niveau', 
+                      selectedValue: selectedLevel, 
+                      listChoice: levelList
+                      ),
                     CustomTextFormField(label: 'Abonnement', controller: subscriptionController),
                     SizedBox(height: 20),
-                    FilledButton(onPressed: () {}, child: Text('Modifier')),
+                    FilledButton(onPressed: () {
+                      final age = ageController.text;
+                      final bmi = bmiController.text;
+                      final fatPercentage = fatPerceentageController.text;
+                      final height = heightController.text;
+                      final weight = weightController.text;
+                      final workoutFrequency = workoutFrequencyController.text;
+                      final level = selectedLevel;
+                      final gender = selectedGender;
+                      final subscription = subscriptionController.text;
+                      context.read<ProfileBloc>().add(
+                        ProfileMemberUpdateRequestEvent
+                        (age: int.parse(age), 
+                        bmi: double.parse(bmi), 
+                        fatPercentage: double.parse(fatPercentage), 
+                        height: double.parse(height), 
+                        weight: double.parse(weight), 
+                        workoutFrequency: int.parse(workoutFrequency), 
+                        gender: convertGenderToInt(gender), 
+                        level: convertLevelToInt(level), 
+                        subscription: convertSubscriptionToInt(subscription))
+                      );
+                    }, child: Text('Modifier')),
                   ],
                 ),
               ),

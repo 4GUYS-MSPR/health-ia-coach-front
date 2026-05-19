@@ -4,9 +4,6 @@ import 'package:health_ia_care/features/profile/presentation/helpers/profil_util
 
 import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
 
-
-const List<String> genderList = <String>['MALE', 'FEMALE', 'NOT SPECIFIED'];
-const List<String> levelList = <String>['BEGINNER', 'INTERMEDIATE', 'EXPERT'];
 class DisplayMemberInfo extends StatelessWidget {
   final MemberModel member;
   const DisplayMemberInfo({
@@ -43,9 +40,9 @@ class DisplayMemberInfo extends StatelessWidget {
                 InfoText(text: '${convertHeight(member.height).toString()}cm'),
                 InfoText(text: '${member.weight.toString()}kg'),
                 InfoText(text: '${member.workoutFrequency.toString()}/s'),
-                InfoText(text: getGenderDisplayLabel(member.gender?.value)),
-                InfoText(text: member.level?.value ?? "-"),
-                InfoText(text: member.subscription?.value ?? "-"),
+                InfoText(text: member.gender?.value ?? '_'),
+                InfoText(text: member.level?.value ?? '_'),
+                InfoText(text: member.subscription?.value ?? '_'),
               ],
             )
           ],
