@@ -6,22 +6,24 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/profile/presentation/pages/profil_page.dart';
 import '../../features/publication/presentation/pages/add_publication_page.dart';
 import '../../features/publication/presentation/pages/publication_list_page.dart';
+import '../../features/recommendations/presentation/pages/recommendations_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
   GoRouter get router => _goRouter;
 
   final _goRouter = GoRouter(
-    initialLocation: AppRoutes.login,
+    initialLocation: '/login',
     errorBuilder: (context, state) => const ErrorPage(),
     routes: [
       GoRoute(
-        path: AppRoutes.login,
+        path: '/login',
+        name: AppRoutes.login,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: AppRoutes.publication,
-        name: 'publication',
+        path: '/publication',
+        name: AppRoutes.publication,
         builder: (context, state) => const AddPublicationPage(),
       ),
       StatefulShellRoute.indexedStack(
@@ -32,9 +34,9 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.home,
+                path: '/home',
+                name: AppRoutes.home,
                 builder: (context, state) => const PublicationListPage(),
-                routes: [],
               ),
             ],
           ),
