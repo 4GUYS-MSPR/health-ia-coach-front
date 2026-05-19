@@ -67,7 +67,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 body: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(28.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Center(
                       child: Column(
                         children: [
