@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../../../auth/data/datasources/auth_local_datasource.dart';
 import '../../../auth/data/models/user_model.dart';
 import '../../domain/repositories/profile_repository.dart';

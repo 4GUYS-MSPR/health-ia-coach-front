@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../../../auth/data/models/user_model.dart';
 import '../../data/models/member_model.dart';
 

@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../../domain/entities/publication.dart';
 import '../../domain/entities/publication_type.dart';
 import '../../domain/repositories/publication_repository.dart';

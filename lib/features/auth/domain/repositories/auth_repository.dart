@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../../data/models/user_model.dart';
 
 abstract interface class AuthRepository {

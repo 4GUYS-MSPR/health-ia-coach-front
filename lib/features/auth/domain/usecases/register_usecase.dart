@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/usecases/usecase.dart';
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterParams {

@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
+import '../../../../core/errors/failure.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../errors/failure.dart';
 import '../../data/models/publication_model.dart';
 import '../repositories/publication_repository.dart';
 
