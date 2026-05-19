@@ -56,12 +56,6 @@ class AuthRemoteDataSource {
 
   Future<UserModel?> getCurrentUser() async {
     try {
-      final token = await localDataSource.getToken();
-
-      if (token == null || token.isEmpty) {
-        return null;
-      }
-
       final response = await dio.get('/api/user/me');
 
       if (response.statusCode == 200) {
