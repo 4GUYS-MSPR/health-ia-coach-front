@@ -15,7 +15,7 @@ class CloseModalButton extends StatelessWidget {
 
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (context, state) {
-        if (state is ProfileUpdateSuccess) {
+        if (state is ProfileUpdateSuccess || state is ProfileMemberUpdateSuccess) {
           closeModal();
         }
       },
