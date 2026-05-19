@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/features/profile/data/models/member_model.dart';
+import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/close_modal_button.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/custom_dropdown.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/custom_text_form_field.dart';
@@ -108,7 +111,27 @@ class _PersonalUserInfoModalFormState extends State<PersonalUserInfoModalForm> {
                     CustomTextFormField(label: 'Abonnement', controller: subscriptionController),
                     SizedBox(height: 20),
                     FilledButton(onPressed: () {
-                      
+                      final age = ageController.text;
+                      final bmi = bmiController.text;
+                      final fatPercentage = fatPerceentageController.text;
+                      final height = heightController.text;
+                      final weight = weightController.text;
+                      final workoutFrequency = workoutFrequencyController.text;
+                      final level = selectedLevel;
+                      final gender = selectedGender;
+                      final subscription = subscriptionController.text;
+                      context.read<ProfileBloc>().add(
+                        ProfileMemberUpdateRequestEvent
+                        (age: int.parse(age), 
+                        bmi: double.parse(bmi), 
+                        fatPercentage: double.parse(fatPercentage), 
+                        height: double.parse(height), 
+                        weight: double.parse(weight), 
+                        workoutFrequency: int.parse(workoutFrequency), 
+                        gender: convertGenderToInt(gender), 
+                        level: convertLevelToInt(level), 
+                        subscription: convertSubscriptionToInt(subscription))
+                      );
                     }, child: Text('Modifier')),
                   ],
                 ),

@@ -44,6 +44,17 @@ class ProfileRemoteDatasource {
     required int? id,
     }) async {
       try {
+        print({
+            'age': age,
+            'bmi': bmi,
+            'fat_percentage': fatPercentage,
+            'height': height,
+            'weight': weight,
+            'workout_frequency': workoutFrequency,
+            'gender': gender,
+            'level': level,
+            'subscription': subscription
+            });
         final response = await dio.patch(
           '/api/member/$id/',
           data: {
@@ -57,6 +68,7 @@ class ProfileRemoteDatasource {
             'level': level,
             'subscription': subscription
             });
+          
 
         if (response.statusCode == 200) {
           return MemberModel.fromMap(response.data);
@@ -73,7 +85,7 @@ class ProfileRemoteDatasource {
     required int? id,
   }) async {
     try{
-      final response = await dio.get('/api/member/$id');
+      final response = await dio.get('/api/member/$id/');
 
       if (response.statusCode == 200){
         return MemberModel.fromMap(response.data);

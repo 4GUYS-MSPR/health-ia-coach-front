@@ -113,7 +113,8 @@ class _ProfilPageState extends State<ProfilPage> {
                           BlocBuilder<ProfileBloc, ProfileState>(
                             builder: (context, profileState) {
                               switch (profileState) {
-                                case ProfileGetTrainingSuccess _:
+                                case ProfileMemberUpdateSuccess(member: final member) || 
+                                  ProfileGetTrainingSuccess(member: final member):
                                   return Column(
                                     children: [
                                       SectionTitle(
@@ -127,7 +128,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                               return SizedBox(
                                                 height: MediaQuery.of(context).size.height * 0.9,
                                                 child: PersonalUserInfoModalForm(
-                                                  member: profileState.member,
+                                                  member: member
                                                 ),
                                               );
                                             },
@@ -138,7 +139,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                         height: 20,
                                       ),
                                       DisplayMemberInfo(
-                                        member: profileState.member,
+                                        member: member,
                                       ),
                                     ],
                                   );

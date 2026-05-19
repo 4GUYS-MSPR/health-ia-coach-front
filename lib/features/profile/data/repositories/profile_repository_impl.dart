@@ -81,12 +81,14 @@ class ProfileRepositoryImpl implements ProfileRepository{
   }) async {
     try{
       String? id = await profileLocalDatasource.getMemberId();
+      print(id);
 
       if (id == null) {
         return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
       }
 
-      int? convertedId = int.tryParse(id);
+      int convertedId = int.parse(id);
+      print('convertedId: $convertedId');
 
 
       final member = await datasource.updateMemberProfile(
