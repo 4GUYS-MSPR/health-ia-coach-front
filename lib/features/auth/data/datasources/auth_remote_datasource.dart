@@ -111,6 +111,9 @@ class AuthRemoteDataSource {
     FormData formData = FormData();
     formData.files.add(MapEntry('avatar', multiFile));
 
+    print(formData);
+    print(multiFile.filename ?? 'Pas de filname');
+
     final response = await dio.patch('/api/user/$id/avatar/', data: formData);
 
     if (response.statusCode == 200) {
