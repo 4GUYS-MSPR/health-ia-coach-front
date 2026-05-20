@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:health_ia_care/errors/failure.dart';
@@ -103,18 +105,22 @@ class AuthRemoteDataSource {
     if (file.bytes != null) {
       multiFile = MultipartFile.fromBytes(file.bytes!, filename: file.name);
     } else if (file.path != null) {
-      multiFile = await MultipartFile.fromFile(file.path!, filename: file.name);
+      final ioFile = io.File(file.path!);
+      final bytes = await ioFile.readAsBytes();
+
+      multiFile = MultipartFile.fromBytes(bytes, filename: file.name);
     } else {
       throw Exception('Fichier invalide');
     }
 
-    FormData formData = FormData();
-    formData.files.add(MapEntry('avatar', multiFile));
+    FormData formData = FormData.fromMap({
+      'avatar': multiFile,
+    });
 
-    print(formData);
-    print(multiFile.filename ?? 'Pas de filname');
-
-    final response = await dio.patch('/api/user/$id/avatar/', data: formData);
+    final response = await dio.patch(
+      '/api/user/$id/avatar/',
+      data: formData,
+    );
 
     if (response.statusCode == 200) {
       return UserModel.fromMap(response.data);
