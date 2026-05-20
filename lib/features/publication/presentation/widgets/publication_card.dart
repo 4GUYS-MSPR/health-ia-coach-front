@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/core/secrets/app_secrets.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
+import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/autoplay_video.dart';
 
 class PublicationCard extends StatelessWidget {
@@ -44,9 +46,17 @@ class PublicationCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          publication.hasLiked ? Icons.favorite : Icons.favorite_border,
-                          size: 20,
+                        IconButton(
+                          icon: Icon(
+                            publication.hasLiked ? Icons.favorite : Icons.favorite_border,
+                            size: 20,
+                          ),
+                          onPressed: () => context.read<PublicationBloc>().add(
+                            PublicationSetLikedEvent(
+                              liked: !publication.hasLiked,
+                              id: publication.id,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 4),
                         Text(

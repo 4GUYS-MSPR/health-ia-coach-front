@@ -61,11 +61,6 @@ class _ProfilPageState extends State<ProfilPage> {
           ],
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              print(state);
-              if (state is AuthFailure) {
-                print(state.message);
-              }
-
               if (state is AuthLoading || state is AuthInitial) {
                 return const Scaffold(
                   body: Center(

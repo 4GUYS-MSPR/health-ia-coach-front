@@ -13,6 +13,11 @@ abstract interface class PublicationRemoteDataSource {
   });
 
   Future<List<PublicationModel>> getPublications();
+
+  Future<PublicationModel> setLiked({
+    required bool liked,
+    required int id,
+  });
 }
 
 class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
@@ -64,13 +69,8 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
   @override
   Future<List<PublicationModel>> getPublications() async {
     try {
-      final token = await localDataSource.getToken();
-
-      final headers = token != null && token.isNotEmpty ? {'Authorization': 'Bearer $token'} : null;
-
       final response = await dio.get(
         '/api/publication/',
-        options: Options(headers: headers),
       );
 
       if (response.statusCode == 200) {
@@ -79,6 +79,26 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
         final List results = data['results'] ?? [];
 
         return results.map((e) => PublicationModel.fromMap(e as Map<String, dynamic>)).toList();
+      } else {
+        throw Exception('Erreur lors de la récupération: ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<PublicationModel> setLiked({
+    required bool liked,
+    required int id,
+  }) async {
+    try {
+      String endpoint = '/api/publication/$id/like/';
+      final request = liked ? dio.post(endpoint) : dio.delete(endpoint);
+      final response = await request;
+
+      if ([201, 200].contains(response.statusCode)) {
+        return PublicationModel.fromMap(response.data as Map<String, dynamic>);
       } else {
         throw Exception('Erreur lors de la récupération: ${response.statusCode}');
       }

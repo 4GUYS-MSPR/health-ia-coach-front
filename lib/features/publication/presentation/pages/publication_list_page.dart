@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/publication_card.dart';
 
@@ -11,6 +12,8 @@ class PublicationListPage extends StatefulWidget {
 }
 
 class _PublicationListPageState extends State<PublicationListPage> {
+  List<PublicationModel> _publications = [];
+
   @override
   void initState() {
     super.initState();
@@ -23,8 +26,27 @@ class _PublicationListPageState extends State<PublicationListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PublicationBloc, PublicationState>(
+    return BlocConsumer<PublicationBloc, PublicationState>(
+      listener: (context, state) {
+        if (state is GetPublicationsSuccess) {
+          setState(() {
+            _publications = state.publications;
+          });
+        }
+
+        if (state is PublicationSetLikedSuccess) {
+          int index = _publications.indexWhere((p) => p.id == state.publication.id);
+
+          if (index != -1) {
+            setState(() {
+              _publications = [..._publications];
+              _publications[index] = state.publication;
+            });
+          }
+        }
+      },
       builder: (context, state) {
+        print(state);
         if (state is PublicationLoading) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -33,22 +55,18 @@ class _PublicationListPageState extends State<PublicationListPage> {
           return Center(child: Text('Erreur: ${state.message}'));
         }
 
-        if (state is GetPublicationsSuccess) {
-          if (state.publications.isEmpty) {
-            return Center(child: Text("Aucune publication"));
-          }
-
-          return ListView.separated(
-            itemCount: state.publications.length,
-            itemBuilder: (context, index) {
-              return PublicationCard(publication: state.publications[index]);
-            },
-            padding: EdgeInsets.symmetric(vertical: 10),
-            separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
-          );
+        if (_publications.isEmpty) {
+          return Center(child: Text("Aucune publication"));
         }
 
-        return const SizedBox.shrink();
+        return ListView.separated(
+          itemCount: _publications.length,
+          itemBuilder: (context, index) {
+            return PublicationCard(publication: _publications[index]);
+          },
+          padding: EdgeInsets.symmetric(vertical: 10),
+          separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
+        );
       },
     );
   }
