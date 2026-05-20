@@ -24,7 +24,10 @@ class _AvatarState extends State<Avatar> {
               ? SizedBox(
                   height: 120,
                   width: 120,
-                  child: Image.network(AppSecrets.baseUrl + widget.user.avatar!),
+                  child: Image.network(
+                    AppSecrets.baseUrl + widget.user.avatar!,
+                    fit: BoxFit.cover,
+                  ),
                 )
               : Container(
                   alignment: .center,
