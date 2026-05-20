@@ -65,7 +65,7 @@ class PublicationBloc extends Bloc<PublicationEvent, PublicationState> {
     PublicationSetLikedEvent event,
     Emitter<PublicationState> emit,
   ) async {
-    emit(PublicationLoading());
+    emit(PublicationSetLikedLoading());
 
     final result = await setLiked(
       SetLikedParams(

@@ -43,6 +43,8 @@ class GetPublicationFailure extends PublicationState {
   List<Object> get props => [message];
 }
 
+class PublicationSetLikedLoading extends PublicationState {}
+
 class PublicationSetLikedSuccess extends PublicationState {
   final PublicationModel publication;
 

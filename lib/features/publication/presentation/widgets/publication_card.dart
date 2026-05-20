@@ -46,16 +46,16 @@ class PublicationCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        IconButton(
-                          icon: Icon(
-                            publication.hasLiked ? Icons.favorite : Icons.favorite_border,
-                            size: 20,
-                          ),
-                          onPressed: () => context.read<PublicationBloc>().add(
+                        GestureDetector(
+                          onTap: () => context.read<PublicationBloc>().add(
                             PublicationSetLikedEvent(
                               liked: !publication.hasLiked,
                               id: publication.id,
                             ),
+                          ),
+                          child: Icon(
+                            publication.hasLiked ? Icons.favorite : Icons.favorite_border,
+                            size: 20,
                           ),
                         ),
                         const SizedBox(width: 4),
