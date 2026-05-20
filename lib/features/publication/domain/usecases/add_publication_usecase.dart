@@ -1,8 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/usecases/usecase.dart';
 import '../../../../core/errors/failure.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../entities/publication.dart';
 import '../entities/publication_type.dart';
 import '../repositories/publication_repository.dart';

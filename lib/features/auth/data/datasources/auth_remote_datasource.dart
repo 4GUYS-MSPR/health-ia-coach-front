@@ -3,7 +3,7 @@ import 'dart:io' as io;
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failure.dart';
 import '../../../profile/data/datasources/profile_local_datasource.dart';
 import '../models/user_model.dart';
 import 'auth_local_datasource.dart';
