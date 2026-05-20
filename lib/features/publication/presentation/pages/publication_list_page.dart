@@ -46,7 +46,6 @@ class _PublicationListPageState extends State<PublicationListPage> {
         }
       },
       builder: (context, state) {
-        print(state);
         if (state is PublicationLoading) {
           return const Center(child: CircularProgressIndicator());
         }
