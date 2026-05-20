@@ -6,6 +6,7 @@ class User extends Equatable {
   final String firstname;
   final String lastname;
   final int memberId;
+  final String? avatar;
 
   const User({
     required this.id,
@@ -13,6 +14,7 @@ class User extends Equatable {
     required this.firstname,
     required this.lastname,
     required this.memberId,
+    required this.avatar,
   });
 
   @override
@@ -22,6 +24,7 @@ class User extends Equatable {
     firstname,
     lastname,
     memberId,
+    avatar
   ];
 
   @override

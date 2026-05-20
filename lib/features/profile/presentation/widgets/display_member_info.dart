@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:health_ia_care/features/profile/data/models/member_model.dart';
 import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
+import 'package:health_ia_care/features/profile/presentation/widgets/display_info_member.dart';
 
-import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
-
+const List<String> genderList = <String>['MALE', 'FEMALE', 'NOT SPECIFIED'];
+const List<String> levelList = <String>['BEGINNER', 'INTERMEDIATE', 'EXPERT'];
 class DisplayMemberInfo extends StatelessWidget {
   final MemberModel member;
   const DisplayMemberInfo({
@@ -14,39 +15,18 @@ class DisplayMemberInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InfoText(text: 'Age'),
-                InfoText(text: 'BMI'),
-                InfoText(text: 'Pourcentage de gras'),
-                InfoText(text: 'Taille'),
-                InfoText(text: 'Poid'),
-                InfoText(text: 'Frequence d\'entraînement'),
-                InfoText(text: 'Sexe'),
-                InfoText(text: 'Niveau'),
-                InfoText(text: 'Abonnement'),
-              ],
-            ),
-            Column(
-              children: [
-                InfoText(text: member.age.toString()),
-                InfoText(text: member.bmi.toString()),
-                InfoText(text: '${member.fatPercentage.toString()}%'),
-                InfoText(text: '${convertHeight(member.height).toString()}cm'),
-                InfoText(text: '${member.weight.toString()}kg'),
-                InfoText(text: '${member.workoutFrequency.toString()}/s'),
-                InfoText(text: member.gender?.value ?? '_'),
-                InfoText(text: member.level?.value ?? '_'),
-                InfoText(text: member.subscription?.value ?? '_'),
-              ],
-            )
+          DisplayInfoMember(label: 'Age', value: member.age.toString()),
+          DisplayInfoMember(label: 'BMI', value: member.bmi.toString()),
+          DisplayInfoMember(label: 'Pourcentage de gras', value: '${member.fatPercentage.toString()}%'),
+          DisplayInfoMember(label: 'Taille', value: '${convertHeight(member.height).toString()}cm'),
+          DisplayInfoMember(label: 'Poid', value: '${member.weight.toString()}kg'),
+          DisplayInfoMember(label: 'Frequence d\'entraînement', value: '${member.workoutFrequency.toString()}/s'),
+          DisplayInfoMember(label: 'Sexe', value: member.level?.value ?? "-"),
+          DisplayInfoMember(label: 'Abonnement', value: member.subscription?.value ?? "-"),
           ],
-        )
+        ),
       ],
     );
   }
