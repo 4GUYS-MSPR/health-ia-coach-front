@@ -29,5 +29,10 @@ final class AuthLoginSuccess extends AuthState {
   AuthLoginSuccess({required this.isLogged});
 }
 
-final class AuthLogoutSucess extends AuthState{}
-final class AuthLogoutFailed extends AuthState{}
+final class AuthLogoutSucess extends AuthState {}
+
+final class AuthLogoutFailed extends AuthState {}
+
+final class AuthUpdateAvatarSuccess extends AuthSuccess {
+  AuthUpdateAvatarSuccess({required super.user});
+}

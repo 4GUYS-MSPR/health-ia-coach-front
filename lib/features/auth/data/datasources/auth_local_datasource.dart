@@ -6,11 +6,14 @@ abstract interface class AuthLocalDataSource {
   Future<String?> getToken();
   Future<String?> getRefreshToken();
   Future<void> logout();
+  Future<String?> getUserId();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   static const _storeAccessToken = 'STORE_ACCESS_TOKEN';
   static const _storeRefreshToken = 'STORE_REFRESH_TOKEN';
+  static const _storeUserId = 'STORE_USER_ID';
+
 
   final FlutterSecureStorage secureStorage;
   AuthLocalDataSourceImpl({required this.secureStorage});
@@ -64,5 +67,10 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       // ignore: avoid_print
       print(e);
     }
+  }
+
+  @override
+  Future<String?> getUserId() async {
+    return await get(key: _storeUserId);
   }
 }

@@ -22,3 +22,11 @@ class AuthRegisterRequestEvent extends AuthEvent {
 class AuthGetUserEvent extends AuthEvent {}
 
 class AuthLogoutEvent extends AuthEvent{}
+
+class AuthUpdateAvatarEvent extends AuthEvent{
+  final PlatformFile file;
+
+  AuthUpdateAvatarEvent({
+    required this.file
+  });
+}

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:health_ia_care/errors/failure.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
@@ -93,5 +95,28 @@ class AuthRemoteDataSource {
       print(e);
     }
     return false;
+  }
+
+  Future<UserModel> updateAvatarData({required PlatformFile file, required int id}) async {
+    MultipartFile multiFile;
+
+    if (file.bytes != null) {
+      multiFile = MultipartFile.fromBytes(file.bytes!, filename: file.name);
+    } else if (file.path != null) {
+      multiFile = await MultipartFile.fromFile(file.path!, filename: file.name);
+    } else {
+      throw Exception('Fichier invalide');
+    }
+
+    FormData formData = FormData();
+    formData.files.add(MapEntry('avatar', multiFile));
+
+    final response = await dio.patch('/api/user/$id/avatar/', data: formData);
+
+    if (response.statusCode == 200) {
+      return UserModel.fromMap(response.data);
+    }
+
+    throw ServerFailure(message: '${response.statusCode}');
   }
 }

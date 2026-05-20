@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:health_ia_care/core/usecases/usecase.dart';
 import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/auth_check_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/register_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/login_usecase.dart';
 import 'package:health_ia_care/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:health_ia_care/features/auth/domain/usecases/update_avatar.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -14,12 +16,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase login;
   final GetUser getUser;
   final LogoutUseCase logout;
+  final UpdateAvatar updateAvatar;
 
   AuthBloc({
     required this.register,
     required this.login,
     required this.getUser,
     required this.logout,
+    required this.updateAvatar,
   }) : super(AuthInitial()) {
     on<AuthEvent>((event, emit) {
       emit(AuthInitial());
@@ -28,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginRequestEvent>((event, emit) => _onLoginEvent(event, emit));
     on<AuthGetUserEvent>((event, emit) => _onGetUserEvent(event, emit));
     on<AuthLogoutEvent>((event, emit) => _onLogoutEvent(event, emit));
+    on<AuthUpdateAvatarEvent>((event, emit) => _onUpdateAvatarEvent(event, emit));
     add(AuthGetUserEvent());
   }
 
@@ -80,6 +85,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (l) => emit(AuthFailure(message: l.message)),
       (r) => emit(r ? AuthLogoutSucess() : AuthLogoutFailed()),
+    );
+  }
+
+  Future<void> _onUpdateAvatarEvent(AuthUpdateAvatarEvent event, Emitter emit) async {
+    emit(AuthLoading());
+    final result = await updateAvatar(UpdateAvatarParams(file: event.file));
+    result.fold(
+      (l) => emit(AuthFailure(message: l.message)),
+      (r) => emit(AuthUpdateAvatarSuccess(user: r)),
     );
   }
 }
