@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 
 import '../features/auth/presentation/bloc/auth_bloc.dart';
+import '../features/comment/presentation/bloc/comment_bloc.dart';
+import '../features/profile/presentation/bloc/profile_bloc.dart';
+import '../features/publication/presentation/bloc/publication_bloc.dart';
 import '../features/theme/theme_cubit.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
@@ -24,6 +25,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider(
           create:  (context) => sl<PublicationBloc>()
+        ),
+        BlocProvider(
+          create: (context) => sl<CommentBloc>(),
         ),
       ],
       child: Builder(

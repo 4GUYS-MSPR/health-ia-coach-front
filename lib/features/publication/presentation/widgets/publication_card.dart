@@ -5,6 +5,7 @@ import 'package:health_ia_care/features/publication/domain/entities/publication.
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/autoplay_video.dart';
+import 'package:health_ia_care/features/publication/presentation/widgets/comments_bottom_sheet.dart';
 
 class PublicationCard extends StatelessWidget {
   final Publication publication;
@@ -67,7 +68,23 @@ class PublicationCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(publication.hasCommented ? Icons.chat : Icons.chat_outlined, size: 20),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              useRootNavigator: true,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return CommentsBottomSheet(publicationId: publication.id);
+                              },
+                            );
+                          },
+                          child: Icon(
+                            publication.hasCommented ? Icons.chat : Icons.chat_outlined,
+                            size: 20,
+                          ),
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           publication.comments.toString(),

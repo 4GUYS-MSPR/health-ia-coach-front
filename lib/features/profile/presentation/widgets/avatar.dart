@@ -5,8 +5,8 @@ import 'package:health_ia_care/features/auth/helpers/auth_utils.dart';
 
 class Avatar extends StatefulWidget {
   final UserModel user;
-  final VoidCallback onTapEdit;
-  const Avatar({required this.user, required this.onTapEdit, super.key});
+  final VoidCallback? onTapEdit;
+  const Avatar({required this.user, this.onTapEdit, super.key});
 
   @override
   State<Avatar> createState() => _AvatarState();

@@ -42,5 +42,4 @@ Future<void> registerPublication(GetIt sl) async {
       setLiked: sl<SetLikedUsecase>(),
     ),
   );
-
 }
