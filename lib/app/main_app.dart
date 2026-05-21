@@ -5,7 +5,7 @@ import 'package:health_ia_care/features/publication/presentation/bloc/publicatio
 
 import '../core/theme/app_theme.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
-import '../features/theme/theme_cubit.dart';
+import '../core/shared/cubits/theme_cubit.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
 
