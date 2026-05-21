@@ -22,3 +22,11 @@ class CommentSuccess extends CommentState {
 
   const CommentSuccess({required this.comments});
 }
+
+class CommentCreateLoading extends CommentState {}
+
+class CommentCreateSuccess extends CommentState {
+  final CommentModel comment;
+
+  const CommentCreateSuccess({required this.comment});
+}

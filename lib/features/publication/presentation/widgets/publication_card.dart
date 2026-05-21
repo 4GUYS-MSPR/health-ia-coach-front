@@ -5,7 +5,7 @@ import 'package:health_ia_care/features/publication/domain/entities/publication.
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/autoplay_video.dart';
-import 'package:health_ia_care/features/publication/presentation/widgets/comments_bottom_sheet.dart';
+import 'package:health_ia_care/features/comment/presentation/widgets/comments_bottom_sheet.dart';
 
 class PublicationCard extends StatelessWidget {
   final Publication publication;

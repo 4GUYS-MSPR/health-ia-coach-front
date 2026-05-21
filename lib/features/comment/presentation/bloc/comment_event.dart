@@ -14,3 +14,13 @@ class CommentGetAllEvent extends CommentEvent {
     required this.publicationId,
   });
 }
+
+class CommentCreateEvent extends CommentEvent {
+  final int publicationId;
+  final String content;
+
+  const CommentCreateEvent({
+    required this.publicationId,
+    required this.content,
+  });
+}

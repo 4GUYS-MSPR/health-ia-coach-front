@@ -20,4 +20,20 @@ class CommentRepositoryImpl implements CommentRepository {
       return left(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, CommentModel>> create({
+    required int publicationId,
+    required String content,
+  }) async {
+    try {
+      final comment = await remoteDataSource.create(
+        publicationId: publicationId,
+        content: content,
+      );
+      return right(comment);
+    } on Exception catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    }
+  }
 }

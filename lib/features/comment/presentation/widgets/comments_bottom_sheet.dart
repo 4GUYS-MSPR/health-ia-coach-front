@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
 import 'package:health_ia_care/features/comment/presentation/bloc/comment_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/avatar.dart';
@@ -14,6 +17,7 @@ class CommentsBottomSheet extends StatefulWidget {
 
 class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
   final TextEditingController _commentController = TextEditingController();
+  List<CommentModel> _comments = [];
 
   @override
   void initState() {
@@ -63,7 +67,20 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
               ),
               const Divider(height: 1),
               Expanded(
-                child: BlocBuilder<CommentBloc, CommentState>(
+                child: BlocConsumer<CommentBloc, CommentState>(
+                  listener: (context, state) {
+                    if (state is CommentSuccess) {
+                      setState(() {
+                        _comments = state.comments;
+                      });
+                    }
+
+                    if (state is CommentCreateSuccess) {
+                      setState(() {
+                        _comments.insert(0, state.comment);
+                      });
+                    }
+                  },
                   builder: (context, state) {
                     if (state is CommentLoading) {
                       return Center(
@@ -71,35 +88,49 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                       );
                     }
 
-                    if (state is CommentSuccess) {
-                      return ListView.builder(
-                        controller: scrollController,
-                        itemCount: state.comments.length,
-                        itemBuilder: (context, index) {
-                          CommentModel comment = state.comments[index];
-                          return ListTile(
-                            leading: SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: Avatar(
-                                user: comment.user,
-                              ),
-                            ),
-                            title: Text(
-                              comment.user.username,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                            subtitle: Text(
-                              comment.content,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          );
-                        },
+                    if (state is CommentFailure) {
+                      if (kDebugMode) {
+                        print(state.message);
+                      }
+
+                      return Center(
+                        child: Text("Erreur lors de la récupération des commentaires."),
                       );
                     }
 
-                    return Center(
-                      child: Text("Erreur lors de la récupération des commentaires."),
+                    if (_comments.isEmpty) {
+                      return Center(
+                        child: Text("Aucun commentaire."),
+                      );
+                    }
+
+                    return ListView.builder(
+                      controller: scrollController,
+                      itemCount: _comments.length,
+                      itemBuilder: (context, index) {
+                        CommentModel comment = _comments[index];
+                        return ListTile(
+                          leading: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Avatar(
+                              user: comment.user,
+                            ),
+                          ),
+                          title: Text(
+                            comment.user.username,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                          subtitle: Text(
+                            comment.content,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          trailing: Text(
+                            timeago.format(comment.createdAt),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -110,11 +141,6 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   padding: EdgeInsets.only(left: 16, right: 8, bottom: bottomInset + 8, top: 8),
                   child: Row(
                     children: [
-                      const CircleAvatar(
-                        radius: 16,
-                        child: Icon(Icons.person, size: 20),
-                      ),
-                      const SizedBox(width: 12),
                       Expanded(
                         child: TextField(
                           controller: _commentController,
@@ -130,7 +156,12 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                         onPressed: () {
                           String text = _commentController.text.trim();
                           if (text.isNotEmpty) {
-                            print("Envoi du commentaire: $text");
+                            context.read<CommentBloc>().add(
+                              CommentCreateEvent(
+                                publicationId: widget.publicationId,
+                                content: text,
+                              ),
+                            );
                             _commentController.clear();
                             FocusScope.of(context).unfocus();
                           }

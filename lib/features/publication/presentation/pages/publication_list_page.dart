@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
@@ -13,6 +15,7 @@ class PublicationListPage extends StatefulWidget {
 
 class _PublicationListPageState extends State<PublicationListPage> {
   List<PublicationModel> _publications = [];
+  Completer<void>? _refreshCompleter;
 
   @override
   void initState() {
@@ -24,6 +27,12 @@ class _PublicationListPageState extends State<PublicationListPage> {
     context.read<PublicationBloc>().add(GetPublicationsEvent());
   }
 
+  Future<void> _handleRefresh() async {
+    _refreshCompleter = Completer<void>();
+    getAllPublications();
+    return _refreshCompleter!.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PublicationBloc, PublicationState>(
@@ -32,6 +41,14 @@ class _PublicationListPageState extends State<PublicationListPage> {
           setState(() {
             _publications = state.publications;
           });
+
+          _refreshCompleter?.complete();
+          _refreshCompleter = null;
+        }
+
+        if (state is GetPublicationFailure) {
+          _refreshCompleter?.complete();
+          _refreshCompleter = null;
         }
 
         if (state is PublicationSetLikedSuccess) {
@@ -46,7 +63,7 @@ class _PublicationListPageState extends State<PublicationListPage> {
         }
       },
       builder: (context, state) {
-        if (state is PublicationLoading) {
+        if (state is PublicationLoading && _refreshCompleter == null) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -58,13 +75,17 @@ class _PublicationListPageState extends State<PublicationListPage> {
           return Center(child: Text("Aucune publication"));
         }
 
-        return ListView.separated(
-          itemCount: _publications.length,
-          itemBuilder: (context, index) {
-            return PublicationCard(publication: _publications[index]);
-          },
-          padding: EdgeInsets.symmetric(vertical: 10),
-          separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
+        return RefreshIndicator(
+          onRefresh: _handleRefresh,
+          edgeOffset: 10,
+          child: ListView.separated(
+            itemCount: _publications.length,
+            itemBuilder: (context, index) {
+              return PublicationCard(publication: _publications[index]);
+            },
+            padding: EdgeInsets.symmetric(vertical: 10),
+            separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
+          ),
         );
       },
     );
