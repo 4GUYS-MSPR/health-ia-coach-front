@@ -23,8 +23,8 @@ class MainApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => sl<AuthBloc>()),
-        BlocProvider(create: (context) => sl<ProfileBloc>()),
         BlocProvider(create: (context) => sl<CommentBloc>()),
+        BlocProvider(create: (context) => sl<ProfileBloc>()),
         BlocProvider(create: (context) => sl<RecommendationsBloc>()),
         BlocProvider(create: (_) => sl<LocaleCubit>()),
         BlocProvider(create: (context) => sl<PublicationBloc>()),
