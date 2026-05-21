@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 
+import '../core/theme/app_theme.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/theme/theme_cubit.dart';
 import 'router/app_router.dart';
@@ -19,12 +20,8 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ),
-        BlocProvider(
-          create: (context) => sl<ProfileBloc>()
-        ),
-        BlocProvider(
-          create:  (context) => sl<PublicationBloc>()
-        ),
+        BlocProvider(create: (context) => sl<ProfileBloc>()),
+        BlocProvider(create: (context) => sl<PublicationBloc>()),
       ],
       child: Builder(
         builder: (context) {
@@ -33,8 +30,10 @@ class MainApp extends StatelessWidget {
 
           return MaterialApp.router(
             themeMode: themeMode,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            highContrastTheme: AppTheme.lightHighContrast,
+            highContrastDarkTheme: AppTheme.darkHighContrast,
             title: "Health IA Coach",
             routerConfig: appRouter.router,
           );
