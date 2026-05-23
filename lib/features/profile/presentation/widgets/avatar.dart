@@ -5,8 +5,8 @@ import 'package:health_ia_care/features/auth/helpers/auth_utils.dart';
 
 class Avatar extends StatefulWidget {
   final UserModel user;
-  final VoidCallback onTapEdit;
-  const Avatar({required this.user, required this.onTapEdit, super.key});
+  final VoidCallback? onTapEdit;
+  const Avatar({required this.user, this.onTapEdit, super.key});
 
   @override
   State<Avatar> createState() => _AvatarState();
@@ -24,7 +24,10 @@ class _AvatarState extends State<Avatar> {
               ? SizedBox(
                   height: 120,
                   width: 120,
-                  child: Image.network(AppSecrets.baseUrl + widget.user.avatar!),
+                  child: Image.network(
+                    AppSecrets.baseUrl + widget.user.avatar!,
+                    fit: BoxFit.cover,
+                  ),
                 )
               : Container(
                   alignment: .center,

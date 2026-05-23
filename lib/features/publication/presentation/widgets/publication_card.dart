@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/core/secrets/app_secrets.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
+import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/autoplay_video.dart';
+import 'package:health_ia_care/features/comment/presentation/widgets/comments_bottom_sheet.dart';
 
 class PublicationCard extends StatelessWidget {
   final Publication publication;
@@ -40,15 +43,53 @@ class PublicationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 16,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.favorite_border, size: 20),
+                        GestureDetector(
+                          onTap: () => context.read<PublicationBloc>().add(
+                            PublicationSetLikedEvent(
+                              liked: !publication.hasLiked,
+                              id: publication.id,
+                            ),
+                          ),
+                          child: Icon(
+                            publication.hasLiked ? Icons.favorite : Icons.favorite_border,
+                            size: 20,
+                          ),
+                        ),
                         const SizedBox(width: 4),
-                        Text("12", style: Theme.of(context).textTheme.bodyMedium),
-                        const SizedBox(width: 16),
-                        Icon(Icons.chat_bubble_outline, size: 20),
+                        Text(
+                          publication.likes.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              useRootNavigator: true,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return CommentsBottomSheet(publicationId: publication.id);
+                              },
+                            );
+                          },
+                          child: Icon(
+                            publication.hasCommented ? Icons.chat : Icons.chat_outlined,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          publication.comments.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ],
                     ),
                     Icon(Icons.share_outlined, size: 20),

@@ -1,16 +1,23 @@
+import 'dart:io' as io;
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
 
 abstract interface class PublicationRemoteDataSource {
-  Future<PublicationModel> createPublication({  
+  Future<PublicationModel> createPublication({
     required int type,
     required String description,
     required PlatformFile media,
   });
 
   Future<List<PublicationModel>> getPublications();
+
+  Future<PublicationModel> setLiked({
+    required bool liked,
+    required int id,
+  });
 }
 
 class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
@@ -23,7 +30,7 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
   });
 
   @override
-  Future<PublicationModel> createPublication({  
+  Future<PublicationModel> createPublication({
     required int type,
     required String description,
     required PlatformFile media,
@@ -32,7 +39,10 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
     if (media.bytes != null) {
       file = MultipartFile.fromBytes(media.bytes!, filename: media.name);
     } else if (media.path != null) {
-      file = await MultipartFile.fromFile(media.path!, filename: media.name);
+      final ioFile = io.File(media.path!);
+      final bytes = await ioFile.readAsBytes();
+
+      file = MultipartFile.fromBytes(bytes, filename: media.name);
     } else {
       throw Exception('Fichier invalide');
     }
@@ -57,36 +67,43 @@ class PublicationRemoteDataSourceImpl implements PublicationRemoteDataSource {
   }
 
   @override
-Future<List<PublicationModel>> getPublications() async {
-  try {
-    
-    final token = await localDataSource.getToken();
-    
-    final headers = token != null && token.isNotEmpty
-        ? {'Authorization': 'Bearer $token'}
-        : null;
-    
-    final response = await dio.get(
-      '/api/publication/',
-      options: Options(headers: headers),
-    );
+  Future<List<PublicationModel>> getPublications() async {
+    try {
+      final response = await dio.get(
+        '/api/publication/',
+      );
 
-    
-    if (response.statusCode == 200) {
-      final data = response.data as Map<String, dynamic>;
-      
-      final List results = data['results'] ?? [];
-      
-      
-      return results
-          .map((e) => PublicationModel.fromMap(e as Map<String, dynamic>))
-          .toList();
-    } else {
-      throw Exception('Erreur lors de la récupération: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final data = response.data as Map<String, dynamic>;
+
+        final List results = data['results'] ?? [];
+
+        return results.map((e) => PublicationModel.fromMap(e as Map<String, dynamic>)).toList();
+      } else {
+        throw Exception('Erreur lors de la récupération: ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
     }
-    
-  }  catch (e) {
-    rethrow;
   }
-}
+
+  @override
+  Future<PublicationModel> setLiked({
+    required bool liked,
+    required int id,
+  }) async {
+    try {
+      String endpoint = '/api/publication/$id/like/';
+      final request = liked ? dio.post(endpoint) : dio.delete(endpoint);
+      final response = await request;
+
+      if ([201, 200].contains(response.statusCode)) {
+        return PublicationModel.fromMap(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Erreur lors de la récupération: ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

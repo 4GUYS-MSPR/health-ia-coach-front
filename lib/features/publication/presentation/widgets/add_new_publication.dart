@@ -94,7 +94,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
         child: Column(
           children: <Widget>[
             CustomFilePicker(sendMedia: handleMedia),
-            
+
             if (message.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -103,7 +103,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
                   style: const TextStyle(color: Colors.red),
                 ),
               ),
-            
+
             TextFormField(
               decoration: const InputDecoration(labelText: "Entrer une description"),
               controller: _descriptionController,
@@ -114,15 +114,16 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
                 return null;
               },
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             BlocBuilder<PublicationBloc, PublicationState>(
               builder: (context, state) {
+                print(state);
                 if (state is PublicationLoading) {
                   return const CircularProgressIndicator();
                 }
-                
+
                 return ElevatedButton(
                   onPressed: addNewPublication,
                   child: Text(

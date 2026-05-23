@@ -23,3 +23,13 @@ class AddPublicationEvent extends PublicationEvent {
 }
 
 class GetPublicationsEvent extends PublicationEvent {}
+
+class PublicationSetLikedEvent extends PublicationEvent {
+  final bool liked;
+  final int id;
+
+  const PublicationSetLikedEvent({
+    required this.liked,
+    required this.id,
+  });
+}
