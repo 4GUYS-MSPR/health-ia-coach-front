@@ -15,26 +15,49 @@ class DishImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageProvider = imagePath != null
-        ? FileImage(File(imagePath!)) as ImageProvider<Object>
+    ImageProvider<Object>? imageProvider;
+    if (imagePath != null) {
+      try {
+        final file = File(imagePath!);
+        if (file.existsSync()) {
+          imageProvider = FileImage(file);
+        }
+      } catch (_) {
+        imageProvider = null;
+      }
+    }
 
     return ZoAnimatedGradientBorder(
       borderRadius: 12,
       borderThickness: 3,
-      animationDuration: Duration(seconds: 2),
+      animationDuration: const Duration(seconds: 2),
       gradientColor: [
         context.colorScheme.primaryFixed,
         context.colorScheme.secondaryFixed,
         context.colorScheme.tertiaryFixed,
       ],
-      child: Container(
-        clipBehavior: .antiAlias,
-        height: 200,
-        width: .infinity,
-        decoration: BoxDecoration(borderRadius: .circular(12)),
-        child: Image(
-          image: imageProvider,
-          fit: .cover,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: SizedBox(
+          height: 200,
+          width: double.infinity,
+          child: imageProvider != null
+              ? Image(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200,
+                )
+              : Container(
+                  color: context.colorScheme.,
+                  child: Center(
+                    child: Icon(
+                      Icons.image_outlined,
+                      size: 48,
+                      color: context.colorScheme.onSurface.withOpacity(0.6),
+                    ),
+                  ),
+                ),
         ),
       ),
     );
