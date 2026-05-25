@@ -7,7 +7,7 @@ import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/avatar.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info.dart';
-import '../../../../widgets/theme_switch_button.dart';
+import '../../../../core/shared/widgets/theme/theme_switch_button.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/display_member_info.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/section_title.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_modal_form.dart';
