@@ -2,3 +2,10 @@ include: package:flutter_lints/flutter.yaml
 formatter:
   trailing_commas: preserve
   page_width: 100
+
+linter:
+  rules:
+    avoid_relative_lib_imports: true
+    cancel_subscriptions: true
+    directives_ordering: true
+    prefer_relative_imports: true
