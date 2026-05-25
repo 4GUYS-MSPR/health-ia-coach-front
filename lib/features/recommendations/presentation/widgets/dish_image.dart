@@ -49,12 +49,12 @@ class DishImage extends StatelessWidget {
                   height: 200,
                 )
               : Container(
-                  color: context.colorScheme.,
+                  color: context.colorScheme.surfaceContainerHigh,
                   child: Center(
                     child: Icon(
                       Icons.image_outlined,
                       size: 48,
-                      color: context.colorScheme.onSurface.withOpacity(0.6),
+                      color: context.colorScheme.onSurface,
                     ),
                   ),
                 ),
