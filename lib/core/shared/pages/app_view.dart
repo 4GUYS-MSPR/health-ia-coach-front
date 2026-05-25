@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/app/router/app_routes.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class AppView extends StatelessWidget {
   const AppView({
@@ -21,29 +21,25 @@ class AppView extends StatelessWidget {
         title: Text("HealthIA Care"),
       ),
       body: navigationShell,
-      floatingActionButtonLocation: .endFloat,
-      floatingActionButton: navigationShell.currentIndex == 0
-          ? FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () => context.push<void>(AppRoutes.publication),
-              child: Icon(Icons.add_a_photo, color: Colors.white,),
-            )
-          : null,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) {
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
           navigationShell.goBranch(
             index,
             initialLocation: index == navigationShell.currentIndex,
           );
         },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Symbols.home),
             label: "Home",
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
+          BottomNavigationBarItem(
+            icon: Icon(Symbols.dinner_dining),
+            label: "Recommendations",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Symbols.person),
             label: "Profil",
           ),
         ],
