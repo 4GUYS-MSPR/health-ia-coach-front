@@ -12,7 +12,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 plugins {
-    id("com.android.application")
+    id("fr.fourguys.health_ia")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -35,7 +35,7 @@ java {
 }
 
 android {
-    namespace = "fr.hostdcode.health_ia_care"
+    namespace = "fr.fourguys.health_ia"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -45,7 +45,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "fr.hostdcode.health_ia_care"
+        applicationId = "fr.fourguys.health_ia"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

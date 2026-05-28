@@ -1,4 +1,4 @@
-package fr.hostdcode.health_ia_care
+package fr.fourguys.health_ia
 
 import io.flutter.embedding.android.FlutterActivity
 
