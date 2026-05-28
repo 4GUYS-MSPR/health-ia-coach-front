@@ -1,0 +1,15 @@
+riz
+pates
+poulet
+steak
+oeuf
+salade
+tomate
+brocoli
+pain
+fromage
+frites
+pomme_de_terre
+saumon
+banane
+yaourt

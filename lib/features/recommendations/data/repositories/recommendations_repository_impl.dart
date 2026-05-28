@@ -5,29 +5,32 @@ import '../../../../core/logging/logger_mixin.dart';
 import '../../../../errors/failure.dart';
 import '../../domain/entities/dish_analysis.dart';
 import '../../domain/repositories/recommendations_repository.dart';
-import '../datasources/recommendations_remote_datasource.dart';
+import '../datasources/recommendations_local_datasource.dart';
 
 class RecommendationsRepositoryImpl
     with LoggerMixin
     implements RecommendationsRepository {
+
   RecommendationsRepositoryImpl({
-    required this.remoteDataSource,
+    required this.localDataSource,
   });
 
-  final RecommendationsRemoteDatasource remoteDataSource;
+  final RecommendationsLocalDatasource localDataSource;
 
   @override
-  String get loggerName => 'Recommendations.Data.RecommendationsRepositoryImpl';
+  String get loggerName =>
+      'Recommendations.Data.RecommendationsRepositoryImpl';
 
   @override
   Future<Either<Failure, DishAnalysis>> analyzeDish({
     required PlatformFile image,
   }) async {
     try {
-      final result = await remoteDataSource.analyzeDish(image: image);
+      final result = await localDataSource.analyzeDish(image: image);
       return right(result);
     } on Exception catch (e) {
-      return left(ServerFailure(message: e.toString()));
+      logger.severe('Erreur lors de l\'analyse IA : $e');
+      return left(AiFailure(message: e.toString()));
     }
   }
 }
