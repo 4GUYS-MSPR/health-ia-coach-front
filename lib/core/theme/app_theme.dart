@@ -11,17 +11,13 @@ class AppTheme {
   static const Color surfaceDark = Color(0xFF000000);
   static const Color surfaceLight = Color(0xFFF9FAFB);
 
-
-
   //Couleurs des textes
   static const Color textPrimary = Color(0xFFF9FAFB);
   static const Color textPrimaryDark = Color(0xFF000000);
   static const Color textSecondary = Color(0xFFD1D5DB);
   static const Color textSecondaryDark = Color(0xFF000000);
   static const Color textTertiary = Color(0xff8a9579);
-  static const Color textTertiaryDark= Color(0xff8a9579);
-
-
+  static const Color textTertiaryDark = Color(0xff8a9579);
 
   //Couleurs systeme
   static const Color success = Color(0xFF10B981);
@@ -42,7 +38,6 @@ class AppTheme {
 
     elevatedButtonTheme: _elevatedBtn(),
     textTheme: _buildTextTheme(textPrimary, textSecondary, textTertiary),
-
   );
 
   static ThemeData lightTheme = ThemeData(
@@ -62,9 +57,11 @@ class AppTheme {
     ),
 
     elevatedButtonTheme: _elevatedBtn(),
-    textTheme: _buildTextTheme(textPrimaryDark, textSecondaryDark, textTertiary),
-
-
+    textTheme: _buildTextTheme(
+      textPrimaryDark,
+      textSecondaryDark,
+      textTertiary,
+    ),
   );
 
   static ElevatedButtonThemeData _elevatedBtn() {
@@ -159,10 +156,4 @@ class AppTheme {
       ),
     );
   }
-
-
-
-
-
 }
-
