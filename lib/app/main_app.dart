@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/shared/cubits/locale_cubit/locale_cubit.dart';
+import '../core/shared/cubits/theme_cubit.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/comment/presentation/bloc/comment_bloc.dart';
 import '../features/profile/presentation/bloc/profile_bloc.dart';
 import '../features/publication/presentation/bloc/publication_bloc.dart';
-import '../core/shared/cubits/theme_cubit.dart';
 import '../features/recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
+import '../l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
 
@@ -21,13 +23,15 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => sl<AuthBloc>()),
         BlocProvider(create: (context) => sl<ProfileBloc>()),
-        BlocProvider(create: (context) => sl<PublicationBloc>()),
         BlocProvider(create: (context) => sl<CommentBloc>()),
         BlocProvider(create: (context) => sl<RecommendationsBloc>()),
+        BlocProvider(create: (_) => sl<LocaleCubit>()),
+        BlocProvider(create: (context) => sl<PublicationBloc>()),
       ],
       child: Builder(
         builder: (context) {
           final appRouter = sl<AppRouter>();
+          final selectedLocale = context.watch<LocaleCubit>().state;
           final themeMode = context.watch<ThemeCubit>().state;
 
           return MaterialApp.router(
@@ -38,6 +42,10 @@ class MainApp extends StatelessWidget {
             highContrastDarkTheme: AppTheme.darkHighContrast,
             title: "Health IA Coach",
             routerConfig: appRouter.router,
+            // l10n
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: selectedLocale,
           );
         },
       ),
