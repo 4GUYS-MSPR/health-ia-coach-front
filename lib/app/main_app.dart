@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 
 import '../core/shared/cubits/locale_cubit/locale_cubit.dart';
 import '../core/shared/cubits/theme_cubit.dart';
@@ -35,6 +36,7 @@ class MainApp extends StatelessWidget {
           final themeMode = context.watch<ThemeCubit>().state;
 
           return MaterialApp.router(
+            onGenerateTitle: (context) => context.l10n.appTitle,
             themeMode: themeMode,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
