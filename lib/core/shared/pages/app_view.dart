@@ -4,7 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../app/router/app_routes.dart';
 import '../../extensions/l10n_extension.dart';
-import '../../../app/router/app_routes.dart';
+import '../../extensions/theme_extension.dart';
 
 class AppView extends StatelessWidget {
   const AppView({
@@ -20,11 +20,12 @@ class AppView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Image.asset('assets/logo.png'),
+        leading: Icon(Symbols.cardiology),
+        title: Text(
+          "HealthIA Care",
+          style: context.textTheme.titleMedium?.copyWith(fontWeight: .bold),
         ),
-        title: Text("HealthIA Care"),
+        titleSpacing: 0,
       ),
       body: navigationShell,
       floatingActionButton: isPublicationTab
