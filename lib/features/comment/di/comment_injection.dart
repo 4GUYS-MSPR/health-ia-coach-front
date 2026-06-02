@@ -1,10 +1,11 @@
 import 'package:get_it/get_it.dart';
-import 'package:health_ia_care/features/comment/data/datasources/comment_remote_datasource.dart';
-import 'package:health_ia_care/features/comment/data/repositories/comment_repository_impl.dart';
-import 'package:health_ia_care/features/comment/domain/repositories/comment_repository.dart';
-import 'package:health_ia_care/features/comment/domain/usecases/create.dart';
-import 'package:health_ia_care/features/comment/domain/usecases/get_all.dart';
-import 'package:health_ia_care/features/comment/presentation/bloc/comment_bloc.dart';
+
+import '../data/datasources/comment_remote_datasource.dart';
+import '../data/repositories/comment_repository_impl.dart';
+import '../domain/repositories/comment_repository.dart';
+import '../domain/usecases/create.dart';
+import '../domain/usecases/get_all.dart';
+import '../presentation/bloc/comment_bloc.dart';
 
 Future<void> registerComment(GetIt sl) async {
   // DataSource

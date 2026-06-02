@@ -1,8 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
-import 'package:health_ia_care/features/comment/domain/repositories/comment_repository.dart';
+
+import '../../../../core/errors/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../data/models/comment_model.dart';
+import '../repositories/comment_repository.dart';
 
 class CommentCreate implements UseCase<CommentModel, CommentCreateParams> {
   final CommentRepository repository;

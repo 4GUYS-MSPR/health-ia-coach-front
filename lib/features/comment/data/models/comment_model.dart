@@ -1,5 +1,5 @@
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/comment/domain/entities/comment.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../../domain/entities/comment.dart';
 
 class CommentModel extends Comment {
   const CommentModel({

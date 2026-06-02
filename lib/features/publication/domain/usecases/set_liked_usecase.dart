@@ -1,8 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
-import 'package:health_ia_care/features/publication/domain/repositories/publication_repository.dart';
+
+import '../../../../core/errors/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../data/models/publication_model.dart';
+import '../repositories/publication_repository.dart';
 
 class SetLikedUsecase implements UseCase<PublicationModel, SetLikedParams> {
   final PublicationRepository repository;

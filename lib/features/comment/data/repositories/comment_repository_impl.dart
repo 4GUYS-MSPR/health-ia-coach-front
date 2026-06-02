@@ -1,8 +1,9 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/comment/data/datasources/comment_remote_datasource.dart';
-import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
-import 'package:health_ia_care/features/comment/domain/repositories/comment_repository.dart';
+
+import '../../../../core/errors/failure.dart';
+import '../../domain/repositories/comment_repository.dart';
+import '../datasources/comment_remote_datasource.dart';
+import '../models/comment_model.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final CommentRemoteDataSource remoteDataSource;

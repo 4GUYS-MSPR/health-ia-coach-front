@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
+
+import '../../../auth/data/models/user_model.dart';
 
 class Comment extends Equatable {
   final int id;

@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
-import 'package:health_ia_care/features/comment/presentation/bloc/comment_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/avatar.dart';
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../../profile/presentation/widgets/avatar.dart';
+import '../../data/models/comment_model.dart';
+import '../bloc/comment_bloc.dart';
 
 class CommentsBottomSheet extends StatefulWidget {
   final int publicationId;

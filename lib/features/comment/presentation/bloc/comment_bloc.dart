@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
-import 'package:health_ia_care/features/comment/domain/usecases/create.dart';
-import 'package:health_ia_care/features/comment/domain/usecases/get_all.dart';
+
+import '../../data/models/comment_model.dart';
+import '../../domain/usecases/create.dart';
+import '../../domain/usecases/get_all.dart';
 
 part 'comment_event.dart';
 part 'comment_state.dart';
