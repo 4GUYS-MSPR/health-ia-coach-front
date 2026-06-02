@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/info_text.dart';
@@ -22,20 +23,20 @@ class PersonalUserInfo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InfoText(text: 'Nom de compte:',),
+                    InfoText(text: context.l10n.profileMyAccountAccountNameLabel,),
                     InfoText(text: user.username),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InfoText(text: 'Prénom:',),
+                    InfoText(text: context.l10n.profileMyAccountFirstnameLabel,),
                     InfoText(text: user.firstname),
                   ],
                 ),Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InfoText(text: 'Nom:',),
+                    InfoText(text: context.l10n.profileMyAccountLastnameLabel,),
                     InfoText(text: user.lastname),
                   ],
                 ),

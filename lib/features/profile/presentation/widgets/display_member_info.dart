@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/profile/data/models/member_model.dart';
 import 'package:health_ia_care/features/profile/presentation/helpers/profil_utils.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/display_info_member.dart';
@@ -17,14 +18,14 @@ class DisplayMemberInfo extends StatelessWidget {
       children: [
         Column(
           children: [
-          DisplayInfoMember(label: 'Age', value: member.age.toString()),
-          DisplayInfoMember(label: 'BMI', value: member.bmi.toString()),
-          DisplayInfoMember(label: 'Pourcentage de gras', value: '${member.fatPercentage.toString()}%'),
-          DisplayInfoMember(label: 'Taille', value: '${convertHeight(member.height).toString()}cm'),
-          DisplayInfoMember(label: 'Poid', value: '${member.weight.toString()}kg'),
-          DisplayInfoMember(label: 'Frequence d\'entraînement', value: '${member.workoutFrequency.toString()}/s'),
-          DisplayInfoMember(label: 'Sexe', value: member.level?.value ?? "-"),
-          DisplayInfoMember(label: 'Abonnement', value: member.subscription?.value ?? "-"),
+          DisplayInfoMember(label: context.l10n.profileMyInfosAgeLabel, value: member.age.toString()),
+          DisplayInfoMember(label: context.l10n.profileMyInfosBmiLabel, value: member.bmi.toString()),
+          DisplayInfoMember(label: context.l10n.profileMyInfosFatPercentageLabel, value: '${member.fatPercentage.toString()}%'),
+          DisplayInfoMember(label: context.l10n.profileMyInfosSizeLabel, value: '${convertHeight(member.height).toString()}cm'),
+          DisplayInfoMember(label: context.l10n.profileMyInfosWeightLabel, value: '${member.weight.toString()}kg'),
+          DisplayInfoMember(label: context.l10n.profileMyInfosWorkoutFrequencyLabel, value: '${member.workoutFrequency.toString()}/s'),
+          DisplayInfoMember(label: context.l10n.profileMyInfosLevelLabel, value: member.level?.value ?? "-"),
+          DisplayInfoMember(label: context.l10n.profileMyInfosSubscriptionLabel, value: member.subscription?.value ?? "-"),
           ],
         ),
       ],

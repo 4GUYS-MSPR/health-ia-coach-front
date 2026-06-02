@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/publication/data/models/publication_model.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/publication_card.dart';
@@ -72,7 +73,7 @@ class _PublicationListPageState extends State<PublicationListPage> {
         }
 
         if (_publications.isEmpty) {
-          return Center(child: Text("Aucune publication"));
+          return Center(child: Text(context.l10n.publicationListNoPublicationLabel));
         }
 
         return RefreshIndicator(

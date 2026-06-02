@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:health_ia_care/features/comment/data/models/comment_model.dart';
@@ -58,10 +59,10 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  'Commentaires',
+                  context.l10n.publicationCommentsBottomSheetTittle,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
@@ -144,8 +145,8 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                       Expanded(
                         child: TextField(
                           controller: _commentController,
-                          decoration: const InputDecoration(
-                            hintText: 'Ajouter un commentaire...',
+                          decoration: InputDecoration(
+                            hintText: context.l10n.publicationCommentsAddACommentFormFieldLabel,
                             border: InputBorder.none,
                             hintStyle: TextStyle(fontSize: 14),
                           ),
@@ -167,7 +168,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                           }
                         },
                         child: Text(
-                          'Publier',
+                          context.l10n.publicationCommentsAddACommentConfirmButtonLabel,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,

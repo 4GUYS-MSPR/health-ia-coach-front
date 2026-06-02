@@ -23,6 +23,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           style: Theme.of(context).textTheme.headlineSmall
         ),
         TextFormField(
+          // FIXME: l10n break this logic
           enabled: widget.label == 'Abonnement' ? false : true,
           controller: widget.controller,
         )

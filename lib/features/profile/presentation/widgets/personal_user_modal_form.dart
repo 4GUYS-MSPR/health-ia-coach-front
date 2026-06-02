@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/auth/data/models/user_model.dart';
 import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/close_modal_button.dart';
@@ -58,7 +59,7 @@ Widget build(BuildContext context) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Modifier mes informations',
+                  Text(context.l10n.profileMyAccountEditModalTitle,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ],

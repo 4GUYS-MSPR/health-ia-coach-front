@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:health_ia_care/app/service_locator/service_locator.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
 import 'package:health_ia_care/features/publication/presentation/widgets/add_new_publication.dart';
 
@@ -13,7 +14,7 @@ class AddPublicationPage extends StatelessWidget {
       create: (context) => sl<PublicationBloc>(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Ajouter une publication"),
+          title: Text(context.l10n.publicationAddAPublicationPageTitle),
         ),
         body: const Padding(
           padding: EdgeInsets.all(16.0),
