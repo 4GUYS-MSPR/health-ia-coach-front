@@ -9,7 +9,6 @@ import '../features/auth/presentation/bloc/auth_bloc.dart';
 import '../features/comment/presentation/bloc/comment_bloc.dart';
 import '../features/profile/presentation/bloc/profile_bloc.dart';
 import '../features/publication/presentation/bloc/publication_bloc.dart';
-import '../features/recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
