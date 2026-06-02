@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../core/extensions/l10n_extension.dart';
 
+import '../core/extensions/l10n_extension.dart';
 import '../core/shared/cubits/locale_cubit/locale_cubit.dart';
 import '../core/shared/cubits/theme_cubit.dart';
 import '../core/theme/app_theme.dart';
@@ -21,14 +21,15 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<ThemeCubit>()),
+        // Core
+        BlocProvider(create: (_) => sl<ThemeCubit>()),
         BlocProvider(create: (_) => sl<LocaleCubit>()),
-        BlocProvider(create: (context) => sl<AuthBloc>()),
-        BlocProvider(create: (context) => sl<CommentBloc>()),
-        BlocProvider(create: (context) => sl<ProfileBloc>()),
-        BlocProvider(create: (context) => sl<RecommendationsBloc>()),
-        BlocProvider(create: (_) => sl<LocaleCubit>()),
-        BlocProvider(create: (context) => sl<PublicationBloc>()),
+
+        // Features
+        BlocProvider(create: (_) => sl<AuthBloc>()),
+        BlocProvider(create: (_) => sl<CommentBloc>()),
+        BlocProvider(create: (_) => sl<ProfileBloc>()),
+        BlocProvider(create: (_) => sl<PublicationBloc>()),
       ],
       child: Builder(
         builder: (context) {
@@ -37,18 +38,23 @@ class MainApp extends StatelessWidget {
           final themeMode = context.watch<ThemeCubit>().state;
 
           return MaterialApp.router(
+            // App title
             onGenerateTitle: (context) => context.l10n.appTitle,
+
+            // App theme
             themeMode: themeMode,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             highContrastTheme: AppTheme.lightHighContrast,
             highContrastDarkTheme: AppTheme.darkHighContrast,
-            title: "Health IA Coach",
-            routerConfig: appRouter.router,
+
             // l10n
+            locale: selectedLocale,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            locale: selectedLocale,
+
+            // Router
+            routerConfig: appRouter.router,
           );
         },
       ),
