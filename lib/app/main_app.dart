@@ -7,6 +7,7 @@ import '../features/comment/presentation/bloc/comment_bloc.dart';
 import '../features/profile/presentation/bloc/profile_bloc.dart';
 import '../features/publication/presentation/bloc/publication_bloc.dart';
 import '../core/shared/cubits/theme_cubit.dart';
+import '../features/recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
 import 'router/app_router.dart';
 import 'service_locator/service_locator.dart';
 
@@ -22,6 +23,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<ProfileBloc>()),
         BlocProvider(create: (context) => sl<PublicationBloc>()),
         BlocProvider(create: (context) => sl<CommentBloc>()),
+        BlocProvider(create: (context) => sl<RecommendationsBloc>()),
       ],
       child: Builder(
         builder: (context) {

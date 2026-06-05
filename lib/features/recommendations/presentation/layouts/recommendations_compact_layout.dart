@@ -10,7 +10,6 @@ import '../widgets/dish_image.dart';
 import '../widgets/fiability_card.dart';
 import '../widgets/nutrition_values_card.dart';
 import '../widgets/photo_capture_widget.dart';
-import '../widgets/recommendation_card.dart';
 
 class RecommendationsCompactLayout extends StatelessWidget {
   const RecommendationsCompactLayout({super.key});
@@ -60,9 +59,6 @@ class RecommendationsCompactLayout extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         DishImage(imagePath: imagePath),
-                        RecommendationCard(
-                          recommendation: analysis?.recommendation,
-                        ),
                         DetectedFoodsCard(foods: foods),
                         NutritionValuesCard(
                           calories: _formatValue(nutrition?.calories),

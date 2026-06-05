@@ -7,6 +7,8 @@ abstract class RecommendationsEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class RecommendationsRequest extends RecommendationsEvent {}
+
 class AnalyzeDishRequested extends RecommendationsEvent {
   final PlatformFile image;
 
