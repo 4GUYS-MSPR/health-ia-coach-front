@@ -6,6 +6,7 @@ import '../../core/shared/pages/app_view.dart';
 import '../../core/shared/pages/error_page.dart';
 import '../../features/profile/presentation/pages/profil_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/recommendations/presentation/pages/recommendations_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -35,6 +36,15 @@ class AppRouter {
                 path: AppRoutes.home,
                 builder: (context, state) => const PublicationListPage(),
                 routes: [],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/recommendations',
+                name: AppRoutes.recommendations,
+                builder: (context, state) => RecommendationsPage(),
               ),
             ],
           ),
