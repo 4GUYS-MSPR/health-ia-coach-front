@@ -8,4 +8,5 @@ abstract interface class RecommendationsRepository {
   Future<Either<Failure, DishAnalysis>> analyzeDish({
     required PlatformFile image,
   });
+  Future<Either<Failure, String>> recommendationsRequest();
 }

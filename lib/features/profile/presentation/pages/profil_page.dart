@@ -13,6 +13,9 @@ import 'package:health_ia_care/features/profile/presentation/widgets/section_tit
 import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_modal_form.dart';
 import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info_modal_form.dart';
 
+import '../../../recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
+import '../../data/models/member_model.dart';
+
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
 
@@ -34,6 +37,41 @@ class _ProfilPageState extends State<ProfilPage> {
     context.read<ProfileBloc>().add(DisplayMemberRequestEvent());
 
     await Future<void>.delayed(const Duration(milliseconds: 500));
+  }
+
+  void showRecommandationModal(BuildContext context, MemberModel member) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        context.read<RecommendationsBloc>().add(RecommendationsRequest());
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BlocBuilder<RecommendationsBloc, RecommendationsState>(
+            builder: (BuildContext context, RecommendationsState state) {
+              switch (state) {
+                case RecommendationsSuccess _:
+                  return Center(
+                    child: Text(state.output),
+                  );
+          
+                case RecommendationsFailure _:
+                  return Center(
+                    child: Text(state.message),
+                  );
+          
+                default:
+                  return Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+              }
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -158,6 +196,14 @@ class _ProfilPageState extends State<ProfilPage> {
                                       ),
                                       DisplayMemberInfo(
                                         member: member,
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      FilledButton.icon(
+                                        label: Text('Demander une recommandation'),
+                                        icon: Icon(Icons.dinner_dining),
+                                        onPressed: () => showRecommandationModal(context, member),
                                       ),
                                     ],
                                   );

@@ -8,6 +8,7 @@ abstract interface class RecommendationsRemoteDatasource {
   Future<DishAnalysisModel> analyzeDish({
     required PlatformFile image,
   });
+  Future<String> recommendationsRequest();
 }
 
 class RecommendationsRemoteDatasourceImpl
@@ -45,6 +46,17 @@ class RecommendationsRemoteDatasourceImpl
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return DishAnalysisModel.fromMap(response.data as Map<String, dynamic>);
+    }
+
+    throw Exception('Erreur lors de l\'analyse: ${response.statusCode}');
+  }
+
+  @override
+  Future<String> recommendationsRequest() async {
+    final response = await dio.get('/api/ia/recommendation/');
+
+    if (response.statusCode == 200) {
+      return response.data;
     }
 
     throw Exception('Erreur lors de l\'analyse: ${response.statusCode}');

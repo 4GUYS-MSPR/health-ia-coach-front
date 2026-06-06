@@ -38,6 +38,19 @@ class RecommendationsLoaded extends RecommendationsState {
   ];
 }
 
+class RecommendationsSuccess extends RecommendationsState {
+  final String output;
+  
+  const RecommendationsSuccess({
+    required this.output,
+  });
+
+  @override
+  List<Object?> get props => [
+    output,
+  ];
+}
+
 class RecommendationsFailure extends RecommendationsState {
   final String message;
   final String? imagePath;
