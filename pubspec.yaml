@@ -1,6 +1,6 @@
 name: health_ia_care
 description: "An AI-powered healthcare coaching application"
-version: 0.1.0
+version: 1.0.2+2
 
 environment:
   sdk: ^3.10.4
