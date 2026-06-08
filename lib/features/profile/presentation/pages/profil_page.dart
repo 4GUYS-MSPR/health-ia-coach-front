@@ -47,8 +47,9 @@ class _ProfilPageState extends State<ProfilPage> {
       ),
       builder: (BuildContext context) {
         context.read<RecommendationsBloc>().add(RecommendationsRequest());
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        return Container(
+          height: 256,
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: BlocBuilder<RecommendationsBloc, RecommendationsState>(
             builder: (BuildContext context, RecommendationsState state) {
               switch (state) {

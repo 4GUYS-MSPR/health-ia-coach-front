@@ -56,7 +56,7 @@ class RecommendationsRemoteDatasourceImpl
     final response = await dio.get('/api/ia/recommendation/');
 
     if (response.statusCode == 200) {
-      return response.data;
+      return response.data['result'];
     }
 
     throw Exception('Erreur lors de l\'analyse: ${response.statusCode}');
