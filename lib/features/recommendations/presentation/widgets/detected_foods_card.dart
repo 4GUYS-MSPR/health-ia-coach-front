@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/extensions/theme_extension.dart';
 import '../../domain/entities/detected_food.dart';
 
@@ -25,7 +26,7 @@ class DetectedFoodsCard extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text(
-              "Aliments détectés",
+              context.l10n.recommendationDetectedFoodsTitle,
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: .bold,
               ),
@@ -34,7 +35,7 @@ class DetectedFoodsCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  "Aucun aliment détecté",
+                  context.l10n.recommendationNoFoodDetected,
                   style: context.textTheme.bodySmall,
                 ),
               )

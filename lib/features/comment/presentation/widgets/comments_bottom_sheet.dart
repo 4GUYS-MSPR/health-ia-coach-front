@@ -95,13 +95,13 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                       }
 
                       return Center(
-                        child: Text("Erreur lors de la récupération des commentaires."),
+                        child: Text(context.l10n.publicationCommentsErrorLabel),
                       );
                     }
 
                     if (_comments.isEmpty) {
                       return Center(
-                        child: Text("Aucun commentaire."),
+                        child: Text(context.l10n.publicationCommentsEmptyLabel),
                       );
                     }
 

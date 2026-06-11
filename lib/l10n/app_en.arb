@@ -8,23 +8,23 @@
     },
     "themeSystemName": "System",
     "@themeSystemName": {
-      "description": "Theme system name"
+        "description": "Theme system name"
     },
     "themeDarkName": "Dark",
     "@themeDarkName": {
-      "description": "Theme dark name"
+        "description": "Theme dark name"
     },
     "themeLightName": "Light",
     "@themeLightName": {
-      "description": "Theme light name"
+        "description": "Theme light name"
     },
     "navigationHomePageLabel": "Home",
     "@navigationHomePageLabel": {
-      "description": "Navigation home page label"
+        "description": "Navigation home page label"
     },
     "navigationProfilePageLabel": "Profile",
     "@navigationProfilePageLabel": {
-      "description": "Navigation profile page label"
+        "description": "Navigation profile page label"
     },
     "@@x-AUTH": "================================================================================",
     "authAccountNameFormFieldLabel": "Account name",
@@ -126,7 +126,7 @@
     },
     "profileLogOutButtonLabel": "Logout",
     "@profileLogOutButtonLabel": {
-      "description": "Profile log out button label"
+        "description": "Profile log out button label"
     },
     "@@x-PUBLICATIONS": "========================================================================",
     "publicationListNoPublicationLabel": "No publication yet",
@@ -156,5 +156,45 @@
     "publicationCommentsAddACommentConfirmButtonLabel": "Send",
     "@publicationCommentsAddACommentConfirmButtonLabel": {
         "description": "Publication comments add A comment confirm button label"
-    }
+    },
+    "publicationCommentsErrorLabel": "Error while retrieving comments.",
+    "@publicationCommentsErrorLabel": {
+        "description": "Error message when comments fail to load"
+    },
+    "publicationCommentsEmptyLabel": "No comments yet.",
+    "@publicationCommentsEmptyLabel": {
+        "description": "Message displayed when the comment list is empty"
+    },
+    "publicationSuccessLabel": "Publication created successfully!",
+    "@publicationSuccessLabel": {
+        "description": "Success message after creating a publication"
+    },
+    "publicationErrorLabel": "Error: {message}",
+    "@publicationErrorLabel": {
+        "description": "Error message display",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "publicationMediaRequiredLabel": "Please select a media",
+    "publicationInvalidFormatLabel": "Unsupported file format",
+    "publicationDescriptionRequiredLabel": "Description is required",
+    "publicationShareLabel": "Share",
+    "@@x-RECOMMENDATIONS": "=====================================================================",
+    "recommendationDetectedFoodsTitle": "Detected foods",
+    "recommendationNoFoodDetected": "No food detected",
+    "recommendationReliabilityIndex": "Reliability index",
+    "recommendationReliabilityDescription": "AI confidence percentage on analysis",
+    "recommendationNutritionTitle": "Nutritional values",
+    "nutritionCaloriesLabel": "cals",
+    "nutritionProteinsLabel": "proteins",
+    "nutritionGlucidesLabel": "carbs",
+    "nutritionLipidesLabel": "fats",
+    "photoCaptureTitle": "Take a photo",
+    "photoCaptureEmptyMessage": "No photo taken",
+    "photoCaptureCameraButton": "Take a photo",
+    "photoCaptureImportButton": "Import",
+    "photoCaptureValidateButton": "Validate"
 }

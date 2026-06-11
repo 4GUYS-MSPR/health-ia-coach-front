@@ -28,7 +28,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
   void addNewPublication() async {
     if (_selectedMedia == null) {
       setState(() {
-        message = "Veuillez sélectionner un média";
+        message = context.l10n.publicationMediaRequiredLabel;
       });
       return;
     }
@@ -40,7 +40,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
       type = PublicationType.video;
     } else {
       setState(() {
-        message = "Format de fichier non supporté";
+        message = context.l10n.publicationInvalidFormatLabel;
       });
       return;
     }
@@ -76,7 +76,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
       listener: (context, state) {
         if (state is AddPublicationSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Publication créée avec succès !')),
+            SnackBar(content: Text(context.l10n.publicationSuccessLabel)),
           );
           setState(() {
             _selectedMedia = null;
@@ -85,7 +85,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
           });
         } else if (state is PublicationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erreur : ${state.message}')),
+            SnackBar(content: Text(context.l10n.publicationErrorLabel(state.message))),
           );
         }
       },
@@ -110,7 +110,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
               controller: _descriptionController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'La description est obligatoire';
+                  return context.l10n.publicationDescriptionRequiredLabel;
                 }
                 return null;
               },

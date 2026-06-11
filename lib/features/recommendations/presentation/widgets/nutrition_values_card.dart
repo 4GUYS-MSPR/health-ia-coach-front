@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/extensions/theme_extension.dart';
 
 class NutritionValuesCard extends StatelessWidget {
@@ -36,7 +37,7 @@ class NutritionValuesCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Valeurs nutritionnelles",
+                context.l10n.recommendationNutritionTitle,
                 style: context.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -86,25 +87,25 @@ class NutritionValuesCard extends StatelessWidget {
                 children: [
                   _MacroCard(
                     value: calories,
-                    label: "calories",
+                    label: context.l10n.nutritionCaloriesLabel,
                     color: context.colorScheme.primaryContainer,
                     textColor: context.colorScheme.onPrimaryContainer,
                   ),
                   _MacroCard(
                     value: proteins,
-                    label: "protéines",
+                    label: context.l10n.nutritionProteinsLabel,
                     color: context.colorScheme.secondaryContainer,
                     textColor: context.colorScheme.onSecondaryContainer,
                   ),
                   _MacroCard(
                     value: carbs,
-                    label: "glucides",
+                    label: context.l10n.nutritionGlucidesLabel,
                     color: context.colorScheme.secondaryContainer,
                     textColor: context.colorScheme.onSecondaryContainer,
                   ),
                   _MacroCard(
                     value: fats,
-                    label: "lipides",
+                    label: context.l10n.nutritionLipidesLabel,
                     color: context.colorScheme.secondaryContainer,
                     textColor: context.colorScheme.onSecondaryContainer,
                   ),
