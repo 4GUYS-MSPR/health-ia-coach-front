@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:health_ia_care/core/constants/timeago.dart';
 import 'package:logging/logging.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'app/main_app.dart';
 import 'app/service_locator/service_locator.dart';
+import 'core/constants/timeago.dart';
 import 'core/logging/app_logger.dart';
 
 Future<void> main() async {

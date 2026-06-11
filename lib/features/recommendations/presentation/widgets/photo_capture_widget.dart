@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
+
 class PhotoCapturePage extends StatefulWidget {
   const PhotoCapturePage({super.key});
 
@@ -53,7 +55,7 @@ class _PhotoCapturePageState extends State<PhotoCapturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Prendre une photo')),
+      appBar: AppBar(title: Text(context.l10n.photoCaptureTitle)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -62,7 +64,7 @@ class _PhotoCapturePageState extends State<PhotoCapturePage> {
             Expanded(
               child: Center(
                 child: _imageFile == null
-                    ? const Text('Aucune photo prise', textAlign: TextAlign.center)
+                    ? Text(context.l10n.photoCaptureEmptyMessage, textAlign: TextAlign.center)
                     : Image.file(_imageFile!, fit: BoxFit.contain),
               ),
             ),
@@ -73,7 +75,7 @@ class _PhotoCapturePageState extends State<PhotoCapturePage> {
                   child: ElevatedButton.icon(
                     onPressed: () => _pickImage(ImageSource.camera),
                     icon: const Icon(Icons.camera_alt),
-                    label: const Text('Prendre une photo'),
+                    label: Text(context.l10n.photoCaptureCameraButton),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -81,7 +83,7 @@ class _PhotoCapturePageState extends State<PhotoCapturePage> {
                   child: ElevatedButton.icon(
                     onPressed: () => _pickImage(ImageSource.gallery),
                     icon: const Icon(Icons.photo_library),
-                    label: const Text('Importer'),
+                    label: Text(context.l10n.photoCaptureImportButton),
                   ),
                 ),
               ],
@@ -89,7 +91,7 @@ class _PhotoCapturePageState extends State<PhotoCapturePage> {
             const SizedBox(height: 8),
             OutlinedButton(
               onPressed: _confirmAndReturn,
-              child: const Text('Valider'),
+              child: Text(context.l10n.photoCaptureValidateButton),
             ),
           ],
         ),

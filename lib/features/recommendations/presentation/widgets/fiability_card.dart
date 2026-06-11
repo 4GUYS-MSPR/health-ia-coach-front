@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/extensions/theme_extension.dart';
 
 class FiabilityCard extends StatelessWidget {
@@ -23,11 +24,11 @@ class FiabilityCard extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text(
-              "Indice de fiabilité",
+              context.l10n.recommendationReliabilityIndex,
               style: context.textTheme.titleMedium?.copyWith(fontWeight: .bold),
             ),
             Text(
-              "Pourcentage de confiance de l'IA sur l'analyse",
+              context.l10n.recommendationReliabilityDescription,
               style: context.textTheme.labelSmall,
             ),
             SizedBox(height: 8),

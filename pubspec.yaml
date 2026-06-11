@@ -7,6 +7,7 @@ environment:
 
 dependencies:
   bloc: ^9.2.0
+  country_flags: ^4.1.2
   dio: ^5.9.2
   equatable: ^2.0.8
   file_picker: ^11.0.2
@@ -17,6 +18,8 @@ dependencies:
   flutter_bloc: ^9.1.1
   flutter_dotenv: ^6.0.1
   flutter_launcher_icons: ^0.14.4
+  flutter_localizations:
+    sdk: flutter
   flutter_native_splash: ^2.4.7
   flutter_secure_storage: ^10.0.0
   fpdart: ^1.2.0
@@ -27,6 +30,7 @@ dependencies:
   hydrated_bloc: ^11.0.0
   image_picker: ^1.2.2
   intl: ^0.20.2
+  language_code: ^0.7.1
   logging: ^1.3.0
   material_symbols_icons: ^4.2928.1
   path_provider: ^2.1.5
@@ -43,6 +47,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  generate: true
   uses-material-design: true
   assets:
     - .env

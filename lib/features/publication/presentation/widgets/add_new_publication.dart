@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/core/shared/widgets/file_picker.dart';
 import 'package:health_ia_care/features/publication/domain/entities/publication_type.dart';
 import 'package:health_ia_care/features/publication/presentation/bloc/publication_bloc.dart';
@@ -27,7 +28,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
   void addNewPublication() async {
     if (_selectedMedia == null) {
       setState(() {
-        message = "Veuillez sélectionner un média";
+        message = context.l10n.publicationMediaRequiredLabel;
       });
       return;
     }
@@ -39,7 +40,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
       type = PublicationType.video;
     } else {
       setState(() {
-        message = "Format de fichier non supporté";
+        message = context.l10n.publicationInvalidFormatLabel;
       });
       return;
     }
@@ -75,7 +76,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
       listener: (context, state) {
         if (state is AddPublicationSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Publication créée avec succès !')),
+            SnackBar(content: Text(context.l10n.publicationSuccessLabel)),
           );
           setState(() {
             _selectedMedia = null;
@@ -84,7 +85,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
           });
         } else if (state is PublicationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erreur : ${state.message}')),
+            SnackBar(content: Text(context.l10n.publicationErrorLabel(state.message))),
           );
         }
       },
@@ -105,11 +106,11 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
               ),
 
             TextFormField(
-              decoration: const InputDecoration(labelText: "Entrer une description"),
+              decoration: InputDecoration(labelText: context.l10n.publicationAddAPublicationDescriptionFormFieldLabel),
               controller: _descriptionController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'La description est obligatoire';
+                  return context.l10n.publicationDescriptionRequiredLabel;
                 }
                 return null;
               },
@@ -127,7 +128,7 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
                 return ElevatedButton(
                   onPressed: addNewPublication,
                   child: Text(
-                    'Valider',
+                    context.l10n.publicationAddAPublicationConfirmButtonLabel,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import '../widgets/authentication_text_form_field.dart';
 
@@ -60,27 +61,27 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           AuthenticationTextFormField(
                             icon: Icons.person_outline_sharp,
-                            label: "Nom de compte",
+                            label: context.l10n.authAccountNameFormFieldLabel,
                             textEditingController: usernameController,
                             isPassword: false,
                           ),
                           if (register == true)
                             AuthenticationTextFormField(
                               icon: Icons.numbers,
-                              label: 'Code structure',
+                              label: context.l10n.authStructureCodeFormFieldLabel,
                               textEditingController: structureCodeController,
                               isPassword: false,
                             ),
                           AuthenticationTextFormField(
                             icon: Icons.vpn_key,
-                            label: "Mot de passe",
+                            label: context.l10n.authPasswordFormFieldLabel,
                             textEditingController: passwordController,
                             isPassword: true,
                           ),
                           if (register == true)
                             AuthenticationTextFormField(
                               icon: Icons.password,
-                              label: 'Confirmer le mot de passe',
+                              label: context.l10n.authConfirmPasswordFormFieldLabel,
                               textEditingController: passwordConfirmationController,
                               isPassword: true,
                             ),
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             },
-                            child: Text(register == true ? 'Créer un compte' : 'Connexion'),
+                            child: Text(register == true ? context.l10n.authCreateAccountButtonLabel : context.l10n.authLoginButtonLabel),
                           ),
                           InkWell(
                             onTap: () {
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                               passwordConfirmationController.clear();
                             },
                             child: Text(
-                              register == true ? 'Se connecter' : 'Créer un compte',
+                              register == true ? context.l10n.authLoginButtonLabel : context.l10n.authCreateAccountButtonLabel,
                             ),
                           ),
                         ],

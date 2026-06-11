@@ -2,6 +2,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:health_ia_care/core/extensions/l10n_extension.dart';
+import 'package:health_ia_care/core/shared/widgets/locale_dropdown.dart';
 
 import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
@@ -135,7 +137,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             height: 30,
                           ),
                           SectionTitle(
-                            title: 'Mon compte',
+                            title: context.l10n.profileMyAccountSectionTitle,
                             onTapEdit: () {
                               showModalBottomSheet<void>(
                                 context: context,
@@ -177,7 +179,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                   return Column(
                                     children: [
                                       SectionTitle(
-                                        title: 'Mes infos',
+                                        title: context.l10n.profileMyInfosSectionTitle,
                                         onTapEdit: () {
                                           showModalBottomSheet<void>(
                                             context: context,
@@ -226,13 +228,14 @@ class _ProfilPageState extends State<ProfilPage> {
                             height: 20,
                           ),
                           Text(
-                            'Paramètres',
+                            context.l10n.profileSettingsSectionTitle,
                             style: TextStyle(fontSize: 32),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           SwitchThemeButton(),
+                          LocaleDropdown(),
                           SizedBox(
                             height: 10,
                           ),
@@ -240,7 +243,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             onPressed: () {
                               context.read<AuthBloc>().add(AuthLogoutEvent());
                             },
-                            child: Text('Se déconnecter'),
+                            child: Text(context.l10n.profileLogOutButtonLabel),
                           ),
                         ],
                       ),

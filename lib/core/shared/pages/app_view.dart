@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../extensions/l10n_extension.dart';
+
 class AppView extends StatelessWidget {
   const AppView({
     super.key,
@@ -29,18 +31,18 @@ class AppView extends StatelessWidget {
             initialLocation: index == navigationShell.currentIndex,
           );
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Symbols.home),
-            label: "Home",
+            icon: Icon(Icons.home),
+            label: context.l10n.navigationHomePageLabel,
           ),
           BottomNavigationBarItem(
             icon: Icon(Symbols.dinner_dining),
             label: "Recommendations",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Symbols.person),
-            label: "Profil",
+            icon: Icon(Icons.person),
+            label: context.l10n.navigationProfilePageLabel,
           ),
         ],
       ),
