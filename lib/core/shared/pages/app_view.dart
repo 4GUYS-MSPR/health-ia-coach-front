@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../extensions/l10n_extension.dart';
+import '../../../app/router/app_routes.dart';
 
 class AppView extends StatelessWidget {
   const AppView({
@@ -14,6 +15,8 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isPublicationTab = navigationShell.currentIndex == 0;
+
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
@@ -23,6 +26,13 @@ class AppView extends StatelessWidget {
         title: Text("HealthIA Care"),
       ),
       body: navigationShell,
+      floatingActionButton: isPublicationTab
+          ? FloatingActionButton(
+              onPressed: () => context.push(AppRoutes.publication),
+              tooltip: context.l10n.publicationAddAPublicationPageTitle,
+              child: const Icon(Icons.add),
+            )
+          : null,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
         onTap: (index) {
