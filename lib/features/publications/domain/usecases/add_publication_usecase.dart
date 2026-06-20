@@ -1,10 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../entities/publication.dart';
-import '../entities/publication_type.dart';
 import '../repositories/publication_repository.dart';
 
 class AddPublicationParams {
@@ -19,14 +18,16 @@ class AddPublicationParams {
   });
 }
 
-class AddPublicationUsecase implements UseCase<Publication, AddPublicationParams> {
+class AddPublicationUsecase implements Usecase<Publication, AddPublicationParams> {
   final PublicationRepository repository;
 
-  AddPublicationUsecase(this.repository);
+  AddPublicationUsecase({
+    required this.repository,
+  });
 
   @override
-  Future<Either<Failure, Publication>> call(AddPublicationParams params) async {
-    return await repository.createPublication(
+  TaskEither<Failure, Publication> call(AddPublicationParams params) {
+    return repository.createPublication(
       type: params.type,
       description: params.description,
       media: params.media,

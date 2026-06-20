@@ -1,18 +1,20 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../data/models/publication_model.dart';
 import '../repositories/publication_repository.dart';
 
-class SetLikedUsecase implements UseCase<PublicationModel, SetLikedParams> {
+class SetLikedUsecase implements Usecase<PublicationModel, SetLikedParams> {
   final PublicationRepository repository;
 
-  SetLikedUsecase(this.repository);
+  SetLikedUsecase({
+    required this.repository,
+  });
 
   @override
-  Future<Either<Failure, PublicationModel>> call(SetLikedParams params) async {
-    return await repository.setLiked(
+  TaskEither<Failure, PublicationModel> call(SetLikedParams params) {
+    return repository.setLiked(
       liked: params.liked,
       id: params.id,
     );

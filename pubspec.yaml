@@ -6,6 +6,7 @@ environment:
   sdk: ^3.10.4
 
 dependencies:
+  auto_validate: ^3.0.8
   bloc: ^9.2.0
   country_flags: ^4.1.2
   dio: ^5.9.2

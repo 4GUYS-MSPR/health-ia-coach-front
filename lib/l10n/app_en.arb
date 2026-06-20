@@ -26,6 +26,23 @@
     "@navigationProfilePageLabel": {
         "description": "Navigation profile page label"
     },
+    "@@x-NOT-FOUND-PAGE": "======================================================================",
+    "notFoundTitle": "Page not found",
+    "@notFoundTitle": {
+        "description": "Title shown on the 404 page"
+    },
+    "notFoundMessage": "The page you are looking for does not exist or has been moved.",
+    "@notFoundMessage": {
+        "description": "Supporting message shown on the 404 page"
+    },
+    "notFoundGoBack": "Go back",
+    "@notFoundGoBack": {
+        "description": "Button text to navigate to the previous page from the 404 page"
+    },
+    "notFoundGoHome": "Return home",
+    "@notFoundGoHome": {
+        "description": "Button text to navigate to the home page from the 404 page"
+    },
     "@@x-AUTH": "================================================================================",
     "authAccountNameFormFieldLabel": "Account name",
     "@authAccountNameFormFieldLabel": {

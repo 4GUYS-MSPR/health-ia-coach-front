@@ -1,15 +1,25 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/failure.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/logging/logger_mixin.dart';
+import '../../../../core/usecases/no_params.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../repositories/auth_repository.dart';
 
-class LogoutUseCase implements UseCase<bool, NoParams> {
+class LogoutUsecase with LoggerMixin implements Usecase<Unit, NoParams> {
   final AuthRepository repository;
-  LogoutUseCase(this.repository);
+
+  LogoutUsecase({
+    required this.repository,
+  });
 
   @override
-  Future<Either<Failure, bool>> call(NoParams params) async {
-    return await repository.logout();
+  String get loggerName => 'Auth.Domain.Usecases.LogoutUsecase';
+
+  @override
+  TaskEither<Failure, Unit> call([NoParams? params]) {
+    logger.fine('Logout requested');
+
+    return repository.logout();
   }
 }

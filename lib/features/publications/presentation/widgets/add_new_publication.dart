@@ -1,11 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/shared/widgets/file_picker.dart';
-import '../../domain/entities/publication_type.dart';
-import '../bloc/publication_bloc.dart';
+import '../../domain/entities/publication.dart';
+import '../bloc/publications_bloc/publications_bloc.dart';
 
 class AddPublicationForm extends StatefulWidget {
   const AddPublicationForm({super.key});
@@ -50,8 +51,8 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
       return;
     }
 
-    context.read<PublicationBloc>().add(
-      AddPublicationEvent(
+    context.read<PublicationsBloc>().add(
+      AddPublicationsEvent(
         type: type,
         description: _descriptionController.text,
         media: _selectedMedia!,
@@ -73,18 +74,14 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PublicationBloc, PublicationState>(
+    return BlocListener<PublicationsBloc, PublicationsState>(
       listener: (context, state) {
         if (state is AddPublicationSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.publicationSuccessLabel)),
           );
-          setState(() {
-            _selectedMedia = null;
-            _descriptionController.clear();
-            message = '';
-          });
-        } else if (state is PublicationFailure) {
+          context.pop();
+        } else if (state is PublicationsFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.publicationErrorLabel(state.message))),
           );
@@ -119,10 +116,9 @@ class _AddPublicationFormState extends State<AddPublicationForm> {
 
             const SizedBox(height: 16),
 
-            BlocBuilder<PublicationBloc, PublicationState>(
+            BlocBuilder<PublicationsBloc, PublicationsState>(
               builder: (context, state) {
-                print(state);
-                if (state is PublicationLoading) {
+                if (state is PublicationsLoading) {
                   return const CircularProgressIndicator();
                 }
 

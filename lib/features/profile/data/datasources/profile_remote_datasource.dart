@@ -1,99 +1,130 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 
-import '../../../auth/data/datasources/auth_local_datasource.dart';
-import '../../../auth/data/models/user_model.dart';
-import '../models/member_model.dart';
+import '../models/profile_model.dart';
 
-class ProfileRemoteDatasource {
-  final AuthLocalDataSource localDataSource;
+abstract class ProfileRemoteDatasource {
+  Future<ProfileModel> fetchCurrentProfile();
+
+  Future<ProfileModel> updateProfile({
+    String? username,
+    String? firstname,
+    String? lastname,
+    int? age,
+    int? gender,
+    double? bmi,
+    double? fatPercentage,
+    double? height,
+    double? weight,
+    int? workoutFrequency,
+    int? level,
+  });
+
+  Future<ProfileModel> updateAvatar({
+    required PlatformFile file,
+  });
+}
+
+class ProfileRemoteDatasourceImpl implements ProfileRemoteDatasource {
   final Dio dio;
 
-  ProfileRemoteDatasource({required this.localDataSource, required this.dio});
+  ProfileRemoteDatasourceImpl({required this.dio});
 
-  Future<UserModel?> updateUserProfile({
-    required String username,
-    required String firstname,
-    required String lastname,
-    required int? id,
-  }) async {
-    try {
-      final response = await dio.patch(
-        '/api/user/$id/',
-        data: {'username': username, 'first_name': firstname, 'last_name': lastname},
-      );
+  @override
+  Future<ProfileModel> fetchCurrentProfile() async {
+    // 1. Appel User
+    final userRes = await dio.get('/api/user/me/');
+    // 2. Appel Member avec le member_id récupéré
+    final memberRes = await dio.get('/api/member/${userRes.data['member_id']}/');
 
-      if (response.statusCode == 200) {
-        return UserModel.fromMap(response.data);
-      }
-    } on DioException catch (e) {
-      // ignore: avoid_print
-      print(e);
-    }
-    return null;
+    // 3. Fusion des JSON
+    final mergedData = {
+      ...(userRes.data as Map<String, dynamic>),
+      ...(memberRes.data as Map<String, dynamic>),
+    };
+
+    return ProfileModel.fromMap(mergedData);
   }
 
-  Future<MemberModel?> updateMemberProfile({
-    required int age,
-    required double bmi,
-    required double fatPercentage,
-    required double height,
-    required double weight,
-    required int workoutFrequency,
-    required int gender,
-    required int level,
-    required int subscription,
-    required int? id,
+  // Ajoute cette logique dans ta classe ProfileRemoteDatasourceImpl
+  @override
+  Future<ProfileModel> updateProfile({
+    String? username,
+    String? firstname,
+    String? lastname,
+    int? age,
+    int? gender,
+    double? bmi,
+    double? fatPercentage,
+    double? height,
+    double? weight,
+    int? workoutFrequency,
+    int? level,
   }) async {
-    try {
-      print({
-        'age': age,
-        'bmi': bmi,
-        'fat_percentage': fatPercentage,
-        'height': height,
-        'weight': weight,
-        'workout_frequency': workoutFrequency,
-        'gender': gender,
-        'level': level,
-        'subscription': subscription,
-      });
-      final response = await dio.patch(
-        '/api/member/$id/',
-        data: {
-          'age': age,
-          'bmi': bmi,
-          'fat_percentage': fatPercentage,
-          'height': height,
-          'weight': weight,
-          'workout_frequency': workoutFrequency,
-          'gender': gender,
-          'level': level,
-          'subscription': subscription,
-        },
-      );
+    // 1. Récupération de l'utilisateur actuel pour avoir les IDs
+    final currentUserRes = await dio.get('/api/user/me/');
+    final userId = currentUserRes.data['id'];
+    final memberId = currentUserRes.data['member_id'];
 
-      if (response.statusCode == 200) {
-        return MemberModel.fromMap(response.data);
-      }
-    } on DioException catch (e) {
-      // ignore: avoid_print
-      print(e);
+    // 2. Mise à jour de l'identité (User)
+    final userPayload = {
+      if (username != null) 'username': username,
+      if (firstname != null) 'first_name': firstname,
+      if (lastname != null) 'last_name': lastname,
+    };
+    
+    if (userPayload.isNotEmpty) {
+      await dio.patch('/api/user/$userId/', data: userPayload);
     }
-    return null;
+
+    // 3. Mise à jour des stats (Member)
+    final memberPayload = {
+      if (age != null) 'age': age,
+      if (gender != null) 'gender': gender,
+      if (bmi != null) 'bmi': bmi,
+      if (fatPercentage != null) 'fat_percentage': fatPercentage,
+      if (height != null) 'height': height,
+      if (weight != null) 'weight': weight,
+      if (workoutFrequency != null) 'workout_frequency': workoutFrequency,
+      if (level != null) 'level': level,
+    };
+    
+    if (memberPayload.isNotEmpty) {
+      await dio.patch('/api/member/$memberId/', data: memberPayload);
+    }
+
+    // 4. Retourne le modèle mis à jour complet
+    return fetchCurrentProfile();
   }
 
-  Future<MemberModel?> getMemberStats({
-    required int? id,
-  }) async {
-    try {
-      final response = await dio.get('/api/member/$id/');
+  @override
+  Future<ProfileModel> updateAvatar({required PlatformFile file}) async {
+    // 1. Récupération de l'utilisateur actuel pour avoir l'ID
+    final currentUserRes = await dio.get('/api/user/me/');
+    final userId = currentUserRes.data['id'];
 
-      if (response.statusCode == 200) {
-        return MemberModel.fromMap(response.data);
-      }
-    } on DioException catch (e) {
-      // ignore: avoid_print
-      print(e);
+    // 2. Préparation du fichier (compatible Web et Mobile)
+    MultipartFile multipartFile;
+    if (file.bytes != null) {
+      multipartFile = MultipartFile.fromBytes(
+        file.bytes!,
+        filename: file.name,
+      );
+    } else {
+      multipartFile = await MultipartFile.fromFile(
+        file.path!,
+        filename: file.name,
+      );
     }
-    return null;
+
+    final formData = FormData.fromMap({
+      'avatar': multipartFile,
+    });
+
+    // 3. Upload de l'avatar via multipart/form-data
+    await dio.patch('/api/user/$userId/avatar/', data: formData);
+
+    // 4. Retourner le profil mis à jour
+    return fetchCurrentProfile();
   }
 }

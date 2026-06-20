@@ -9,7 +9,7 @@
     "navigationHomePageLabel": "Accueil",
     "navigationProfilePageLabel": "Profil",
     "@@x-AUTH": "================================================================================",
-    "authAccountNameFormFieldLabel": "Nom du compte",
+    "authAccountNameFormFieldLabel": "Nom d'utilisateur",
     "authPasswordFormFieldLabel": "Mot de passe",
     "authLoginButtonLabel": "Connexion",
     "authCreateAccountButtonLabel": "Créer un compte",

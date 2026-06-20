@@ -1,12 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../errors/failure.dart';
+import '../../../../core/errors/failures.dart';
 import '../entities/dish_analysis.dart';
 
 abstract interface class RecommendationsRepository {
-  Future<Either<Failure, DishAnalysis>> analyzeDish({
+  TaskEither<Failure, DishAnalysis> analyzeDish({
     required PlatformFile image,
   });
-  Future<Either<Failure, String>> recommendationsRequest();
+  TaskEither<Failure, String> recommendationsRequest();
 }

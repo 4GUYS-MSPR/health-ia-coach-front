@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../../core/extensions/l10n_extension.dart';
-import '../../data/models/publication_model.dart';
-import '../bloc/publication_bloc.dart';
+import '../bloc/publications_bloc/publications_bloc.dart';
 import '../widgets/publication_card.dart';
 
 class PublicationListPage extends StatefulWidget {
@@ -16,80 +14,55 @@ class PublicationListPage extends StatefulWidget {
 }
 
 class _PublicationListPageState extends State<PublicationListPage> {
-  List<PublicationModel> _publications = [];
-  Completer<void>? _refreshCompleter;
-
   @override
   void initState() {
     super.initState();
-    getAllPublications();
-  }
-
-  void getAllPublications() {
-    context.read<PublicationBloc>().add(GetPublicationsEvent());
-  }
-
-  Future<void> _handleRefresh() async {
-    _refreshCompleter = Completer<void>();
-    getAllPublications();
-    return _refreshCompleter!.future;
+    context.read<PublicationsBloc>().add(GetPublicationsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PublicationBloc, PublicationState>(
-      listener: (context, state) {
-        if (state is GetPublicationsSuccess) {
-          setState(() {
-            _publications = state.publications;
-          });
-
-          _refreshCompleter?.complete();
-          _refreshCompleter = null;
-        }
-
-        if (state is GetPublicationFailure) {
-          _refreshCompleter?.complete();
-          _refreshCompleter = null;
-        }
-
-        if (state is PublicationSetLikedSuccess) {
-          int index = _publications.indexWhere((p) => p.id == state.publication.id);
-
-          if (index != -1) {
-            setState(() {
-              _publications = [..._publications];
-              _publications[index] = state.publication;
-            });
+    return Scaffold(
+      body: BlocBuilder<PublicationsBloc, PublicationsState>(
+        builder: (context, state) {
+          if (state is PublicationsLoading) {
+            return const Center(child: CircularProgressIndicator());
           }
-        }
-      },
-      builder: (context, state) {
-        if (state is PublicationLoading && _refreshCompleter == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
 
-        if (state is GetPublicationFailure) {
-          return Center(child: Text('Erreur: ${state.message}'));
-        }
+          if (state is GetPublicationsFailure) {
+            return Center(child: Text('Erreur: ${state.message}'));
+          }
 
-        if (_publications.isEmpty) {
-          return Center(child: Text(context.l10n.publicationListNoPublicationLabel));
-        }
+          if (state is GetPublicationsSuccess) {
+            final publications = state.publications;
 
-        return RefreshIndicator(
-          onRefresh: _handleRefresh,
-          edgeOffset: 10,
-          child: ListView.separated(
-            itemCount: _publications.length,
-            itemBuilder: (context, index) {
-              return PublicationCard(publication: _publications[index]);
-            },
-            padding: EdgeInsets.symmetric(vertical: 10),
-            separatorBuilder: (context, index) => const Divider(indent: 10, endIndent: 10),
-          ),
-        );
-      },
+            if (publications.isEmpty) {
+              return Center(child: Text(context.l10n.publicationListNoPublicationLabel));
+            }
+
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<PublicationsBloc>().add(GetPublicationsEvent());
+              },
+              edgeOffset: 10,
+              child: ListView.separated(
+                itemCount: publications.length,
+                itemBuilder: (context, index) {
+                  return PublicationCard(publication: publications[index]);
+                },
+                padding: const EdgeInsets.all(16),
+                separatorBuilder: (context, index) => const SizedBox(height: 8),
+              ),
+            );
+          }
+
+          return Text(state.toString());
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Symbols.add),
+      ),
     );
   }
 }

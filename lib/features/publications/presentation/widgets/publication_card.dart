@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/extensions/theme_extension.dart';
 import '../../../../core/secrets/app_secrets.dart';
-import '../../../comment/presentation/widgets/comments_bottom_sheet.dart';
 import '../../domain/entities/publication.dart';
-import '../../domain/entities/publication_type.dart';
-import '../bloc/publication_bloc.dart';
+import '../bloc/publications_bloc/publications_bloc.dart';
+import '../../../../app/service_locator/service_locator.dart';
+import '../bloc/comments_bloc/comments_bloc.dart';
 import 'autoplay_video.dart';
+import 'comments_bottom_sheet.dart';
 
 class PublicationCard extends StatelessWidget {
   final Publication publication;
@@ -15,30 +17,44 @@ class PublicationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(50),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    return Card.outlined(
+      clipBehavior: .antiAlias,
+      color: context.colorScheme.surfaceContainer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Media(publication: publication),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const .all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundImage: publication.author.avatarUrl != null
+                          ? NetworkImage(AppSecrets.baseUrl + publication.author.avatarUrl!)
+                          : null,
+                      child: publication.author.avatarUrl == null
+                          ? Text(
+                              publication.author.username.isNotEmpty
+                                  ? publication.author.username[0].toUpperCase()
+                                  : '?',
+                            )
+                          : null,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      publication.author.username,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
                 Text(
                   publication.description,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: context.textTheme.titleMedium,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -49,8 +65,8 @@ class PublicationCard extends StatelessWidget {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () => context.read<PublicationBloc>().add(
-                            PublicationSetLikedEvent(
+                          onTap: () => context.read<PublicationsBloc>().add(
+                            PublicationsSetLikedEvent(
                               liked: !publication.hasLiked,
                               id: publication.id,
                             ),
@@ -77,7 +93,10 @@ class PublicationCard extends StatelessWidget {
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
                               builder: (context) {
-                                return CommentsBottomSheet(publicationId: publication.id);
+                                return BlocProvider(
+                                  create: (context) => sl<CommentsBloc>(),
+                                  child: CommentsBottomSheet(publicationId: publication.id),
+                                );
                               },
                             );
                           },
@@ -93,7 +112,6 @@ class PublicationCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Icon(Icons.share_outlined, size: 20),
                   ],
                 ),
               ],

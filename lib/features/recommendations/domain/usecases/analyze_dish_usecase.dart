@@ -1,8 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
+import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../errors/failure.dart';
 import '../entities/dish_analysis.dart';
 import '../repositories/recommendations_repository.dart';
 
@@ -12,7 +12,7 @@ class AnalyzeDishParams {
   AnalyzeDishParams({required this.image});
 }
 
-class AnalyzeDishUsecase implements UseCase<DishAnalysis, AnalyzeDishParams> {
+class AnalyzeDishUsecase implements Usecase<DishAnalysis, AnalyzeDishParams> {
   final RecommendationsRepository repository;
 
   AnalyzeDishUsecase({
@@ -20,7 +20,7 @@ class AnalyzeDishUsecase implements UseCase<DishAnalysis, AnalyzeDishParams> {
   });
 
   @override
-  Future<Either<Failure, DishAnalysis>> call(AnalyzeDishParams params) async {
-    return await repository.analyzeDish(image: params.image);
+  TaskEither<Failure, DishAnalysis> call(AnalyzeDishParams params) {
+    return repository.analyzeDish(image: params.image);
   }
 }

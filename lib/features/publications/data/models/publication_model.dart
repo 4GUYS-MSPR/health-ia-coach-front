@@ -1,6 +1,5 @@
-import '../../../auth/data/models/user_model.dart';
 import '../../domain/entities/publication.dart';
-import '../../domain/entities/publication_type.dart';
+import 'author_model.dart';
 
 class PublicationModel extends Publication {
   const PublicationModel({
@@ -9,7 +8,7 @@ class PublicationModel extends Publication {
     super.image,
     super.video,
     required super.description,
-    required super.user,
+    required super.author,
     required super.likes,
     required super.comments,
     required super.hasLiked,
@@ -37,7 +36,7 @@ class PublicationModel extends Publication {
       image: map['image'] as String?,
       video: map['video'] as String?,
       description: map['description'] as String,
-      user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
+      author: AuthorModel.fromMap(map['user'] as Map<String, dynamic>),
       likes: map['likes'] as int,
       comments: map['comments'] as int,
       hasLiked:  map['has_liked'] as bool,

@@ -1,27 +1,27 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/failure.dart';
-import '../../../auth/data/models/user_model.dart';
-import '../../data/models/member_model.dart';
+import '../../../../core/errors/failures.dart';
+import '../entities/profile.dart';
 
 abstract interface class ProfileRepository {
-  Future<Either<Failure, UserModel>> updateUserProfile({
-    required String username,
-    required String firstname,
-    required String lastname,
+  TaskEither<Failure, Profile> getProfile();
+
+  TaskEither<Failure, Profile> updateAvatar({
+    required PlatformFile file,
   });
 
-  Future<Either<Failure, MemberModel>> updateMemberProfile({
-    required int age,
-    required double bmi,
-    required double fatPercentage,
-    required double height,
-    required double weight,
-    required int workoutFrequency,
-    required int gender,
-    required int level,
-    required int subscription,
+  TaskEither<Failure, Profile> updateProfile({
+    required String? username,
+    required String? firstname,
+    required String? lastname,
+    required int? age,
+    required int? gender,
+    required double? bmi,
+    required double? fatPercentage,
+    required double? height,
+    required double? weight,
+    required int? workoutFrequency,
+    required int? level,
   });
-
-  Future<Either<Failure, MemberModel>> getMemberStats();
 }

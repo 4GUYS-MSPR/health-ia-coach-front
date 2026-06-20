@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/service_locator/service_locator.dart';
 import '../../../../core/shared/layouts/responsive_layout_builder.dart';
-import '../blocs/recommendations/recommendations_bloc.dart';
+import '../cubits/analyze_dish_cubit/analyze_dish_cubit.dart';
 import '../layouts/recommendations_compact_layout.dart';
 
 class RecommendationsPage extends StatelessWidget {
@@ -12,7 +12,7 @@ class RecommendationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<RecommendationsBloc>(),
+      create: (context) => sl<AnalyzeDishCubit>(),
       child: ResponsiveLayoutBuilder(
         compact: RecommendationsCompactLayout(),
       ),

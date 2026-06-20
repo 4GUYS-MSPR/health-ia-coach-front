@@ -6,7 +6,8 @@ import '../data/repositories/recommendations_repository_impl.dart';
 import '../domain/repositories/recommendations_repository.dart';
 import '../domain/usecases/analyze_dish_usecase.dart';
 import '../domain/usecases/recommendations_request.dart';
-import '../presentation/blocs/recommendations/recommendations_bloc.dart';
+import '../presentation/cubits/ai_recommendation_cubit/ai_recommendation_cubit.dart';
+import '../presentation/cubits/analyze_dish_cubit/analyze_dish_cubit.dart';
 
 Future<void> registerRecommendations(GetIt sl) async {
   sl.registerLazySingleton<RecommendationsLocalDatasource>(
@@ -34,9 +35,14 @@ Future<void> registerRecommendations(GetIt sl) async {
     ),
   );
 
-  sl.registerLazySingleton(
-    () => RecommendationsBloc(
+  sl.registerFactory(
+    () => AnalyzeDishCubit(
       analyzeDishUsecase: sl<AnalyzeDishUsecase>(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => AiRecommendationCubit(
       recommendationsRequestUsecase: sl<RecommendationsRequestUsecase>(),
     ),
   );

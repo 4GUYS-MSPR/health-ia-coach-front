@@ -1,30 +1,53 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../../core/logging/logger_mixin.dart';
+import '../../domain/entities/auth_session.dart';
+
 abstract interface class AuthLocalDataSource {
+  Future<void> storeAuthSession(AuthSession session);
   Future<void> storeAccessToken(String accessToken);
   Future<void> storeRefreshToken(String refreshToken);
-  Future<String?> getToken();
+
+  Future<AuthSession?> getAuthSession();
+  Future<String?> getAccessToken();
   Future<String?> getRefreshToken();
-  Future<void> logout();
-  Future<String?> getUserId();
+
+  Future<void> clearSession();
 }
 
-class AuthLocalDataSourceImpl implements AuthLocalDataSource {
+class AuthLocalDataSourceImpl with LoggerMixin implements AuthLocalDataSource {
   static const _storeAccessToken = 'STORE_ACCESS_TOKEN';
   static const _storeRefreshToken = 'STORE_REFRESH_TOKEN';
-  static const _storeUserId = 'STORE_USER_ID';
-
 
   final FlutterSecureStorage secureStorage;
-  AuthLocalDataSourceImpl({required this.secureStorage});
+
+  AuthLocalDataSourceImpl({
+    required this.secureStorage,
+  });
+
+  @override
+  String get loggerName => 'Auth.Data.Datasources.AuthLocalDataSource';
+
+  @override
+  Future<void> storeAuthSession(AuthSession session) async {
+    try {
+      await secureStorage.write(key: _storeAccessToken, value: session.accessToken);
+      await secureStorage.write(key: _storeRefreshToken, value: session.refreshToken);
+      logger.finer('Auth session stored');
+    } catch (e, stackTrace) {
+      logger.severe('Failed to store auth session', e, stackTrace);
+      rethrow;
+    }
+  }
 
   @override
   Future<void> storeAccessToken(String accessToken) async {
     try {
       await secureStorage.write(key: _storeAccessToken, value: accessToken);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      logger.finer('Access token stored successfully');
+    } catch (e, stackTrace) {
+      logger.severe('Failed to store access token', e, stackTrace);
+      rethrow;
     }
   }
 
@@ -32,45 +55,51 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<void> storeRefreshToken(String refreshToken) async {
     try {
       await secureStorage.write(key: _storeRefreshToken, value: refreshToken);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      logger.finer('Refresh token stored successfully');
+    } catch (e, stackTrace) {
+      logger.severe('Failed to store refresh token', e, stackTrace);
+      rethrow;
     }
   }
 
   @override
-  Future<String?> getToken() async {
-    return await get(key: _storeAccessToken);
+  Future<AuthSession?> getAuthSession() async {
+    final accessToken = await getAccessToken();
+    final refreshToken = await getRefreshToken();
+
+    if (accessToken != null && refreshToken != null) {
+      return AuthSession(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> getAccessToken() async {
+    final token = await secureStorage.read(key: _storeAccessToken);
+    logger.finer('Access token retrieved: ${token != null ? "found" : "null"}');
+    return token;
   }
 
   @override
   Future<String?> getRefreshToken() async {
-    return await get(key: _storeRefreshToken);
-  }
-
-  Future<String?> get({required String key}) async {
-    try {
-      String? token = await secureStorage.read(key: key);
-      return token;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-    }
-    return null;
+    final token = await secureStorage.read(key: _storeRefreshToken);
+    logger.finer('Refresh token retrieved: ${token != null ? "found" : "null"}');
+    return token;
   }
 
   @override
-  Future<void> logout() async {
+  Future<void> clearSession() async {
     try {
-      await secureStorage.deleteAll();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      await secureStorage.delete(key: _storeAccessToken);
+      await secureStorage.delete(key: _storeRefreshToken);
+      logger.finer('User session cleared');
+    } catch (e, stackTrace) {
+      logger.severe('Failed to clear session', e, stackTrace);
+      rethrow;
     }
-  }
-
-  @override
-  Future<String?> getUserId() async {
-    return await get(key: _storeUserId);
   }
 }
