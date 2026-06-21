@@ -30,7 +30,7 @@ class _LoginPasswordFormFieldState extends State<LoginPasswordFormField> {
     final loginCubit = context.watch<LoginCubit>();
 
     final inputDecoration = InputDecoration(
-      border: OutlineInputBorder(borderRadius: .circular(12)),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       prefixIcon: const Icon(Symbols.password),
       labelText: "Password",
       hintText: "Enter your password",

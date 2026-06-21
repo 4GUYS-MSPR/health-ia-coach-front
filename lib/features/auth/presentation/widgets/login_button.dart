@@ -20,7 +20,7 @@ class LoginButton extends StatelessWidget {
     final buttonStyle = ButtonStyle(
       shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(
-          borderRadius: .circular(12),
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

@@ -110,6 +110,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
           ),
 
           floatingActionButton: FloatingActionButton(
+            heroTag: 'recommendations_fab',
             onPressed: isLoading
                 ? null
                 : () async {

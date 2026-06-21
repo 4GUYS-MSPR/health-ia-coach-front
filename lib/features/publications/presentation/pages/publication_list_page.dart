@@ -60,8 +60,9 @@ class _PublicationListPageState extends State<PublicationListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'publication_list_fab',
         onPressed: () {},
-        child: Icon(Symbols.add),
+        child: const Icon(Symbols.add),
       ),
     );
   }

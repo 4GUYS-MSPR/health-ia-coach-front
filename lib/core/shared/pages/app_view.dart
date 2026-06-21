@@ -30,6 +30,7 @@ class AppView extends StatelessWidget {
       body: navigationShell,
       floatingActionButton: isPublicationTab
           ? FloatingActionButton(
+              heroTag: 'app_view_fab',
               onPressed: () => context.push(AppRoutes.publication),
               tooltip: context.l10n.publicationAddAPublicationPageTitle,
               child: const Icon(Icons.add),

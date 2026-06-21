@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../../../core/extensions/theme_extension.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
@@ -16,30 +17,77 @@ class LoginCompactLayout extends StatelessWidget {
     final loginCubit = context.watch<LoginCubit>();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  "Connexion",
-                  style: context.textTheme.displayLarge,
-                ),
-                Form(
-                  key: loginCubit.formKey,
-                  child: AutofillGroup(
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 400),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Symbols.cardiology,
+                            size: 48,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            "Connexion",
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "Veuillez entrer vos identifiants pour continuer",
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        LoginUsernameFormField(),
-                        LoginPasswordFormField(),
+                        const SizedBox(height: 32),
+                        Form(
+                          key: loginCubit.formKey,
+                          child: AutofillGroup(
+                            child: Column(
+                              children: [
+                                const LoginUsernameFormField(),
+                                const SizedBox(height: 12),
+                                const LoginPasswordFormField(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const LoginButton(),
                       ],
                     ),
                   ),
-                ),
-                LoginButton(),
-                NoAccountRegisterButton(),
-              ],
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24.0),
+                        child: const NoAccountRegisterButton(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
