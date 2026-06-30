@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'enum_member.dart';
+import '../../../../core/shared/models/enum_item_model.dart';
 
 class Profile extends Equatable {
   final int id;

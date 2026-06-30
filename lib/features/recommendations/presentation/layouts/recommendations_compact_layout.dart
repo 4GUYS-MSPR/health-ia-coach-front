@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
+
 import '../../domain/entities/detected_food.dart';
 import '../cubits/analyze_dish_cubit/analyze_dish_cubit.dart';
 import '../cubits/analyze_dish_cubit/analyze_dish_state.dart';
@@ -91,14 +93,14 @@ class RecommendationsCompactLayout extends StatelessWidget {
                 if (isLoading)
                   Container(
                     color: Colors.black45,
-                    child: const Center(
+                    child:  Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 16,
                         children: [
                           CircularProgressIndicator(),
                           Text(
-                            "Analyse en cours...",
+                            context.l10n.recommendationGeneratingMessage,
                             style: TextStyle(color: Colors.white),
                           ),
                         ],

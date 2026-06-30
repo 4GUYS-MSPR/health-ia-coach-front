@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../domain/entities/enum_member.dart';
+import '../../../../core/shared/models/enum_item_model.dart';
 import '../../domain/entities/profile.dart';
 
 class ProfileModel extends Profile {

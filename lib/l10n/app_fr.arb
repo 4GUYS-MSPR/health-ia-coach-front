@@ -65,5 +65,46 @@
     "photoCaptureEmptyMessage": "Aucune photo prise",
     "photoCaptureCameraButton": "Prendre une photo",
     "photoCaptureImportButton": "Importer",
-    "photoCaptureValidateButton": "Valider"
+    "photoCaptureValidateButton": "Valider",
+    "recommendationTabDish": "Plat",
+    "recommendationTabRecommendations": "Recommandations",
+    "recommendationNavigationLabel": "Analyse",
+    "recommendationAiCoachTitle": "Votre Coach IA",
+    "recommendationRecommendedExercisesTitle": "Exercices recommandés",
+    "recommendationNewRecommendationButton": "Nouvelle recommandation",
+    "recommendationGeneratingMessage": "Génération de vos recommandations...",
+    "recommendationOopsTitle": "Oups !",
+    "recommendationTargetedMovementLabel": "Mouvement ciblé",
+    "recommendationCategoryLabel": "Catégorie",
+    "profileDataError": "Erreur de récupération des données",
+    "profileHello": "Bonjour {name} !",
+    "authErrorLabel": "Erreur : {message}",
+    "@authErrorLabel": {
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "authNoAccountRegister": "Pas de compte ? S'inscrire",
+    "authAlreadyHaveAccountLogin": "Déjà un compte ? Se connecter",
+    "profileSaveButton": "Enregistrer",
+    "profileAppThemeTitle": "Thème de l'application",
+    "profileLanguageTitle": "Langue",
+    "settingsAppLanguageTitle": "Langage de l'application",
+    "settingsAppThemeTitle": "Thème de l'application",
+    "settingsValidateButton": "Valider",
+    "exerciceDetailPrefix": "Exercice #{id}",
+    "@exerciceDetailPrefix": {
+        "placeholders": {
+            "id": {
+                "type": "int"
+            }
+        }
+    },
+    "exerciceCategoryLabel": "Catégorie",
+    "exerciceBodyPartsLabel": "Parties du corps",
+    "exerciceEquipmentsLabel": "Équipements",
+    "exerciceTargetMusclesLabel": "Muscles ciblés",
+    "exerciceSecondaryMusclesLabel": "Muscles secondaires"
 }

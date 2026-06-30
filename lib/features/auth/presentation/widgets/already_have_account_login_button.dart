@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 
 class AlreadyHaveAccountLoginButton extends StatelessWidget {
   const AlreadyHaveAccountLoginButton({super.key});
@@ -10,7 +11,7 @@ class AlreadyHaveAccountLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => context.replaceNamed(AppRoutes.login),
-      child: const Text("Déjà un compte ? Se connecter"),
+      child: Text(context.l10n.authAlreadyHaveAccountLogin),
     );
   }
 }

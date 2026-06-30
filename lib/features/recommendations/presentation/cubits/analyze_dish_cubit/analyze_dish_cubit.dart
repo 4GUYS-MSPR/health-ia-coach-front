@@ -7,8 +7,7 @@ import 'analyze_dish_state.dart';
 class AnalyzeDishCubit extends Cubit<AnalyzeDishState> {
   final AnalyzeDishUsecase analyzeDishUsecase;
 
-  AnalyzeDishCubit({required this.analyzeDishUsecase})
-      : super(AnalyzeDishInitial());
+  AnalyzeDishCubit({required this.analyzeDishUsecase}) : super(AnalyzeDishInitial());
 
   Future<void> analyzeDish(PlatformFile image) async {
     emit(AnalyzeDishLoading(imagePath: image.path));

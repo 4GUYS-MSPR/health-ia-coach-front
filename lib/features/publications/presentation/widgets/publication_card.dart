@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/service_locator/service_locator.dart';
 import '../../../../core/extensions/theme_extension.dart';
 import '../../../../core/secrets/app_secrets.dart';
 import '../../domain/entities/publication.dart';
-import '../bloc/publications_bloc/publications_bloc.dart';
-import '../../../../app/service_locator/service_locator.dart';
 import '../bloc/comments_bloc/comments_bloc.dart';
+import '../bloc/publications_bloc/publications_bloc.dart';
 import 'autoplay_video.dart';
 import 'comments_bottom_sheet.dart';
 

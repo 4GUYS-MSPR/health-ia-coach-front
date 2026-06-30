@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../../core/logging/logger_mixin.dart';
@@ -12,7 +12,6 @@ import '../../features/profile/presentation/pages/profil_page.dart';
 import '../../features/publications/presentation/pages/add_publication_page.dart';
 import '../../features/publications/presentation/pages/publication_list_page.dart';
 import '../../features/recommendations/presentation/pages/recommendations_page.dart';
-import '../../features/recommendations/presentation/widgets/profile_recommendation_section.dart';
 import 'app_routes.dart';
 import 'go_router_refresh_stream.dart';
 import 'guest_go_route.dart';
@@ -72,12 +71,7 @@ class AppRouter with LoggerMixin {
               ProtectedGoRoute(
                 path: '/profile',
                 name: AppRoutes.profile,
-                builder: (context, state) => ProfilPage(
-                  recommendationSection: const ProfileRecommendationSection(),
-                  onLogout: () {
-                    context.read<AuthBloc>().add(AuthLogoutEvent());
-                  },
-                ),
+                builder: (context, state) => const ProfilPage(),
               ),
             ],
           ),

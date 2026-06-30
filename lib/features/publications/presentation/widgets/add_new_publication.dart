@@ -12,10 +12,10 @@ class AddPublicationForm extends StatefulWidget {
   const AddPublicationForm({super.key});
 
   @override
-  _AddPublicationFormState createState() => _AddPublicationFormState();
+  AddPublicationFormState createState() => AddPublicationFormState();
 }
 
-class _AddPublicationFormState extends State<AddPublicationForm> {
+class AddPublicationFormState extends State<AddPublicationForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _descriptionController;
   PlatformFile? _selectedMedia;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../extensions/l10n_extension.dart';
 import '../../../utils/locale_utils.dart';
 import '../../cubits/locale_cubit/locale_cubit.dart';
 
@@ -12,7 +13,7 @@ class SelectLocaleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Langage de l'application"),
+      title: Text(context.l10n.settingsAppLanguageTitle),
       contentPadding: .only(top: 16),
       content: SizedBox(
         width: .maxFinite,
@@ -53,7 +54,7 @@ class SelectLocaleDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => context.pop(),
-          child: Text("Valider"),
+          child: Text(context.l10n.settingsValidateButton),
         ),
       ],
     );

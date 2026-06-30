@@ -4,6 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/logging/logger_mixin.dart';
 import '../../domain/entities/dish_analysis.dart';
+import '../../domain/entities/recommendation.dart';
 import '../../domain/failures/recommendations_failures.dart';
 import '../../domain/repositories/recommendations_repository.dart';
 import '../datasources/recommendations_local_datasource.dart';
@@ -39,7 +40,7 @@ class RecommendationsRepositoryImpl
   }
 
   @override
-  TaskEither<Failure, String> recommendationsRequest() {
+  TaskEither<Failure, Recommendation> recommendationsRequest() {
     return TaskEither.tryCatch(
       () async => await remoteDatasource.recommendationsRequest(),
       (error, stackTrace) {

@@ -30,7 +30,7 @@ class _PublicationListPageState extends State<PublicationListPage> {
           }
 
           if (state is GetPublicationsFailure) {
-            return Center(child: Text('Erreur: ${state.message}'));
+            return Center(child: Text(context.l10n.publicationErrorLabel(state.message)));
           }
 
           if (state is GetPublicationsSuccess) {

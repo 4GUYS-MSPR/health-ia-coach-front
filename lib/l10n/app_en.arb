@@ -213,5 +213,56 @@
     "photoCaptureEmptyMessage": "No photo taken",
     "photoCaptureCameraButton": "Take a photo",
     "photoCaptureImportButton": "Import",
-    "photoCaptureValidateButton": "Validate"
+    "photoCaptureValidateButton": "Validate",
+    "recommendationTabDish": "Dish",
+    "recommendationTabRecommendations": "Recommendations",
+    "recommendationNavigationLabel": "Analysis",
+    "recommendationAiCoachTitle": "Your AI Coach",
+    "recommendationRecommendedExercisesTitle": "Recommended exercises",
+    "recommendationNewRecommendationButton": "New recommendation",
+    "recommendationGeneratingMessage": "Generating your recommendations...",
+    "recommendationOopsTitle": "Oops!",
+    "recommendationTargetedMovementLabel": "Targeted movement",
+    "recommendationCategoryLabel": "Category",
+    "profileDataError": "Error fetching data",
+    "profileHello": "Hi {name}!",
+    "@profileHello": {
+        "description": "Greeting message on profile page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "authErrorLabel": "Error: {message}",
+    "@authErrorLabel": {
+        "description": "Auth error message",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "authNoAccountRegister": "No account? Register",
+    "authAlreadyHaveAccountLogin": "Already have an account? Login",
+    "profileSaveButton": "Save",
+    "profileAppThemeTitle": "App theme",
+    "profileLanguageTitle": "Language",
+    "settingsAppLanguageTitle": "App language",
+    "settingsAppThemeTitle": "App theme",
+    "settingsValidateButton": "Validate",
+    "exerciceDetailPrefix": "Exercise #{id}",
+    "@exerciceDetailPrefix": {
+        "description": "Exercise prefix",
+        "placeholders": {
+            "id": {
+                "type": "int"
+            }
+        }
+    },
+    "exerciceCategoryLabel": "Category",
+    "exerciceBodyPartsLabel": "Body parts",
+    "exerciceEquipmentsLabel": "Equipments",
+    "exerciceTargetMusclesLabel": "Targeted muscles",
+    "exerciceSecondaryMusclesLabel": "Secondary muscles"
 }

@@ -169,7 +169,7 @@ class _ProfileInfosSectionState extends State<ProfileInfosSection> {
             child: FilledButton.icon(
               onPressed: _onSave,
               icon: const Icon(Symbols.save),
-              label: const Text("Save"),
+              label: Text(context.l10n.profileSaveButton),
             ),
           ),
         ],

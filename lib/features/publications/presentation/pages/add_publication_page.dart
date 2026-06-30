@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../../core/extensions/l10n_extension.dart';
 import '../widgets/add_new_publication.dart';

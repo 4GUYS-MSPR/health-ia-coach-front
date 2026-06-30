@@ -6,7 +6,6 @@ import '../core/shared/cubits/locale_cubit/locale_cubit.dart';
 import '../core/shared/cubits/theme_cubit/theme_cubit.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
-import '../features/publications/presentation/bloc/comments_bloc/comments_bloc.dart';
 import '../features/publications/presentation/bloc/publications_bloc/publications_bloc.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';

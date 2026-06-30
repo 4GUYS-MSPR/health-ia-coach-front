@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../app/service_locator/service_locator.dart';
+import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/shared/layouts/responsive_layout_builder.dart';
 import '../blocs/auth_bloc/auth_bloc.dart';
 import '../cubits/login_cubit/login_cubit.dart';
@@ -22,7 +23,7 @@ class LoginPage extends StatelessWidget {
             listener: (context, state) {
               if (state is LoginFailureState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Erreur : ${state.failure}')),
+                  SnackBar(content: Text(context.l10n.authErrorLabel(state.failure.debugMessage ?? ''))),
                 );
               } else if (state is LoginSuccessState) {
                 context.read<AuthBloc>().add(AuthGetSessionEvent());

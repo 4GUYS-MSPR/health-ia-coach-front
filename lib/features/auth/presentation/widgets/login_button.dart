@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
 import '../cubits/login_cubit/login_cubit.dart';
 
 class LoginButton extends StatelessWidget {
@@ -29,7 +30,7 @@ class LoginButton extends StatelessWidget {
       onPressed: onPressed,
       style: buttonStyle,
       icon: Icon(Symbols.login),
-      label: Text("Se connecter"),
+      label: Text(context.l10n.authLoginButtonLabel),
     );
   }
 }

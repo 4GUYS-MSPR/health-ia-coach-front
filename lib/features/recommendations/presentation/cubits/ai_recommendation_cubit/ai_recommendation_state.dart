@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/recommendation.dart';
+
 abstract class AiRecommendationState extends Equatable {
   const AiRecommendationState();
 
@@ -12,7 +14,7 @@ class AiRecommendationInitial extends AiRecommendationState {}
 class AiRecommendationLoading extends AiRecommendationState {}
 
 class AiRecommendationSuccess extends AiRecommendationState {
-  final String output;
+  final Recommendation output;
 
   const AiRecommendationSuccess({required this.output});
 

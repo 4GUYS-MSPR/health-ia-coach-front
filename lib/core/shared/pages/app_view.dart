@@ -50,8 +50,8 @@ class AppView extends StatelessWidget {
             label: context.l10n.navigationHomePageLabel,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Symbols.dinner_dining),
-            label: "Recommendations",
+            icon: const Icon(Symbols.analytics),
+            label: context.l10n.recommendationNavigationLabel,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

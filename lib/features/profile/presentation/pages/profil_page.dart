@@ -10,34 +10,25 @@ import '../../../../core/shared/widgets/locale/select_locale_dialog.dart';
 import '../../../../core/shared/widgets/theme/select_theme_dialog.dart';
 
 import '../bloc/profile_bloc.dart';
+import '../../../../features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import '../widgets/avatar.dart';
 import '../widgets/profile_account_section.dart';
 import '../widgets/profile_infos_section.dart';
 
 class ProfilPage extends StatelessWidget {
-  final VoidCallback onLogout;
-  final Widget? recommendationSection;
-  
-  const ProfilPage({super.key, required this.onLogout, this.recommendationSection});
+  const ProfilPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
-      child: ProfilePageContent(onLogout: onLogout, recommendationSection: recommendationSection),
+      child: const ProfilePageContent(),
     );
   }
 }
 
 class ProfilePageContent extends StatelessWidget {
-  final VoidCallback onLogout;
-  final Widget? recommendationSection;
-  
-  const ProfilePageContent({
-    super.key,
-    required this.onLogout,
-    this.recommendationSection,
-  });
+  const ProfilePageContent({super.key});
 
 
 
@@ -93,16 +84,12 @@ class ProfilePageContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            "Hi ${profile.firstname}!",
+                            context.l10n.profileHello(profile.firstname),
                             style: context.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 16),
-                          if (recommendationSection != null) ...[
-                            recommendationSection!,
-                            const SizedBox(height: 16),
-                          ],
                           ProfileAccountSection(profile: profile),
                           const SizedBox(height: 8),
                           ProfileInfosSection(profile: profile),
@@ -118,7 +105,7 @@ class ProfilePageContent extends StatelessWidget {
                                 ListTile(
                                   dense: true,
                                   leading: const Icon(Symbols.routine),
-                                  title: const Text("App theme"),
+                                  title: Text(context.l10n.profileAppThemeTitle),
                                   trailing: const Icon(Symbols.chevron_right),
                                   onTap: () {
                                     showDialog(
@@ -130,7 +117,7 @@ class ProfilePageContent extends StatelessWidget {
                                 ListTile(
                                   dense: true,
                                   leading: const Icon(Symbols.language),
-                                  title: const Text("Language"),
+                                  title: Text(context.l10n.profileLanguageTitle),
                                   trailing: const Icon(Symbols.chevron_right),
                                   onTap: () {
                                     showDialog(
@@ -153,7 +140,9 @@ class ProfilePageContent extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: FilledButton.tonalIcon(
-                              onPressed: onLogout,
+                              onPressed: () {
+                                context.read<AuthBloc>().add(AuthLogoutEvent());
+                              },
                               icon: const Icon(Symbols.logout),
                               label: Text(context.l10n.profileLogOutButtonLabel),
                             ),
@@ -164,11 +153,11 @@ class ProfilePageContent extends StatelessWidget {
                   ),
                 );
               }
-              return const SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(
                   height: 400,
-                  child: Center(child: Text("Erreur de récupération des données")),
+                  child: Center(child: Text(context.l10n.profileDataError)),
                 ),
               );
             },

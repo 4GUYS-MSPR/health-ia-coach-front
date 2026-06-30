@@ -14,7 +14,7 @@ class SelectThemeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Thème de l'application"),
+      title: Text(context.l10n.settingsAppThemeTitle),
       contentPadding: .only(top: 16),
       content: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
@@ -57,7 +57,7 @@ class SelectThemeDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => context.pop(),
-          child: Text("Valider"),
+          child: Text(context.l10n.settingsValidateButton),
         ),
       ],
     );
