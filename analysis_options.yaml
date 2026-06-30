@@ -9,3 +9,5 @@ linter:
     cancel_subscriptions: true
     directives_ordering: true
     prefer_relative_imports: true
+    prefer_const_constructors: true
+

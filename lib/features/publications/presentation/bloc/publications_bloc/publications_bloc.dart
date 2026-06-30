@@ -67,18 +67,43 @@ class PublicationsBloc extends Bloc<PublicationsEvent, PublicationsState> {
     PublicationsSetLikedEvent event,
     Emitter<PublicationsState> emit,
   ) async {
-    emit(PublicationsSetLikedLoading());
+    // Sauvegarde de l'état actuel pour pouvoir revenir en cas d'erreur
+    final previousState = state;
 
+    // Mise à jour optimiste : on modifie la liste localement sans loading
+    if (previousState is GetPublicationsSuccess) {
+      final optimisticList = previousState.publications.map((pub) {
+        if (pub.id != event.id) return pub;
+        return pub.copyWith(
+          hasLiked: event.liked,
+          likes: event.liked ? pub.likes + 1 : pub.likes - 1,
+        );
+      }).toList();
+      emit(GetPublicationsSuccess(publications: optimisticList));
+    }
+
+    // Appel API en arrière-plan
     final result = await setLiked(
-      SetLikedParams(
-        liked: event.liked,
-        id: event.id,
-      ),
+      SetLikedParams(liked: event.liked, id: event.id),
     ).run();
 
     result.fold(
-      (failure) => emit(PublicationsFailure(message: failure.toString())),
-      (publication) => emit(PublicationsSetLikedSuccess(publication: publication)),
+      (failure) {
+        // Échec : on revient à l'état précédent
+        if (previousState is GetPublicationsSuccess) {
+          emit(previousState);
+        }
+      },
+      (updatedPublication) {
+        // Succès : on synchronise avec la réponse du serveur
+        final currentState = state;
+        if (currentState is GetPublicationsSuccess) {
+          final syncedList = currentState.publications.map((pub) {
+            return pub.id == updatedPublication.id ? updatedPublication : pub;
+          }).toList();
+          emit(GetPublicationsSuccess(publications: syncedList));
+        }
+      },
     );
   }
 }

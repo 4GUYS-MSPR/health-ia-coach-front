@@ -29,6 +29,24 @@ class PublicationModel extends Publication {
     };
   }
 
+  PublicationModel copyWith({
+    int? likes,
+    bool? hasLiked,
+  }) {
+    return PublicationModel(
+      id: id,
+      type: type,
+      image: image,
+      video: video,
+      description: description,
+      author: author as AuthorModel,
+      likes: likes ?? this.likes,
+      comments: comments,
+      hasLiked: hasLiked ?? this.hasLiked,
+      hasCommented: hasCommented,
+    );
+  }
+
   factory PublicationModel.fromMap(Map<String, dynamic> map) {
     return PublicationModel(
       id: map['id'] as int,

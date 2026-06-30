@@ -46,10 +46,20 @@ class ProfilePageContent extends StatelessWidget {
                     SnackBar(content: Text(state.message)),
                   );
                 }
+                if (state is ProfileUpdateSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(context.l10n.profileSaveSuccessMessage),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  );
+                }
               },
             ),
           ],
           child: BlocBuilder<ProfileBloc, ProfileState>(
+            buildWhen: (previous, current) =>
+                current is! ProfileFailure,
             builder: (context, state) {
               if (state is ProfileLoading || state is ProfileInitial) {
                 return const Scaffold(
@@ -59,8 +69,13 @@ class ProfilePageContent extends StatelessWidget {
                 );
               }
 
-              if (state is ProfileLoaded) {
-                final profile = state.profile;
+              final profile = switch (state) {
+                ProfileLoaded(:final profile) => profile,
+                ProfileUpdateSuccess(:final profile) => profile,
+                _ => null,
+              };
+
+              if (profile != null) {
                 return SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Padding(

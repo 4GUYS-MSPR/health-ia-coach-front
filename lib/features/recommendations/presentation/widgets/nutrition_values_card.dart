@@ -79,35 +79,51 @@ class NutritionValuesCard extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 8),
-              GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisExtent: 80,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 8,
                 children: [
-                  _MacroCard(
-                    value: calories,
-                    label: context.l10n.nutritionCaloriesLabel,
-                    color: context.colorScheme.primaryContainer,
-                    textColor: context.colorScheme.onPrimaryContainer,
+                  Row(
+                    spacing: 8,
+                    children: [
+                      Expanded(
+                        child: _MacroCard(
+                          value: calories,
+                          label: context.l10n.nutritionCaloriesLabel,
+                          color: context.colorScheme.primaryContainer,
+                          textColor: context.colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                      Expanded(
+                        child: _MacroCard(
+                          value: proteins,
+                          label: context.l10n.nutritionProteinsLabel,
+                          color: context.colorScheme.secondaryContainer,
+                          textColor: context.colorScheme.onSecondaryContainer,
+                        ),
+                      ),
+                    ],
                   ),
-                  _MacroCard(
-                    value: proteins,
-                    label: context.l10n.nutritionProteinsLabel,
-                    color: context.colorScheme.secondaryContainer,
-                    textColor: context.colorScheme.onSecondaryContainer,
-                  ),
-                  _MacroCard(
-                    value: carbs,
-                    label: context.l10n.nutritionGlucidesLabel,
-                    color: context.colorScheme.secondaryContainer,
-                    textColor: context.colorScheme.onSecondaryContainer,
-                  ),
-                  _MacroCard(
-                    value: fats,
-                    label: context.l10n.nutritionLipidesLabel,
-                    color: context.colorScheme.secondaryContainer,
-                    textColor: context.colorScheme.onSecondaryContainer,
+                  Row(
+                    spacing: 8,
+                    children: [
+                      Expanded(
+                        child: _MacroCard(
+                          value: carbs,
+                          label: context.l10n.nutritionGlucidesLabel,
+                          color: context.colorScheme.secondaryContainer,
+                          textColor: context.colorScheme.onSecondaryContainer,
+                        ),
+                      ),
+                      Expanded(
+                        child: _MacroCard(
+                          value: fats,
+                          label: context.l10n.nutritionLipidesLabel,
+                          color: context.colorScheme.secondaryContainer,
+                          textColor: context.colorScheme.onSecondaryContainer,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
