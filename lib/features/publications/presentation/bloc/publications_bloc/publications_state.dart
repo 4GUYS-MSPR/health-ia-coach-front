@@ -42,4 +42,3 @@ class GetPublicationsFailure extends PublicationsState {
   @override
   List<Object> get props => [message];
 }
-

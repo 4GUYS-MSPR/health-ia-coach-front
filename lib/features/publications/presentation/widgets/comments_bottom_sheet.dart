@@ -112,11 +112,15 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                         CommentModel comment = _comments[index];
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: comment.author.avatarUrl != null 
-                                ? NetworkImage(AppSecrets.baseUrl + comment.author.avatarUrl!) 
+                            backgroundImage: comment.author.avatarUrl != null
+                                ? NetworkImage(AppSecrets.baseUrl + comment.author.avatarUrl!)
                                 : null,
-                            child: comment.author.avatarUrl == null 
-                                ? Text(comment.author.username.isNotEmpty ? comment.author.username[0].toUpperCase() : '?')
+                            child: comment.author.avatarUrl == null
+                                ? Text(
+                                    comment.author.username.isNotEmpty
+                                        ? comment.author.username[0].toUpperCase()
+                                        : '?',
+                                  )
                                 : null,
                           ),
                           title: Text(

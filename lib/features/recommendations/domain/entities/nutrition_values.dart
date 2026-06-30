@@ -10,9 +10,9 @@ class NutritionValues extends Equatable {
   final double sodiumMG;
   final double cholesterolMG;
   final double waterIntakeML;
-  final String? label;      
-  final String? category;   
-  final String? mealType;   
+  final String? label;
+  final String? category;
+  final String? mealType;
 
   const NutritionValues({
     required this.calories,
@@ -31,8 +31,17 @@ class NutritionValues extends Equatable {
 
   @override
   List<Object?> get props => [
-    calories, proteinsG, carbsG, fatsG, fiberG,
-    sugarsG, sodiumMG, cholesterolMG, waterIntakeML,
-    label, category, mealType,
+    calories,
+    proteinsG,
+    carbsG,
+    fatsG,
+    fiberG,
+    sugarsG,
+    sodiumMG,
+    cholesterolMG,
+    waterIntakeML,
+    label,
+    category,
+    mealType,
   ];
 }

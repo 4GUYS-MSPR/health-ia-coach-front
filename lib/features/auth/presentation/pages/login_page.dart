@@ -23,7 +23,9 @@ class LoginPage extends StatelessWidget {
             listener: (context, state) {
               if (state is LoginFailureState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(context.l10n.authErrorLabel(state.failure.debugMessage ?? ''))),
+                  SnackBar(
+                    content: Text(context.l10n.authErrorLabel(state.failure.debugMessage ?? '')),
+                  ),
                 );
               } else if (state is LoginSuccessState) {
                 context.read<AuthBloc>().add(AuthGetSessionEvent());

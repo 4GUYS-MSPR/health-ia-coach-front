@@ -74,7 +74,9 @@ class ExerciceDetailPage extends StatelessWidget {
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: exercice.equipments.map((eq) => Chip(label: Text(eq.name))).toList(),
+                      children: exercice.equipments
+                          .map((eq) => Chip(label: Text(eq.name)))
+                          .toList(),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -87,7 +89,9 @@ class ExerciceDetailPage extends StatelessWidget {
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: exercice.targetMuscles.map((tm) => Chip(label: Text(tm.name))).toList(),
+                      children: exercice.targetMuscles
+                          .map((tm) => Chip(label: Text(tm.name)))
+                          .toList(),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -100,7 +104,9 @@ class ExerciceDetailPage extends StatelessWidget {
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: exercice.secondaryMuscles.map((sm) => Chip(label: Text(sm.name))).toList(),
+                      children: exercice.secondaryMuscles
+                          .map((sm) => Chip(label: Text(sm.name)))
+                          .toList(),
                     ),
                     const SizedBox(height: 16),
                   ],

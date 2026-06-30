@@ -57,8 +57,8 @@ class PublicationModel extends Publication {
       author: AuthorModel.fromMap(map['user'] as Map<String, dynamic>),
       likes: map['likes'] as int,
       comments: map['comments'] as int,
-      hasLiked:  map['has_liked'] as bool,
-      hasCommented:  map['has_commented'] as bool,
+      hasLiked: map['has_liked'] as bool,
+      hasCommented: map['has_commented'] as bool,
     );
   }
 }

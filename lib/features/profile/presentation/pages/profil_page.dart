@@ -29,8 +29,6 @@ class ProfilPage extends StatelessWidget {
 class ProfilePageContent extends StatelessWidget {
   const ProfilePageContent({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,8 +55,7 @@ class ProfilePageContent extends StatelessWidget {
             ),
           ],
           child: BlocBuilder<ProfileBloc, ProfileState>(
-            buildWhen: (previous, current) =>
-                current is! ProfileFailure,
+            buildWhen: (previous, current) => current is! ProfileFailure,
             builder: (context, state) {
               if (state is ProfileLoading || state is ProfileInitial) {
                 return const Scaffold(

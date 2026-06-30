@@ -10,10 +10,7 @@ import '../../domain/repositories/recommendations_repository.dart';
 import '../datasources/recommendations_local_datasource.dart';
 import '../datasources/recommendations_remote_datasource.dart';
 
-class RecommendationsRepositoryImpl
-    with LoggerMixin
-    implements RecommendationsRepository {
-
+class RecommendationsRepositoryImpl with LoggerMixin implements RecommendationsRepository {
   RecommendationsRepositoryImpl({
     required this.localDataSource,
     required this.remoteDatasource,
@@ -23,8 +20,7 @@ class RecommendationsRepositoryImpl
   final RecommendationsRemoteDatasource remoteDatasource;
 
   @override
-  String get loggerName =>
-      'Recommendations.Data.RecommendationsRepositoryImpl';
+  String get loggerName => 'Recommendations.Data.RecommendationsRepositoryImpl';
 
   @override
   TaskEither<Failure, DishAnalysis> analyzeDish({

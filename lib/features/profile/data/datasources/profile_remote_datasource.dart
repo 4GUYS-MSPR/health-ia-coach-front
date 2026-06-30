@@ -72,7 +72,7 @@ class ProfileRemoteDatasourceImpl implements ProfileRemoteDatasource {
       'first_name': ?firstname,
       'last_name': ?lastname,
     };
-    
+
     if (userPayload.isNotEmpty) {
       await dio.patch('/api/user/$userId/', data: userPayload);
     }
@@ -88,7 +88,7 @@ class ProfileRemoteDatasourceImpl implements ProfileRemoteDatasource {
       'workout_frequency': ?workoutFrequency,
       'level': ?level,
     };
-    
+
     if (memberPayload.isNotEmpty) {
       await dio.patch('/api/member/$memberId/', data: memberPayload);
     }

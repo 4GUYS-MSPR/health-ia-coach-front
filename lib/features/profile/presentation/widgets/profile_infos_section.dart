@@ -34,7 +34,9 @@ class _ProfileInfosSectionState extends State<ProfileInfosSection> {
   void _initControllers() {
     _ageCtrl = TextEditingController(text: widget.profile.age.toString());
     _bmiCtrl = TextEditingController(text: widget.profile.bmi?.toString() ?? "");
-    _fatPercentageCtrl = TextEditingController(text: widget.profile.fatPercentage?.toString() ?? "");
+    _fatPercentageCtrl = TextEditingController(
+      text: widget.profile.fatPercentage?.toString() ?? "",
+    );
     _heightCtrl = TextEditingController(text: widget.profile.height?.toString() ?? "");
     _weightCtrl = TextEditingController(text: widget.profile.weight?.toString() ?? "");
     _workoutFreqCtrl = TextEditingController(text: widget.profile.workoutFrequency.toString());
