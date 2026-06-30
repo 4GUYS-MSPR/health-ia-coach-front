@@ -1,85 +1,100 @@
-import 'package:file_picker/file_picker.dart';
-import 'package:health_ia_care/errors/failure.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource datasource;
-  final AuthLocalDataSource authLocalDataSource;
+import '../../../../core/errors/failures.dart';
+import '../../../../core/logging/logger_mixin.dart';
+import '../../domain/entities/auth_session.dart';
+import '../../domain/errors/auth_failures.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../datasources/auth_local_datasource.dart';
+import '../datasources/auth_remote_datasource.dart';
+import '../models/auth_session_model.dart';
 
-  AuthRepositoryImpl(this.datasource, this.authLocalDataSource);
+class AuthRepositoryImpl with LoggerMixin implements AuthRepository {
+  final AuthRemoteDatasource remoteDatasource;
+  final AuthLocalDataSource localDatasource;
+
+  AuthRepositoryImpl({
+    required this.remoteDatasource,
+    required this.localDatasource,
+  });
 
   @override
-  Future<Either<Failure, bool>> register({
+  TaskEither<Failure, AuthSessionModel> register({
     required String username,
     required String password,
     required String structureCode,
-  }) async {
-    try {
-      return Right(
-        await datasource.register(
-          password: password,
+  }) {
+    return TaskEither.tryCatch(
+      () async {
+        await remoteDatasource.register(
           username: username,
+          password: password,
           structureCode: structureCode,
-        ),
-      );
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
-  }
+        );
 
-  @override
-  Future<Either<Failure, bool>> login({required String username, required String password}) async {
-    try {
-      return Right(
-        await datasource.login(
+        return await remoteDatasource.login(
           username: username,
           password: password,
-        ),
-      );
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
+        );
+      },
+      (error, stackTrace) {
+        return UnknowAuthFailure();
+      },
+    );
   }
 
   @override
-  Future<Either<Failure, UserModel>> getCurrentUser() async {
-    try {
-      final user = await datasource.getCurrentUser();
-      if (user == null) {
-        return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
-      }
-      return Right(user);
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
+  TaskEither<Failure, AuthSessionModel> login({
+    required String username,
+    required String password,
+  }) {
+    return TaskEither.tryCatch(
+      () async {
+        final authSession = await remoteDatasource.login(
+          username: username,
+          password: password,
+        );
+        await localDatasource.storeAuthSession(authSession);
+
+        return authSession;
+      },
+      (error, stackTrace) {
+        logger.severe("Login failed", error, stackTrace);
+        return UnknowAuthFailure();
+      },
+    );
   }
 
   @override
-  Future<Either<Failure, bool>> logout() async {
-    try {
-      return Right(await datasource.logout());
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
+  TaskEither<Failure, Unit> logout() {
+    return TaskEither.tryCatch(
+      () async {
+        try {
+          await remoteDatasource.logout();
+        } catch (e) {
+          rethrow;
+        } finally {
+          await localDatasource.clearSession();
+        }
+        return unit;
+      },
+      (error, stackTrace) {
+        return UnknowAuthFailure(
+          debugMessage: error.toString(),
+        );
+      },
+    );
   }
 
   @override
-  Future<Either<Failure, UserModel>> updateAvatarRepo({required PlatformFile file}) async {
-    try {
-      String? id = await authLocalDataSource.getUserId();
-
-      if (id == null) {
-        return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
-      }
-
-      int convertedId = int.parse(id);
-      return Right(await datasource.updateAvatarData(file: file, id: convertedId));
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
+  TaskEither<Failure, AuthSession?> getSession() {
+    return TaskEither.tryCatch(
+      () async {
+        return await localDatasource.getAuthSession();
+      },
+      (error, stackTrace) {
+        return UnknownFailure();
+      },
+    );
   }
 }

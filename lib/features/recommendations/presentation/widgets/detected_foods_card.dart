@@ -17,20 +17,29 @@ class DetectedFoodsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card.outlined(
-      margin: .zero,
+      margin: EdgeInsets.zero,
       color: context.colorScheme.surfaceContainerHigh,
-      child: Container(
-        padding: .all(8),
-        width: .infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              context.l10n.recommendationDetectedFoodsTitle,
-              style: context.textTheme.titleMedium?.copyWith(
-                fontWeight: .bold,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.restaurant_menu,
+                  color: context.colorScheme.primary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  context.l10n.recommendationDetectedFoodsTitle,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
+            const SizedBox(height: 16),
             if (foods.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -40,20 +49,57 @@ class DetectedFoodsCard extends StatelessWidget {
                 ),
               )
             else
-              ListView.builder(
+              ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: foods.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final food = foods[index];
-                  return Card(
-                    margin: .zero,
-                    child: ListTile(
-                      dense: true,
-                      title: Text(food.name),
-                      subtitle: LinearProgressIndicator(
-                        value: _clampRatio(food.confidence),
+                  final ratio = _clampRatio(food.confidence);
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: context.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: context.colorScheme.outlineVariant,
                       ),
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              food.name,
+                              style: context.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${(ratio * 100).toStringAsFixed(0)}%",
+                              style: context.textTheme.bodySmall?.copyWith(
+                                color: context.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: LinearProgressIndicator(
+                            value: ratio,
+                            minHeight: 6,
+                            backgroundColor: context.colorScheme.primaryContainer,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              context.colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },

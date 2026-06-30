@@ -1,10 +1,12 @@
 import 'package:fpdart/fpdart.dart';
 
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecases/no_params.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../errors/failure.dart';
+import '../entities/recommendation.dart';
 import '../repositories/recommendations_repository.dart';
 
-class RecommendationsRequestUsecase implements UseCase<String, NoParams> {
+class RecommendationsRequestUsecase implements Usecase<Recommendation, NoParams> {
   final RecommendationsRepository repository;
 
   RecommendationsRequestUsecase({
@@ -12,7 +14,7 @@ class RecommendationsRequestUsecase implements UseCase<String, NoParams> {
   });
 
   @override
-  Future<Either<Failure, String>> call(NoParams params) async {
-    return await repository.recommendationsRequest();
+  TaskEither<Failure, Recommendation> call(NoParams params) {
+    return repository.recommendationsRequest();
   }
 }

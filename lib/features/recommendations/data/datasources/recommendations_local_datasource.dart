@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -219,7 +218,7 @@ class RecommendationsLocalDatasourceImpl
 
     final rawScores = await _extractScores(outputs);
     for (final t in outputs.values) {
-      t?.dispose();
+      t.dispose();
     }
     final probabilities = _softmax(rawScores);
 
@@ -349,11 +348,10 @@ class RecommendationsLocalDatasourceImpl
       throw Exception('Tenseur de sortie "$_outputName" introuvable');
     }
     final raw = await outputTensor.asList();
-    if (raw is List && raw.isNotEmpty && raw.first is List) {
+    if (raw.isNotEmpty && raw.first is List) {
       return List<double>.from(raw.first as List);
     }
-    if (raw is List) return List<double>.from(raw);
-    throw Exception('Format de sortie inattendu : ${raw.runtimeType}');
+    return List<double>.from(raw);
   }
 
   List<double> _softmax(List<double> logits) {

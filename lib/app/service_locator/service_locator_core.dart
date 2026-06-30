@@ -6,6 +6,8 @@ import 'init/logger_init.dart';
 import 'modules/locale_cubit_module.dart';
 import 'modules/network_module.dart';
 import 'modules/router_module.dart';
+import 'modules/secure_storage_module.dart';
+import 'modules/theme_cubit_module.dart';
 
 Future<void> registerCoreDependencies(GetIt sl) async {
   // Inits
@@ -14,7 +16,9 @@ Future<void> registerCoreDependencies(GetIt sl) async {
   await initHydratedStorage();
 
   // Modules
+  registerSecureStorage(sl);
   registerLocaleCubit(sl);
+  registerThemeCubit(sl);
   registerNetwork(sl);
   registerRouter(sl);
 }

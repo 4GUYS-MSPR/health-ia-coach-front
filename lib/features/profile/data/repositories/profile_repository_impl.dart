@@ -1,114 +1,64 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:health_ia_care/features/profile/data/datasources/profile_local_datasource.dart';
-import 'package:health_ia_care/features/profile/data/models/member_model.dart';
 
-import 'package:health_ia_care/features/profile/domain/repositories/profile_repository.dart';
-import 'package:health_ia_care/features/auth/data/models/user_model.dart';
-import 'package:health_ia_care/errors/failure.dart';
-import 'package:health_ia_care/features/profile/data/datasources/profile_remote_datasource.dart';
+import '../../../../core/errors/failures.dart';
+import '../../domain/entities/profile.dart';
+import '../../domain/repositories/profile_repository.dart';
+import '../datasources/profile_remote_datasource.dart';
+import '../models/profile_model.dart';
 
-class ProfileRepositoryImpl implements ProfileRepository{
-  final ProfileRemoteDatasource datasource;
-  final ProfileLocalDatasource profileLocalDatasource;
-  final AuthLocalDataSource authLocalDataSource;
+class ProfileRepositoryImpl implements ProfileRepository {
+  final ProfileRemoteDatasource remoteDatasource;
 
-  ProfileRepositoryImpl(this.datasource, this.profileLocalDatasource, this.authLocalDataSource);
+  ProfileRepositoryImpl({
+    required this.remoteDatasource,
+  });
 
   @override
-  Future<Either<Failure, UserModel>> updateUserProfile({
-    required String username,
-    required String firstname,
-    required String lastname
-  }) async {
-    try{
-      String? id = await profileLocalDatasource.getUserId();
+  TaskEither<Failure, Profile> getProfile() {
+    return TaskEither<Failure, ProfileModel>.tryCatch(
+      () => remoteDatasource.fetchCurrentProfile(),
+      (error, stackTrace) => UnknownFailure(debugMessage: error.toString()),
+    ).map((model) => model as Profile);
+  }
 
-      if (id == null) {
-        return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
-      }
+  @override
+  TaskEither<Failure, Profile> updateAvatar({required PlatformFile file}) {
+    return TaskEither<Failure, ProfileModel>.tryCatch(
+      () => remoteDatasource.updateAvatar(file: file),
+      (error, stackTrace) => UnknownFailure(debugMessage: error.toString()),
+    ).map((model) => model as Profile);
+  }
 
-      int? convertedId = int.tryParse(id);
-
-
-      final user = await datasource.updateUserProfile(
-        username: username, 
+  @override
+  TaskEither<Failure, Profile> updateProfile({
+    String? username,
+    String? firstname,
+    String? lastname,
+    int? age,
+    int? gender,
+    double? bmi,
+    double? fatPercentage,
+    double? height,
+    double? weight,
+    int? workoutFrequency,
+    int? level,
+  }) {
+    return TaskEither<Failure, ProfileModel>.tryCatch(
+      () => remoteDatasource.updateProfile(
+        username: username,
         firstname: firstname,
         lastname: lastname,
-        id: convertedId,
-        );
-
-      if (user == null) {
-        return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
-      }
-      return Right(user);
-    } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
-    }
-  }
-  @override
-  Future<Either<Failure, MemberModel>> getMemberStats() async {
-    try{
-      String? id = await profileLocalDatasource.getMemberId();
-
-      if (id == null) {
-        return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
-      }
-      int? convertedId = int.tryParse(id);
-
-      final user = await datasource.getMemberStats(
-        id: convertedId,        );
-
-      if (user == null) {
-        return Left(ServerFailure(message: "Utilisateur non trouvé ou session expirée"));
-      }
-      return Right(user);
-    } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
-    }
-  }
-  @override
-  Future<Either<Failure, MemberModel>> updateMemberProfile({
-    required int age,
-    required double bmi,
-    required double fatPercentage,
-    required double height,
-    required double weight,
-    required int workoutFrequency,
-    required int gender,
-    required int level,
-    required int subscription,
-  }) async {
-    try{
-      String? id = await profileLocalDatasource.getMemberId();
-
-      if (id == null) {
-        return Left(ServerFailure(message: "Session expirée ou ID introuvable"));
-      }
-
-      int convertedId = int.parse(id);
-
-      final member = await datasource.updateMemberProfile(
         age: age,
+        gender: gender,
         bmi: bmi,
         fatPercentage: fatPercentage,
         height: height,
         weight: weight,
         workoutFrequency: workoutFrequency,
-        gender: gender,
         level: level,
-        subscription: subscription,
-        id: convertedId,
-        );
-
-      if (member == null) {
-        return Left(ServerFailure(message: "Membre non trouvé ou session expirée"));
-      }
-      return Right(member);
-    } catch (e) {
-        return Left(ServerFailure(message: e.toString()));
-    }
-
+      ),
+      (error, stackTrace) => UnknownFailure(debugMessage: error.toString()),
+    ).map((model) => model as Profile);
   }
-
 }

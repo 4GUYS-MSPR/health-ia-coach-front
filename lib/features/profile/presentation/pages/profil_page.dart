@@ -1,108 +1,57 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:health_ia_care/core/extensions/l10n_extension.dart';
-import 'package:health_ia_care/core/shared/widgets/locale_dropdown.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
-import 'package:health_ia_care/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/avatar.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info.dart';
-import '../../../../core/shared/widgets/theme/theme_switch_button.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/display_member_info.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/section_title.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_modal_form.dart';
-import 'package:health_ia_care/features/profile/presentation/widgets/personal_user_info_modal_form.dart';
+import '../../../../app/service_locator/service_locator.dart';
+import '../../../../core/extensions/l10n_extension.dart';
+import '../../../../core/extensions/theme_extension.dart';
+import '../../../../core/shared/widgets/locale/select_locale_dialog.dart';
+import '../../../../core/shared/widgets/theme/select_theme_dialog.dart';
 
-import '../../../recommendations/presentation/blocs/recommendations/recommendations_bloc.dart';
-import '../../data/models/member_model.dart';
+import '../bloc/profile_bloc.dart';
+import '../../../../features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import '../widgets/avatar.dart';
+import '../widgets/profile_account_section.dart';
+import '../widgets/profile_infos_section.dart';
 
-class ProfilPage extends StatefulWidget {
+class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});
 
   @override
-  State<ProfilPage> createState() => _ProfilPageState();
-}
-
-class _ProfilPageState extends State<ProfilPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _refreshData();
-    });
-  }
-
-  Future<void> _refreshData() async {
-    context.read<AuthBloc>().add(AuthGetUserEvent());
-    context.read<ProfileBloc>().add(DisplayMemberRequestEvent());
-
-    await Future<void>.delayed(const Duration(milliseconds: 500));
-  }
-
-  void showRecommandationModal(BuildContext context, MemberModel member) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext context) {
-        context.read<RecommendationsBloc>().add(RecommendationsRequest());
-        return Container(
-          height: 256,
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: BlocBuilder<RecommendationsBloc, RecommendationsState>(
-            builder: (BuildContext context, RecommendationsState state) {
-              switch (state) {
-                case RecommendationsSuccess _:
-                  return Center(
-                    child: Text(state.output),
-                  );
-          
-                case RecommendationsFailure _:
-                  return Center(
-                    child: Text(state.message),
-                  );
-          
-                default:
-                  return Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-              }
-            },
-          ),
-        );
-      },
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<ProfileBloc>()..add(GetProfileEvent()),
+      child: const ProfilePageContent(),
     );
   }
+}
+
+class ProfilePageContent extends StatelessWidget {
+  const ProfilePageContent({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: RefreshIndicator.adaptive(
-        onRefresh: _refreshData,
+        onRefresh: () async => context.read<ProfileBloc>().add(GetProfileEvent()),
         child: MultiBlocListener(
           listeners: [
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is AuthLogoutSucess) {
-                  context.replace('/login');
-                }
-              },
-            ),
             BlocListener<ProfileBloc, ProfileState>(
               listener: (context, state) {
-                if (state is ProfileUpdateSuccess) {
-                  context.read<AuthBloc>().add(AuthGetUserEvent());
-                  context.read<ProfileBloc>().add(DisplayMemberRequestEvent());
+                if (state is ProfileFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message)),
+                  );
                 }
               },
             ),
           ],
-          child: BlocBuilder<AuthBloc, AuthState>(
+          child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
-              if (state is AuthLoading || state is AuthInitial) {
+              if (state is ProfileLoading || state is ProfileInitial) {
                 return const Scaffold(
                   body: Center(
                     child: CircularProgressIndicator.adaptive(),
@@ -110,8 +59,8 @@ class _ProfilPageState extends State<ProfilPage> {
                 );
               }
 
-              if (state is AuthSuccess || state is AuthUpdateAvatarSuccess) {
-                state = state as AuthSuccess;
+              if (state is ProfileLoaded) {
+                final profile = state.profile;
                 return SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Padding(
@@ -120,130 +69,83 @@ class _ProfilPageState extends State<ProfilPage> {
                       child: Column(
                         children: [
                           Avatar(
-                            user: state.user,
+                            profile: profile,
                             onTapEdit: () async {
                               FilePickerResult? result = await FilePicker.pickFiles(
                                 type: FileType.image,
                               );
                               if (!context.mounted) return;
                               if (result != null) {
-                                context.read<AuthBloc>().add(
-                                  AuthUpdateAvatarEvent(file: result.files.first),
+                                context.read<ProfileBloc>().add(
+                                  UpdateAvatarEvent(result.files.first),
                                 );
                               }
                             },
                           ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          SectionTitle(
-                            title: context.l10n.profileMyAccountSectionTitle,
-                            onTapEdit: () {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                useSafeArea: true,
-                                isScrollControlled: true,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height * 0.9,
-                                    child: PersonalUserModalForm(
-                                      user: (state as AuthSuccess).user,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          PersonalUserInfo(
-                            user: state.user,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Divider(
-                            color: Theme.of(context).colorScheme.primary,
-                            indent: 50,
-                            endIndent: 50,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          BlocBuilder<ProfileBloc, ProfileState>(
-                            builder: (context, profileState) {
-                              switch (profileState) {
-                                case ProfileMemberUpdateSuccess(member: final member) ||
-                                    ProfileGetTrainingSuccess(member: final member):
-                                  return Column(
-                                    children: [
-                                      SectionTitle(
-                                        title: context.l10n.profileMyInfosSectionTitle,
-                                        onTapEdit: () {
-                                          showModalBottomSheet<void>(
-                                            context: context,
-                                            useSafeArea: true,
-                                            isScrollControlled: true,
-                                            builder: (BuildContext context) {
-                                              return SizedBox(
-                                                height: MediaQuery.of(context).size.height * 0.9,
-                                                child: PersonalUserInfoModalForm(member: member),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      DisplayMemberInfo(
-                                        member: member,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      FilledButton.icon(
-                                        label: Text('Demander une recommandation'),
-                                        icon: Icon(Icons.dinner_dining),
-                                        onPressed: () => showRecommandationModal(context, member),
-                                      ),
-                                    ],
-                                  );
-
-                                default:
-                                  return Center(child: CircularProgressIndicator.adaptive());
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Divider(
-                            color: Theme.of(context).colorScheme.primary,
-                            indent: 50,
-                            endIndent: 50,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 16),
                           Text(
-                            context.l10n.profileSettingsSectionTitle,
-                            style: TextStyle(fontSize: 32),
+                            context.l10n.profileHello(profile.firstname),
+                            style: context.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
+                          const SizedBox(height: 16),
+                          ProfileAccountSection(profile: profile),
+                          const SizedBox(height: 8),
+                          ProfileInfosSection(profile: profile),
+                          const SizedBox(height: 8),
+                          Card.filled(
+                            margin: EdgeInsets.zero,
+                            clipBehavior: Clip.antiAlias,
+                            child: ExpansionTile(
+                              leading: const Icon(Symbols.settings),
+                              shape: const Border.fromBorderSide(BorderSide.none),
+                              title: Text(context.l10n.profileSettingsSectionTitle),
+                              children: [
+                                ListTile(
+                                  dense: true,
+                                  leading: const Icon(Symbols.routine),
+                                  title: Text(context.l10n.profileAppThemeTitle),
+                                  trailing: const Icon(Symbols.chevron_right),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => SelectThemeDialog(),
+                                    );
+                                  },
+                                ),
+                                ListTile(
+                                  dense: true,
+                                  leading: const Icon(Symbols.language),
+                                  title: Text(context.l10n.profileLanguageTitle),
+                                  trailing: const Icon(Symbols.chevron_right),
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => SelectLocaleDialog(),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Card.filled(
+                            margin: EdgeInsets.zero,
+                            child: AboutListTile(
+                              icon: Icon(Symbols.info),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
                           SizedBox(
-                            height: 20,
-                          ),
-                          SwitchThemeButton(),
-                          LocaleDropdown(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              context.read<AuthBloc>().add(AuthLogoutEvent());
-                            },
-                            child: Text(context.l10n.profileLogOutButtonLabel),
+                            width: double.infinity,
+                            child: FilledButton.tonalIcon(
+                              onPressed: () {
+                                context.read<AuthBloc>().add(AuthLogoutEvent());
+                              },
+                              icon: const Icon(Symbols.logout),
+                              label: Text(context.l10n.profileLogOutButtonLabel),
+                            ),
                           ),
                         ],
                       ),
@@ -252,10 +154,10 @@ class _ProfilPageState extends State<ProfilPage> {
                 );
               }
               return SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(
                   height: 400,
-                  child: const Center(child: Text("Erreur de récupération des données")),
+                  child: Center(child: Text(context.l10n.profileDataError)),
                 ),
               );
             },

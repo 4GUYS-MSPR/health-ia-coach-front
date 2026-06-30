@@ -36,7 +36,7 @@ class AuthInterceptor extends Interceptor with LoggerMixin {
     }
 
     try {
-      final token = await authLocalDatasource.getToken();
+      final token = await authLocalDatasource.getAccessToken();
 
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../../core/extensions/l10n_extension.dart';
+
 import '../../domain/entities/detected_food.dart';
-import '../blocs/recommendations/recommendations_bloc.dart';
+import '../cubits/analyze_dish_cubit/analyze_dish_cubit.dart';
+import '../cubits/analyze_dish_cubit/analyze_dish_state.dart';
 import '../widgets/detected_foods_card.dart';
 import '../widgets/dish_image.dart';
 import '../widgets/fiability_card.dart';
@@ -26,24 +29,24 @@ class RecommendationsCompactLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RecommendationsBloc, RecommendationsState>(
+    return BlocConsumer<AnalyzeDishCubit, AnalyzeDishState>(
       listener: (context, state) {
-        if (state is RecommendationsFailure) {
+        if (state is AnalyzeDishFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
         }
       },
       builder: (context, state) {
-        final isLoading = state is RecommendationsLoading;
-        final analysis  = state is RecommendationsLoaded ? state.analysis : null;
+        final isLoading = state is AnalyzeDishLoading;
+        final analysis  = state is AnalyzeDishSuccess ? state.analysis : null;
         final foods     = analysis?.foods ?? const <DetectedFood>[];
         final nutrition = analysis?.nutrition;
 
         final imagePath = switch (state) {
-          RecommendationsLoading(:final imagePath)  => imagePath,
-          RecommendationsLoaded(:final imagePath)   => imagePath,
-          RecommendationsFailure(:final imagePath)  => imagePath,
+          AnalyzeDishLoading(:final imagePath)  => imagePath,
+          AnalyzeDishSuccess(:final imagePath)   => imagePath,
+          AnalyzeDishFailure(:final imagePath)  => imagePath,
           _ => null,
         };
 
@@ -90,14 +93,14 @@ class RecommendationsCompactLayout extends StatelessWidget {
                 if (isLoading)
                   Container(
                     color: Colors.black45,
-                    child: const Center(
+                    child:  Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 16,
                         children: [
                           CircularProgressIndicator(),
                           Text(
-                            "Analyse en cours...",
+                            context.l10n.recommendationGeneratingMessage,
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
@@ -109,6 +112,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
           ),
 
           floatingActionButton: FloatingActionButton(
+            heroTag: 'recommendations_fab',
             onPressed: isLoading
                 ? null
                 : () async {
@@ -118,9 +122,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
                       ),
                     );
                     if (!context.mounted || result == null) return;
-                    context.read<RecommendationsBloc>().add(
-                      AnalyzeDishRequested(image: result),
-                    );
+                    context.read<AnalyzeDishCubit>().analyzeDish(result);
                   },
             child: Icon(
               Symbols.add_a_photo,

@@ -1,20 +1,56 @@
+import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:health_ia_care/core/usecases/usecase.dart';
-import 'package:health_ia_care/features/auth/domain/repositories/auth_repository.dart';
-import 'package:health_ia_care/errors/failure.dart';
 
-class LoginParams {
+import '../../../../core/errors/failures.dart';
+import '../../../../core/logging/logger_mixin.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/auth_session.dart';
+import '../errors/auth_failures.dart';
+import '../repositories/auth_repository.dart';
+
+class LoginUsecaseParams extends Equatable {
   final String username;
   final String password;
-  const LoginParams({required this.username, required this.password});
-}
 
-class LoginUseCase implements UseCase<bool, LoginParams> {
-  final AuthRepository repository;
-  LoginUseCase(this.repository);
+  const LoginUsecaseParams({
+    required this.username,
+    required this.password,
+  });
 
   @override
-  Future<Either<Failure, bool>> call(LoginParams params) async {
-    return await repository.login(username: params.username, password: params.password);
+  List<Object?> get props => [
+    username,
+    password,
+  ];
+}
+
+class LoginUsecase with LoggerMixin implements Usecase<AuthSession, LoginUsecaseParams> {
+  final AuthRepository repository;
+
+  LoginUsecase({
+    required this.repository,
+  });
+
+  @override
+  String get loggerName => 'Auth.Domain.Usecases.LoginWithPasswordUsecase';
+
+  @override
+  TaskEither<Failure, AuthSession> call(LoginUsecaseParams params) {
+    logger.fine('Sign-in with password requested');
+
+    if (params.username.isEmpty) {
+      logger.warning('Login validation failed: empty username');
+      return TaskEither.left(const EmptyPasswordFailure());
+    }
+
+    if (params.password.isEmpty) {
+      logger.warning('Login validation failed: empty password');
+      return TaskEither.left(const EmptyPasswordFailure());
+    }
+
+    return repository.login(
+      username: params.username,
+      password: params.password,
+    );
   }
 }
