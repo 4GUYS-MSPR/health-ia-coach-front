@@ -15,7 +15,7 @@ class SelectThemeDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(context.l10n.settingsAppThemeTitle),
-      contentPadding: .only(top: 16),
+      contentPadding: const .only(top: 16),
       content: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return RadioGroup<ThemeMode>(
@@ -30,23 +30,23 @@ class SelectThemeDialog extends StatelessWidget {
               children: [
                 RadioListTile(
                   value: ThemeMode.system,
-                  secondary: Icon(Symbols.routine),
+                  secondary: const Icon(Symbols.routine),
                   controlAffinity: .trailing,
-                  contentPadding: .symmetric(horizontal: 24),
+                  contentPadding: const .symmetric(horizontal: 24),
                   title: Text(context.l10n.themeSystemName),
                 ),
                 RadioListTile(
                   value: ThemeMode.dark,
-                  secondary: Icon(Symbols.dark_mode),
+                  secondary: const Icon(Symbols.dark_mode),
                   controlAffinity: .trailing,
-                  contentPadding: .symmetric(horizontal: 24),
+                  contentPadding: const .symmetric(horizontal: 24),
                   title: Text(context.l10n.themeDarkName),
                 ),
                 RadioListTile(
                   value: ThemeMode.light,
-                  secondary: Icon(Symbols.light_mode),
+                  secondary: const Icon(Symbols.light_mode),
                   controlAffinity: .trailing,
-                  contentPadding: .symmetric(horizontal: 24),
+                  contentPadding: const .symmetric(horizontal: 24),
                   title: Text(context.l10n.themeLightName),
                 ),
               ],

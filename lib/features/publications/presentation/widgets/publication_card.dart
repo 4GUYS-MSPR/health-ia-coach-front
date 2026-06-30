@@ -44,14 +44,14 @@ class PublicationCard extends StatelessWidget {
                             )
                           : null,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       publication.author.username,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   publication.description,
                   style: context.textTheme.titleMedium,

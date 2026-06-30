@@ -29,7 +29,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
         );
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }
@@ -41,7 +41,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
         return await remoteDataSource.getAllPublications();
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }
@@ -56,7 +56,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
         return await remoteDataSource.setLiked(liked: liked, id: id);
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }

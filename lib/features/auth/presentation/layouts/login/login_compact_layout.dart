@@ -61,12 +61,12 @@ class LoginCompactLayout extends StatelessWidget {
                         const SizedBox(height: 32),
                         Form(
                           key: loginCubit.formKey,
-                          child: AutofillGroup(
+                          child: const AutofillGroup(
                             child: Column(
                               children: [
-                                const LoginUsernameFormField(),
-                                const SizedBox(height: 12),
-                                const LoginPasswordFormField(),
+                                LoginUsernameFormField(),
+                                SizedBox(height: 12),
+                                LoginPasswordFormField(),
                               ],
                             ),
                           ),
@@ -76,13 +76,13 @@ class LoginCompactLayout extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SliverFillRemaining(
+                  const SliverFillRemaining(
                     hasScrollBody: false,
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24.0),
-                        child: const NoAccountRegisterButton(),
+                        padding: EdgeInsets.symmetric(vertical: 24.0),
+                        child: NoAccountRegisterButton(),
                       ),
                     ),
                   ),

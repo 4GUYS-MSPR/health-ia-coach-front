@@ -39,7 +39,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ],
         child: ResponsiveLayoutBuilder(
-          compact: RegisterCompactLayout(),
+          compact: const RegisterCompactLayout(),
         ),
       ),
     );

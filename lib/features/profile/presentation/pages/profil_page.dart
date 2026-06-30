@@ -8,9 +8,8 @@ import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/extensions/theme_extension.dart';
 import '../../../../core/shared/widgets/locale/select_locale_dialog.dart';
 import '../../../../core/shared/widgets/theme/select_theme_dialog.dart';
-
-import '../bloc/profile_bloc.dart';
 import '../../../../features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import '../bloc/profile_bloc.dart';
 import '../widgets/avatar.dart';
 import '../widgets/profile_account_section.dart';
 import '../widgets/profile_infos_section.dart';
@@ -125,7 +124,7 @@ class ProfilePageContent extends StatelessWidget {
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => SelectThemeDialog(),
+                                      builder: (context) => const SelectThemeDialog(),
                                     );
                                   },
                                 ),
@@ -137,7 +136,7 @@ class ProfilePageContent extends StatelessWidget {
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => SelectLocaleDialog(),
+                                      builder: (context) => const SelectLocaleDialog(),
                                     );
                                   },
                                 ),

@@ -14,7 +14,7 @@ class SelectLocaleDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(context.l10n.settingsAppLanguageTitle),
-      contentPadding: .only(top: 16),
+      contentPadding: const .only(top: 16),
       content: SizedBox(
         width: .maxFinite,
         child: BlocBuilder<LocaleCubit, Locale?>(
@@ -35,14 +35,14 @@ class SelectLocaleDialog extends StatelessWidget {
                     value: locale,
                     secondary: CountryFlag.fromLanguageCode(
                       locale.languageCode,
-                      theme: ImageTheme(
+                      theme: const ImageTheme(
                         shape: RoundedRectangle(4),
                         width: 32,
                         height: 20,
                       ),
                     ),
                     controlAffinity: .trailing,
-                    contentPadding: .symmetric(horizontal: 24),
+                    contentPadding: const .symmetric(horizontal: 24),
                     title: Text(LocaleUtils.getLanguageNativeName(locale)),
                   );
                 },

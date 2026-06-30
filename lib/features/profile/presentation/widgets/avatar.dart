@@ -26,7 +26,7 @@ class Avatar extends StatelessWidget {
         clipBehavior: .none,
         children: [
           Container(
-            padding: .all(2),
+            padding: const .all(2),
             decoration: BoxDecoration(
               shape: .circle,
               color: context.colorScheme.outline,
@@ -47,7 +47,7 @@ class Avatar extends StatelessWidget {
               right: -12,
               child: IconButton.filledTonal(
                 onPressed: onTapEdit,
-                icon: Icon(
+                icon: const Icon(
                   Symbols.camera_alt,
                 ),
               ),

@@ -23,7 +23,7 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
             children: [
               const Icon(Icons.image, size: 48),
               const SizedBox(height: 8),
-              Text(media!.name, style: TextStyle(fontSize: 12)),
+              Text(media!.name, style: const TextStyle(fontSize: 12)),
             ],
           );
         }
@@ -33,7 +33,7 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
           children: [
             const Icon(Icons.videocam, size: 48),
             const SizedBox(height: 8),
-            Text(media!.name, style: TextStyle(fontSize: 12)),
+            Text(media!.name, style: const TextStyle(fontSize: 12)),
           ],
         );
       }
@@ -63,7 +63,7 @@ class _CustomFilePickerState extends State<CustomFilePicker> {
       },
       child: Container(
         decoration: BoxDecoration(
-          border: media == null ? Border.all() : Border(),
+          border: media == null ? Border.all() : const Border(),
           borderRadius: BorderRadius.circular(24),
         ),
         width: 150,

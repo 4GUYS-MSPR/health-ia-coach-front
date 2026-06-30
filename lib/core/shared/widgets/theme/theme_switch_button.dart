@@ -23,17 +23,17 @@ class SwitchThemeButton extends StatelessWidget {
             ButtonSegment(
               value: .system,
               label: Text(context.l10n.themeSystemName),
-              icon: Icon(Symbols.routine),
+              icon: const Icon(Symbols.routine),
             ),
             ButtonSegment(
               value: .light,
               label: Text(context.l10n.themeLightName),
-              icon: Icon(Symbols.light_mode),
+              icon: const Icon(Symbols.light_mode),
             ),
             ButtonSegment(
               value: .dark,
               label: Text(context.l10n.themeDarkName),
-              icon: Icon(Symbols.dark_mode),
+              icon: const Icon(Symbols.dark_mode),
             ),
           ],
           selected: {state},

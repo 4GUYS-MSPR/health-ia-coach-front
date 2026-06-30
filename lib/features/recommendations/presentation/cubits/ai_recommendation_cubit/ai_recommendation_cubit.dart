@@ -13,7 +13,7 @@ class AiRecommendationCubit extends Cubit<AiRecommendationState> {
   Future<void> getRecommendation() async {
     emit(AiRecommendationLoading());
 
-    final result = await recommendationsRequestUsecase(NoParams()).run();
+    final result = await recommendationsRequestUsecase(const NoParams()).run();
 
     result.fold(
       (failure) => emit(

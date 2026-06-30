@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
           ),
         ],
         child: ResponsiveLayoutBuilder(
-          compact: LoginCompactLayout(),
+          compact: const LoginCompactLayout(),
         ),
       ),
     );

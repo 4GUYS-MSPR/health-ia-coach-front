@@ -19,7 +19,7 @@ class CommentRepositoryImpl implements CommentRepository {
         return await remoteDataSource.getPublicationComments(publicationId: publicationId);
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }
@@ -37,7 +37,7 @@ class CommentRepositoryImpl implements CommentRepository {
         );
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }

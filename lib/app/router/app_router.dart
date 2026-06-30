@@ -62,7 +62,7 @@ class AppRouter with LoggerMixin {
               ProtectedGoRoute(
                 path: '/recommendations',
                 name: AppRoutes.recommendations,
-                builder: (context, state) => RecommendationsPage(),
+                builder: (context, state) => const RecommendationsPage(),
               ),
             ],
           ),

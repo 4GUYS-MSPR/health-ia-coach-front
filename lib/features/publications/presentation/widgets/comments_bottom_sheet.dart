@@ -60,10 +60,10 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   context.l10n.publicationCommentsBottomSheetTittle,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
               const Divider(height: 1),
@@ -84,7 +84,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   },
                   builder: (context, state) {
                     if (state is CommentLoading) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator.adaptive(),
                       );
                     }
@@ -125,7 +125,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                           ),
                           subtitle: Text(
                             comment.content,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           trailing: Text(
                             timeago.format(comment.createdAt),
@@ -149,7 +149,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                           decoration: InputDecoration(
                             hintText: context.l10n.publicationCommentsAddACommentFormFieldLabel,
                             border: InputBorder.none,
-                            hintStyle: TextStyle(fontSize: 14),
+                            hintStyle: const TextStyle(fontSize: 14),
                           ),
                           maxLines: null,
                         ),

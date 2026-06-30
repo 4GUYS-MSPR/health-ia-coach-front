@@ -98,10 +98,10 @@ class RecommendationsCompactLayout extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         spacing: 16,
                         children: [
-                          CircularProgressIndicator(),
+                          const CircularProgressIndicator(),
                           Text(
                             context.l10n.recommendationGeneratingMessage,
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
@@ -124,7 +124,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
                     if (!context.mounted || result == null) return;
                     context.read<AnalyzeDishCubit>().analyzeDish(result);
                   },
-            child: Icon(
+            child: const Icon(
               Symbols.add_a_photo,
               fill: 1,
             ),
