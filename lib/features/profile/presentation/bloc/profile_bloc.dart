@@ -37,16 +37,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _onUpdateProfile(UpdateProfileEvent event, Emitter<ProfileState> emit) async {
-    emit(ProfileLoading());
     final result = await updateProfileUseCase(event.params).run();
     result.fold(
       (failure) => emit(ProfileFailure(failure.toString())),
-      (profile) => emit(ProfileLoaded(profile)),
+      (profile) => emit(ProfileUpdateSuccess(profile)),
     );
   }
 
   Future<void> _onUpdateAvatar(UpdateAvatarEvent event, Emitter<ProfileState> emit) async {
-    emit(ProfileLoading());
     final result = await updateAvatarUseCase(
       UpdateAvatarParams(
         file: event.file,
@@ -54,7 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     ).run();
     result.fold(
       (failure) => emit(ProfileFailure(failure.toString())),
-      (profile) => emit(ProfileLoaded(profile)),
+      (profile) => emit(ProfileUpdateSuccess(profile)),
     );
   }
 }

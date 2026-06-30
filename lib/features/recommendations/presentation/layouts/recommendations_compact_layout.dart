@@ -39,14 +39,14 @@ class RecommendationsCompactLayout extends StatelessWidget {
       },
       builder: (context, state) {
         final isLoading = state is AnalyzeDishLoading;
-        final analysis  = state is AnalyzeDishSuccess ? state.analysis : null;
-        final foods     = analysis?.foods ?? const <DetectedFood>[];
+        final analysis = state is AnalyzeDishSuccess ? state.analysis : null;
+        final foods = analysis?.foods ?? const <DetectedFood>[];
         final nutrition = analysis?.nutrition;
 
         final imagePath = switch (state) {
-          AnalyzeDishLoading(:final imagePath)  => imagePath,
-          AnalyzeDishSuccess(:final imagePath)   => imagePath,
-          AnalyzeDishFailure(:final imagePath)  => imagePath,
+          AnalyzeDishLoading(:final imagePath) => imagePath,
+          AnalyzeDishSuccess(:final imagePath) => imagePath,
+          AnalyzeDishFailure(:final imagePath) => imagePath,
           _ => null,
         };
 
@@ -77,7 +77,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
                             nutrition?.fatsG,
                             suffix: 'g',
                           ),
-                          label:    nutrition?.label,
+                          label: nutrition?.label,
                           category: nutrition?.category,
                           mealType: nutrition?.mealType,
                         ),
@@ -93,15 +93,15 @@ class RecommendationsCompactLayout extends StatelessWidget {
                 if (isLoading)
                   Container(
                     color: Colors.black45,
-                    child:  Center(
+                    child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 16,
                         children: [
-                          CircularProgressIndicator(),
+                          const CircularProgressIndicator(),
                           Text(
                             context.l10n.recommendationGeneratingMessage,
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ],
                       ),
@@ -124,7 +124,7 @@ class RecommendationsCompactLayout extends StatelessWidget {
                     if (!context.mounted || result == null) return;
                     context.read<AnalyzeDishCubit>().analyzeDish(result);
                   },
-            child: Icon(
+            child: const Icon(
               Symbols.add_a_photo,
               fill: 1,
             ),

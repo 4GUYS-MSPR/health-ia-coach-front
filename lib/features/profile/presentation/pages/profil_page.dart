@@ -8,9 +8,8 @@ import '../../../../core/extensions/l10n_extension.dart';
 import '../../../../core/extensions/theme_extension.dart';
 import '../../../../core/shared/widgets/locale/select_locale_dialog.dart';
 import '../../../../core/shared/widgets/theme/select_theme_dialog.dart';
-
-import '../bloc/profile_bloc.dart';
 import '../../../../features/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
+import '../bloc/profile_bloc.dart';
 import '../widgets/avatar.dart';
 import '../widgets/profile_account_section.dart';
 import '../widgets/profile_infos_section.dart';
@@ -30,8 +29,6 @@ class ProfilPage extends StatelessWidget {
 class ProfilePageContent extends StatelessWidget {
   const ProfilePageContent({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,10 +43,19 @@ class ProfilePageContent extends StatelessWidget {
                     SnackBar(content: Text(state.message)),
                   );
                 }
+                if (state is ProfileUpdateSuccess) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(context.l10n.profileSaveSuccessMessage),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  );
+                }
               },
             ),
           ],
           child: BlocBuilder<ProfileBloc, ProfileState>(
+            buildWhen: (previous, current) => current is! ProfileFailure,
             builder: (context, state) {
               if (state is ProfileLoading || state is ProfileInitial) {
                 return const Scaffold(
@@ -59,8 +65,13 @@ class ProfilePageContent extends StatelessWidget {
                 );
               }
 
-              if (state is ProfileLoaded) {
-                final profile = state.profile;
+              final profile = switch (state) {
+                ProfileLoaded(:final profile) => profile,
+                ProfileUpdateSuccess(:final profile) => profile,
+                _ => null,
+              };
+
+              if (profile != null) {
                 return SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Padding(
@@ -110,7 +121,7 @@ class ProfilePageContent extends StatelessWidget {
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => SelectThemeDialog(),
+                                      builder: (context) => const SelectThemeDialog(),
                                     );
                                   },
                                 ),
@@ -122,7 +133,7 @@ class ProfilePageContent extends StatelessWidget {
                                   onTap: () {
                                     showDialog(
                                       context: context,
-                                      builder: (context) => SelectLocaleDialog(),
+                                      builder: (context) => const SelectLocaleDialog(),
                                     );
                                   },
                                 ),

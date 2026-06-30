@@ -255,13 +255,16 @@ class RecommendationsLocalDatasourceImpl
 
     List<Map<String, dynamic>> rows = await db.query(
       _tableName,
-      where: '$_labelColumn = ? OR $_labelColumn = ? OR $_labelColumn LIKE ? OR $_labelColumn LIKE ?',
+      where:
+          '$_labelColumn = ? OR $_labelColumn = ? OR $_labelColumn LIKE ? OR $_labelColumn LIKE ?',
       whereArgs: [cleanLabelEn, labelFr, '%$cleanLabelEn%', '%$labelFr%'],
       limit: 1,
     );
 
     if (rows.isEmpty) {
-      logger.warning('❌ Aucune donnée nutritionnelle trouvée dans SQLite pour "$cleanLabelEn" / "$labelFr"');
+      logger.warning(
+        '❌ Aucune donnée nutritionnelle trouvée dans SQLite pour "$cleanLabelEn" / "$labelFr"',
+      );
       return NutritionValuesModel.empty();
     }
 

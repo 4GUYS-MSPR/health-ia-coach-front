@@ -29,7 +29,7 @@ class LoginButton extends StatelessWidget {
     return FilledButton.icon(
       onPressed: onPressed,
       style: buttonStyle,
-      icon: Icon(Symbols.login),
+      icon: const Icon(Symbols.login),
       label: Text(context.l10n.authLoginButtonLabel),
     );
   }

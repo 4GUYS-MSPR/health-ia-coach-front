@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 
-
 import '../data/datasources/auth_local_datasource.dart';
 import '../data/datasources/auth_remote_datasource.dart';
 import '../data/repositories/auth_repository_impl.dart';

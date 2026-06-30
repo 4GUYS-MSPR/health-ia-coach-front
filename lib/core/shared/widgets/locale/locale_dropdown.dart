@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../utils/locale_utils.dart';
 import '../../cubits/locale_cubit/locale_cubit.dart';
 
-
 class LocaleDropdown extends StatelessWidget {
   const LocaleDropdown({super.key});
 

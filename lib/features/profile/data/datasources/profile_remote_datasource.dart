@@ -68,27 +68,27 @@ class ProfileRemoteDatasourceImpl implements ProfileRemoteDatasource {
 
     // 2. Mise à jour de l'identité (User)
     final userPayload = {
-      if (username != null) 'username': username,
-      if (firstname != null) 'first_name': firstname,
-      if (lastname != null) 'last_name': lastname,
+      'username': ?username,
+      'first_name': ?firstname,
+      'last_name': ?lastname,
     };
-    
+
     if (userPayload.isNotEmpty) {
       await dio.patch('/api/user/$userId/', data: userPayload);
     }
 
     // 3. Mise à jour des stats (Member)
     final memberPayload = {
-      if (age != null) 'age': age,
-      if (gender != null) 'gender': gender,
-      if (bmi != null) 'bmi': bmi,
-      if (fatPercentage != null) 'fat_percentage': fatPercentage,
-      if (height != null) 'height': height,
-      if (weight != null) 'weight': weight,
-      if (workoutFrequency != null) 'workout_frequency': workoutFrequency,
-      if (level != null) 'level': level,
+      'age': ?age,
+      'gender': ?gender,
+      'bmi': ?bmi,
+      'fat_percentage': ?fatPercentage,
+      'height': ?height,
+      'weight': ?weight,
+      'workout_frequency': ?workoutFrequency,
+      'level': ?level,
     };
-    
+
     if (memberPayload.isNotEmpty) {
       await dio.patch('/api/member/$memberId/', data: memberPayload);
     }

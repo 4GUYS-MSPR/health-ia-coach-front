@@ -60,10 +60,10 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   context.l10n.publicationCommentsBottomSheetTittle,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
               const Divider(height: 1),
@@ -84,7 +84,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   },
                   builder: (context, state) {
                     if (state is CommentLoading) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator.adaptive(),
                       );
                     }
@@ -112,11 +112,15 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                         CommentModel comment = _comments[index];
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: comment.author.avatarUrl != null 
-                                ? NetworkImage(AppSecrets.baseUrl + comment.author.avatarUrl!) 
+                            backgroundImage: comment.author.avatarUrl != null
+                                ? NetworkImage(AppSecrets.baseUrl + comment.author.avatarUrl!)
                                 : null,
-                            child: comment.author.avatarUrl == null 
-                                ? Text(comment.author.username.isNotEmpty ? comment.author.username[0].toUpperCase() : '?')
+                            child: comment.author.avatarUrl == null
+                                ? Text(
+                                    comment.author.username.isNotEmpty
+                                        ? comment.author.username[0].toUpperCase()
+                                        : '?',
+                                  )
                                 : null,
                           ),
                           title: Text(
@@ -125,7 +129,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                           ),
                           subtitle: Text(
                             comment.content,
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           trailing: Text(
                             timeago.format(comment.createdAt),
@@ -149,7 +153,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                           decoration: InputDecoration(
                             hintText: context.l10n.publicationCommentsAddACommentFormFieldLabel,
                             border: InputBorder.none,
-                            hintStyle: TextStyle(fontSize: 14),
+                            hintStyle: const TextStyle(fontSize: 14),
                           ),
                           maxLines: null,
                         ),

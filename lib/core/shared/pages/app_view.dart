@@ -20,7 +20,7 @@ class AppView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Symbols.cardiology),
+        leading: const Icon(Symbols.cardiology),
         title: Text(
           "HealthIA Care",
           style: context.textTheme.titleMedium?.copyWith(fontWeight: .bold),
@@ -46,7 +46,7 @@ class AppView extends StatelessWidget {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: context.l10n.navigationHomePageLabel,
           ),
           BottomNavigationBarItem(
@@ -54,7 +54,7 @@ class AppView extends StatelessWidget {
             label: context.l10n.recommendationNavigationLabel,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             label: context.l10n.navigationProfilePageLabel,
           ),
         ],

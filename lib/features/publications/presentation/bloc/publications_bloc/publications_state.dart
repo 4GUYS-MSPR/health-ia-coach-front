@@ -42,11 +42,3 @@ class GetPublicationsFailure extends PublicationsState {
   @override
   List<Object> get props => [message];
 }
-
-class PublicationsSetLikedLoading extends PublicationsState {}
-
-class PublicationsSetLikedSuccess extends PublicationsState {
-  final PublicationModel publication;
-
-  const PublicationsSetLikedSuccess({required this.publication});
-}

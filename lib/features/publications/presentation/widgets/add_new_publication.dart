@@ -104,7 +104,9 @@ class AddPublicationFormState extends State<AddPublicationForm> {
               ),
 
             TextFormField(
-              decoration: InputDecoration(labelText: context.l10n.publicationAddAPublicationDescriptionFormFieldLabel),
+              decoration: InputDecoration(
+                labelText: context.l10n.publicationAddAPublicationDescriptionFormFieldLabel,
+              ),
               controller: _descriptionController,
               validator: (value) {
                 if (value == null || value.isEmpty) {

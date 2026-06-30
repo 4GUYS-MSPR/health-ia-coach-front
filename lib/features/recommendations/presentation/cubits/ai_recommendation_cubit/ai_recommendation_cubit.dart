@@ -8,12 +8,12 @@ class AiRecommendationCubit extends Cubit<AiRecommendationState> {
   final RecommendationsRequestUsecase recommendationsRequestUsecase;
 
   AiRecommendationCubit({required this.recommendationsRequestUsecase})
-      : super(AiRecommendationInitial());
+    : super(AiRecommendationInitial());
 
   Future<void> getRecommendation() async {
     emit(AiRecommendationLoading());
 
-    final result = await recommendationsRequestUsecase(NoParams()).run();
+    final result = await recommendationsRequestUsecase(const NoParams()).run();
 
     result.fold(
       (failure) => emit(

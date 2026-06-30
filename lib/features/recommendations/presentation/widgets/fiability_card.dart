@@ -31,7 +31,7 @@ class FiabilityCard extends StatelessWidget {
               context.l10n.recommendationReliabilityDescription,
               style: context.textTheme.labelSmall,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Card.outlined(
               margin: .zero,
               child: LinearProgressIndicator(

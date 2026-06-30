@@ -246,6 +246,7 @@
     "authNoAccountRegister": "No account? Register",
     "authAlreadyHaveAccountLogin": "Already have an account? Login",
     "profileSaveButton": "Save",
+    "profileSaveSuccessMessage": "Changes saved successfully!",
     "profileAppThemeTitle": "App theme",
     "profileLanguageTitle": "Language",
     "settingsAppLanguageTitle": "App language",

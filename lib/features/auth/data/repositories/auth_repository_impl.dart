@@ -38,7 +38,7 @@ class AuthRepositoryImpl with LoggerMixin implements AuthRepository {
         );
       },
       (error, stackTrace) {
-        return UnknowAuthFailure();
+        return const UnknowAuthFailure();
       },
     );
   }
@@ -60,7 +60,7 @@ class AuthRepositoryImpl with LoggerMixin implements AuthRepository {
       },
       (error, stackTrace) {
         logger.severe("Login failed", error, stackTrace);
-        return UnknowAuthFailure();
+        return const UnknowAuthFailure();
       },
     );
   }
@@ -93,7 +93,7 @@ class AuthRepositoryImpl with LoggerMixin implements AuthRepository {
         return await localDatasource.getAuthSession();
       },
       (error, stackTrace) {
-        return UnknownFailure();
+        return const UnknownFailure();
       },
     );
   }

@@ -26,35 +26,35 @@ class NutritionValuesModel extends NutritionValues {
     }
 
     return NutritionValuesModel(
-      label:         map['label'] as String?,
-      calories:      readDouble('calories'),
-      proteinsG:     readDouble('protein'),       
-      carbsG:        readDouble('carbohydrates'), 
-      fatsG:         readDouble('fat'),           
-      fiberG:        readDouble('fiber'),
-      sugarsG:       readDouble('sugars'),
-      sodiumMG:      readDouble('sodium'),
+      label: map['label'] as String?,
+      calories: readDouble('calories'),
+      proteinsG: readDouble('protein'),
+      carbsG: readDouble('carbohydrates'),
+      fatsG: readDouble('fat'),
+      fiberG: readDouble('fiber'),
+      sugarsG: readDouble('sugars'),
+      sodiumMG: readDouble('sodium'),
       cholesterolMG: readDouble('cholesterol'),
       waterIntakeML: readDouble('water_intake'),
-      category:      map['category'] as String?,
-      mealType:      map['meal_type'] as String?,
+      category: map['category'] as String?,
+      mealType: map['meal_type'] as String?,
     );
   }
 
   factory NutritionValuesModel.empty() {
-  return const NutritionValuesModel(
-    calories:      0.0,
-    proteinsG:     0.0,
-    carbsG:        0.0,
-    fatsG:         0.0,
-    fiberG:        0.0,
-    sugarsG:       0.0,
-    sodiumMG:      0.0,
-    cholesterolMG: 0.0,
-    waterIntakeML: 0.0,
-    label:         null,
-    category:      null,
-    mealType:      null,
-  );
-}
+    return const NutritionValuesModel(
+      calories: 0.0,
+      proteinsG: 0.0,
+      carbsG: 0.0,
+      fatsG: 0.0,
+      fiberG: 0.0,
+      sugarsG: 0.0,
+      sodiumMG: 0.0,
+      cholesterolMG: 0.0,
+      waterIntakeML: 0.0,
+      label: null,
+      category: null,
+      mealType: null,
+    );
+  }
 }

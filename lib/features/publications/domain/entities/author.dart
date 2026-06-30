@@ -17,10 +17,10 @@ class Author extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        username,
-        firstname,
-        lastname,
-        avatarUrl,
-      ];
+    id,
+    username,
+    firstname,
+    lastname,
+    avatarUrl,
+  ];
 }

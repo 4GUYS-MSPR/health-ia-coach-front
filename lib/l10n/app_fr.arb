@@ -89,6 +89,7 @@
     "authNoAccountRegister": "Pas de compte ? S'inscrire",
     "authAlreadyHaveAccountLogin": "Déjà un compte ? Se connecter",
     "profileSaveButton": "Enregistrer",
+    "profileSaveSuccessMessage": "Modifications enregistrées avec succès !",
     "profileAppThemeTitle": "Thème de l'application",
     "profileLanguageTitle": "Langue",
     "settingsAppLanguageTitle": "Langage de l'application",
